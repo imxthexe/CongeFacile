@@ -1,3 +1,9 @@
+
+/* BIEN ECRIRE LES CHEMINS CSS EN ENTIER ! */
+/*  */
+
+/* Reset CSS */
+
 html{
     margin: 0;
 }
@@ -8,5 +14,28 @@ body{
 }
 
 h1{
-    
+
 }
+
+h2{
+
+}
+
+h3{
+
+}
+
+p{
+
+}
+
+/* Fin Reset CSS */
+
+/* Header */
+
+header{
+
+}
+
+/* Fin Header */
+
