@@ -1,43 +1,36 @@
-
 /* BIEN ECRIRE LES CHEMINS CSS EN ENTIER ! */
 /*  */
 
 /* Reset CSS */
 
-html{
+html {
     margin: 0;
 }
 
-body{
+body {
     margin: 0;
     padding: 0;
 }
 
-h1{
+h1 {}
 
-}
+h2 {}
 
-h2{
+h3 {}
 
-}
-
-h3{
-
-}
-
-p{
-
-}
+p {}
 
 /* Fin Reset CSS */
 
 /* Header */
 
-header{
-    width: 96%;
-    background-color: blue;
-    margin: 0 auto;
-}
+header {}
 
 /* Fin Header */
 
+:root {
+    --color_btn: #004C6C;
+    --color_title: #1B3168;
+    --color-text: #000000;
+    --color_btn_navbarre: #5C73A0;
+}
