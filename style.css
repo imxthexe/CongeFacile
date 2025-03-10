@@ -24,8 +24,30 @@ p {}
 
 /* Header */
 
-header {}
+header {
+    display: flex;
+    gap: 20px;
+    background-color:#1B3168;
+    margin:  20px   ;
+    border-radius: 25px;
+    box-shadow: -5px -10px 0px   #5C73A0;
+}
 
+header img{
+    width: 80px;
+    padding-left: 25px;
+}
+header h2{
+    font-size: 25px;
+    
+}
+header b{
+    font-weight: 1500;
+    color: white;
+}
+header p{
+
+}
 /* Fin Header */
 
 :root {
