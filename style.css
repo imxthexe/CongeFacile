@@ -12,19 +12,34 @@ body {
     padding: 0;
 }
 
-h1 {}
+h1
+{
+font-size: 36px;
+}
+h2
+{
+font-size:24px;
+}
+ 
+h3
+{
+font-size:21px;
+}
 
-h2 {}
-
-h3 {}
-
-p {}
+p {
+    font-size: 16px;
+}
 
 /* Fin Reset CSS */
 
 /* Header */
 
-header {}
+header {
+    background-color: var(--color_btn);
+    color: var(--color-text);
+    padding: 10px;
+    text-align: center;
+}
 
 /* Fin Header */
 
