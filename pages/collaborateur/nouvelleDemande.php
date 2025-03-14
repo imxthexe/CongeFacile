@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../../style.css">
-
+<?php include'../../includes/header2.php'?>
 <div class="Container-newdemande">
     
         <h1>Effectuer une nouvelle demande</1>
