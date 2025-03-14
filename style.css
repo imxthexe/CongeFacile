@@ -2,6 +2,11 @@
 /*  */
 
 /* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 html {
     margin: 0;
@@ -331,7 +336,8 @@ nav {
 
 /*FIN PageConnexion*/
 .container {
-    padding: 50px;
+    padding: 50px 0 0 300px;
+    width: 40%;
 }
 
 .steps {
@@ -344,7 +350,7 @@ nav {
     justify-content: space-between;
     width: 70%;
     position: relative;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
 .stepCircle {
@@ -407,4 +413,5 @@ nav {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 5px;
 }
