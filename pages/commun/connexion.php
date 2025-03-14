@@ -23,14 +23,21 @@
 
             <h2>Connectez-vous</h2>
 
-            <form action="">
-                <label for="mail">Adresse Mail</label>
-                <input type="mail" placeholder="****@mentalworks.fr">
+            <form action="" class="FormConnexion">
 
-                <label for="password">Mot de passe</label>
-                <input type="password">
+                <div class="labelConnexion">Adresse Mail</div>
+                <div class="inputConnexion">
+                    <div class="inputConnexionMail">
+                        <input type="mail" placeholder="****@mentalworks.fr" name="mail">
+                    </div>
+                </div>
 
-                <input type="submit" value="Connexion au portal">
+                <div class="labelConnexion">Mot de passe</div>
+                <div class="inputConnexion">
+                    <input type="password" name="password">
+                </div>
+
+                <input type="submit" value="Connexion au portail" class="inputConnexionSubmit">
             </form>
 
             <p>Vous avez oublié votre mot de passe ? <a href="">Cliquez ici</a> pour le réinitialiser.</p>
@@ -72,7 +79,7 @@ if ($REQUEST_METHOD = 'POST') {
         }
 
         $password = $data['password'];
-        password_hash($password, PASSWORD_DEFAULT);
+
 
         $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
         $requete->execute(

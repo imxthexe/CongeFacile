@@ -53,13 +53,15 @@ p {
     width: 100%;
     margin: 0 auto;
 }
-.top{
+
+.top {
     border-radius: 15px;
     background-color: #5C73A0;
     height: 25px;
     z-index: 5;
-    margin:25px 40px 0 40px;
+    margin: 25px 40px 0 40px;
 }
+
 header {
     background-color: var(--color_btn);
     color: var(--color-text);
@@ -67,10 +69,12 @@ header {
     border-radius: 15px;
 
 }
-header img{
+
+header img {
     width: 250px;
-    padding:5px 25px 15px 25px;
+    padding: 5px 25px 15px 25px;
 }
+
 /* Fin Header */
 
 /* Navbar */
@@ -80,7 +84,7 @@ nav {
     padding: 70px 20px 20px 20px;
 }
 
-.navBar nav ul{
+.navBar nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -102,6 +106,29 @@ nav {
 
 
 
+/*PageConnexion*/
 
+input {
+    border: none;
+    outline: none;
+}
 
+.inputConnexion input {
+    border: #DFE4EA solid 1px;
+    margin-bottom: 30px;
+    align-items: center;
+    width: 350px;
+    height: 46px;
+    border-radius: 6px;
+    display: flex;
+}
 
+.inputConnexionSubmit {
+    background-color: var(--color_btn);
+    color: white;
+    width: 215px;
+    height: 50px;
+    border-radius: 6px;
+}
+
+/*FIN PageConnexion*/
