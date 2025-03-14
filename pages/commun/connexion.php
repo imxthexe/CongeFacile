@@ -11,7 +11,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="containerConnexion">
         <div class="connexion">
             <h1>CongéFacile</h1>
 

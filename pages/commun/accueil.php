@@ -11,20 +11,20 @@
 
 <body>
 
-    <div class="container">
+    <div class="containerAccueil">
 
         <section class="accueil">
 
             <h1>CongéFacile</h1>
 
-            
+
             <p>CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.</p>
             <p>Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.</p>
-            
 
-            
+
+
             <div class="steps">
-                
+
                 <h2>Etapes</h2>
 
                 <div class="progressContainer">
@@ -47,7 +47,7 @@
                         <div class="circle">3</div>
                         <div class="label">Etape 3</div>
                     </div>
-                    
+
                 </div>
 
                 <div class="CardsContainer">
