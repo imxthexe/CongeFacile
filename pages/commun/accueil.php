@@ -11,15 +11,19 @@
 
 <body>
 
+<?php include "../../includes/header.html" ?>
+
     <div class="containerAccueil">
 
         <section class="accueil">
 
             <h1>CongéFacile</h1>
 
+            <div class="hero">
+                <p>CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.</p>
+                <p>Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.</p>
+            </div>
 
-            <p>CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.</p>
-            <p>Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.</p>
 
 
 

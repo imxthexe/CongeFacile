@@ -67,6 +67,7 @@ input {
 .header-container {
     width: 100%;
     margin: 0 auto;
+    height: 100px;
 }
 
 .top {
@@ -196,7 +197,7 @@ textarea:focus {
 }
 
 .Container-newdemande button {
-    background-color: #0056b3;
+    background-color: var(--color_btn);
     color: white;
     border: none;
     cursor: pointer;
@@ -276,7 +277,7 @@ input[type=password] {
 
 /* Accueil */
 
-.container {
+.containerAccueil {
     padding: 50px 0 0 300px;
     width: 55%;
 }
@@ -355,8 +356,8 @@ input[type=password] {
     justify-content: space-around;
 }
 
-.accueil .steps .CardsContainer p {
-    line-height: 30px;
+.accueil .hero {
+    line-height: 25px;
 }
 
 .accueil .steps .CardsContainer .stepsCards {
