@@ -184,11 +184,11 @@ input {
     margin-bottom: 20px;
 }
 
-.steps {
+.accueil .steps {
     margin: 75px 0;
 }
 
-.progressContainer {
+.accueil .progressContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -197,14 +197,14 @@ input {
     margin: 30px auto;
 }
 
-.stepCircle {
+.accueil .stepCircle {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
 
-.circle {
+.accueil .circle {
     width: 50px;
     height: 50px;
     border: 2px solid #1f4a66;
@@ -219,18 +219,18 @@ input {
     z-index: 1;
 }
 
-.circle.active {
+.accueil .circle.active {
     background-color: #1f4a66;
     color: #fff;
 }
 
-.label {
+.accueil .label {
     margin-top: 10px;
     font-size: 1em;
     color: #333;
 }
 
-.line {
+.accueil .line {
     height: 2px;
     background-color: #1f4a66;
     flex-grow: 1;
@@ -246,6 +246,10 @@ input {
 .accueil .steps .CardsContainer {
     display: flex;
     justify-content: space-around;
+}
+
+.accueil .steps .CardsContainer p {
+    line-height: 30px;
 }
 
 .accueil .steps .CardsContainer .stepsCards {
