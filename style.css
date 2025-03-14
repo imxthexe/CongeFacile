@@ -516,6 +516,10 @@ input[type=email] {
     display: flex;
     justify-content: space-around;
 }
+.accueil .steps .CardsContainer {
+    display: flex;
+    justify-content: space-around;
+}
 
 .accueil .steps .CardsContainer .stepsCards {
     background-color: #004C6C0D;
