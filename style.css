@@ -111,11 +111,10 @@ header img {
     /* Hauteur totale du conteneur */
 }
 
-
 .navBar .link nav hr {
     margin-left: 40px;
 }
-
+ 
 .navBar .link nav {
     margin-top: 110px;
     padding: 0 20px 20px 0;
@@ -128,7 +127,6 @@ header img {
 }
 
 .navBar .link nav ul li {
-
     padding: 16px 0px 16px 40px;
 }
 

@@ -11,7 +11,7 @@
 
 <body>
 
-<?php include "../../includes/header.html" ?>
+<?php include "../../includes/header2.php" ?>
 
     <div class="containerAccueil">
 
