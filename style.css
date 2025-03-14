@@ -118,6 +118,10 @@ input {
     outline: none;
 }
 
+.labelConnexion {
+    margin-bottom: 15px;
+}
+
 .inputConnexion input {
     border: #DFE4EA solid 1px;
     margin-bottom: 30px;
@@ -136,6 +140,13 @@ input {
     border-radius: 6px;
 }
 
+<<<<<<< HEAD
+.connexion p a {
+    color: var(--color_btn);
+}
+
+/*FIN PageConnexion*/
+=======
 /*FIN PageConnexion*/
 
 
@@ -246,3 +257,4 @@ input {
     text-align: center;
     padding: 5px;
 }
+>>>>>>> 0d5c1d19e4c20bb649c9082e34b324c93b5b3630
