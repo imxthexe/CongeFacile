@@ -63,6 +63,7 @@ input {
 .header-container {
     width: 100%;
     margin: 0 auto;
+    height: 100px;
 }
 
 .top {
@@ -188,7 +189,7 @@ textarea:focus {
 }
 
 .Container-newdemande button {
-    background-color: #0056b3;
+    background-color: var(--color_btn);
     color: white;
     border: none;
     cursor: pointer;
