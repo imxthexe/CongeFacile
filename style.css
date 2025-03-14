@@ -204,34 +204,9 @@ textarea:focus {
 }
 
 
+/* FIN NOUVELLE DEMANDE */
 
 
-
-.Container-newdemande {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 800px;
-}
-
-.Container-newdemande label {
-    font-weight: bold;
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 20px;
-}
-
-.Container-newdemande input,
-select,
-textarea,
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
 
 
