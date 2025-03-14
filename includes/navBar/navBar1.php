@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="style.css">
+<html>
+
+<link rel="stylesheet" href="../../style.css">
 
 <body>
-    <?php include 'header.php' ?>
     <div class="navBar">
-
         <nav>
             <ul>
                 <li><a href="">Accueil</a></li>
@@ -19,4 +19,7 @@
         </nav>
     </div>
 
+
 </body>
+
+</html>
