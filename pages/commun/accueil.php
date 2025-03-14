@@ -44,3 +44,45 @@
 </body>
 
 </html>
+
+
+<?php
+
+if ($REQUEST_METHOD = 'POST') {
+    if (isset($data)) {
+        $data = [];
+        $password = [];
+        $errors = [];
+        $data = $_POST;
+
+        $RegexMail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+
+        $data['email'] = trim($data['email']);
+        $data['password'] = trim($data['password']);
+
+        $data['email'] = htmlspecialchars($data['email']);
+        $data['password'] = htmlspecialchars($data['password']);
+
+        if (empty($data['email'])) {
+            $errors['email'] = 'Veuillez renseigner votre email';
+        } elseif (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
+            $errors['email'] = 'Votre email est incorrect';
+        } elseif (!preg_match($RegexMail, $data['email'])) {
+            $errors['email'] = "Votre email est incorrect";
+        }
+
+        $password = $data['password'];
+        password_hash($password, PASSWORD_DEFAULT);
+
+        $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
+        $requete->execute(
+            array(
+                "email" => $data['email'],
+                "password" => $password
+            )
+        );
+    }
+}
+
+
+?>
