@@ -44,6 +44,8 @@ p {
     font-size: 16px;
 }
 
+
+
 @font-face {
     font-family: "Epilogue";
     src: url("font/Epilogue/Epilogue-VariableFont_wght.ttf") format("truetype");
@@ -52,7 +54,9 @@ p {
 input {
     border: none;
     outline: none;
+    font-family: "Epilogue";
 }
+
 
 
 /* Fin Reset CSS */
@@ -63,6 +67,7 @@ input {
 .header-container {
     width: 100%;
     margin: 0 auto;
+    height: 100px;
 }
 
 .top {
@@ -91,14 +96,17 @@ header img {
 /* Navbar */
 
 .navBar {
-    width:300px;
+    width: 300px;
     display: grid;
-    grid-template-rows: auto auto; /* Deux lignes pour empiler les divs */
-    align-content: space-between; /* Équivalent de space-between mais en colonne */
-    height: 100vh; /* Hauteur totale du conteneur */ 
+    grid-template-rows: auto auto;
+    /* Deux lignes pour empiler les divs */
+    align-content: space-between;
+    /* Équivalent de space-between mais en colonne */
+    height: 100vh;
+    /* Hauteur totale du conteneur */
 }
 
-.navBar .link nav hr{
+.navBar .link nav hr {
     margin-left: 40px;
 }
  
@@ -107,7 +115,7 @@ header img {
     padding: 0 20px 20px 0;
 }
 
-.navBar .link nav ul{
+.navBar .link nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -128,13 +136,14 @@ header img {
 
 .navBar .link nav ul a:focus {
     color: var(--color_btn);
-    li{
+
+    li {
         background-color: #004c6c20;
         border-right: 3px solid #004c6c;
     }
 }
 
-.navBar .profile .img{
+.navBar .profile .img {
     border-radius: 40px;
 }
 
@@ -186,7 +195,7 @@ textarea:focus {
 }
 
 .Container-newdemande button {
-    background-color: #0056b3;
+    background-color: var(--color_btn);
     color: white;
     border: none;
     cursor: pointer;
@@ -212,9 +221,9 @@ textarea:focus {
 /*PageConnexion*/
 
 
-/* .connexion {
+.connexion {
     padding-left: 5%;
-} */
+}
 
 .labelConnexion {
     margin-bottom: 15px;
@@ -239,7 +248,7 @@ textarea:focus {
 }
 
 input[type=email] {
-    box-sizing: border-box;
+
     background-color: white;
     background-image: url('images/enveloppe.png');
     background-size: 24px;
@@ -252,6 +261,13 @@ input[type=email] {
     color: var(--color_btn);
 }
 
+input[type=password] {
+    background-image: url(images/visible.png);
+    background-size: 24px;
+    background-position: 300px 10px;
+    background-repeat: no-repeat;
+}
+
 /*FIN PageConnexion*/
 
 
@@ -259,7 +275,7 @@ input[type=email] {
 
 /* Accueil */
 
-.container {
+.containerAccueil {
     padding: 50px 0 0 300px;
     width: 55%;
 }
@@ -338,8 +354,8 @@ input[type=email] {
     justify-content: space-around;
 }
 
-.accueil .steps .CardsContainer p {
-    line-height: 30px;
+.accueil .hero {
+    line-height: 25px;
 }
 
 .accueil .steps .CardsContainer .stepsCards {
