@@ -13,13 +13,12 @@ body {
     font-family: "Epilogue";
 }
 
-h1
-{
-font-size: 36px;
+h1 {
+    font-size: 36px;
 }
-h2
-{
-font-size:24px;
+
+h2 {
+    font-size: 24px;
 }
 
 h3 {
@@ -37,6 +36,7 @@ p
     font-family: "Epilogue";
     src: url("font/Epilogue/Epilogue-VariableFont_wght.ttf") format("truetype");
 }
+
 /* Fin Reset CSS */
 
 /* Header */
@@ -59,21 +59,22 @@ header {
 
 /* Navbar */
 
-nav{
+nav {
     width: 300px;
     padding: 70px 20px 20px 20px;
 }
-.navBar nav ul{
+
+.navBar nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.navBar nav ul li{
+.navBar nav ul li {
     padding: 16px 0;
 }
 
-.navBar nav ul li a{
+.navBar nav ul li a {
     text-decoration: none;
     color: #5C73A0;
     font-size: 16px;
