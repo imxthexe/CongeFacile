@@ -44,6 +44,8 @@ p {
     font-size: 16px;
 }
 
+
+
 @font-face {
     font-family: "Epilogue";
     src: url("font/Epilogue/Epilogue-VariableFont_wght.ttf") format("truetype");
@@ -52,7 +54,9 @@ p {
 input {
     border: none;
     outline: none;
+    font-family: "Epilogue";
 }
+
 
 
 /* Fin Reset CSS */
@@ -219,9 +223,9 @@ textarea:focus {
 /*PageConnexion*/
 
 
-/* .connexion {
+.connexion {
     padding-left: 5%;
-} */
+}
 
 .labelConnexion {
     margin-bottom: 15px;
@@ -243,11 +247,10 @@ textarea:focus {
     width: 215px;
     height: 50px;
     border-radius: 6px;
-    font-family: "Epilogue";
 }
 
 input[type=email] {
-    box-sizing: border-box;
+
     background-color: white;
     background-image: url('images/enveloppe.png');
     background-size: 24px;
@@ -260,6 +263,13 @@ input[type=email] {
     color: var(--color_btn);
 }
 
+input[type=password] {
+    background-image: url(images/visible.png);
+    background-size: 24px;
+    background-position: 300px 10px;
+    background-repeat: no-repeat;
+}
+
 /*FIN PageConnexion*/
 
 
@@ -267,7 +277,7 @@ input[type=email] {
 
 /* Accueil */
 
-.container {
+.containerAccueil {
     padding: 50px 0 0 300px;
     width: 55%;
 }
@@ -346,8 +356,8 @@ input[type=email] {
     justify-content: space-around;
 }
 
-.accueil .steps .CardsContainer p {
-    line-height: 30px;
+.accueil .hero {
+    line-height: 25px;
 }
 
 .accueil .steps .CardsContainer .stepsCards {
