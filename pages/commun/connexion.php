@@ -28,7 +28,7 @@
                 <div class="labelConnexion">Adresse Mail</div>
                 <div class="inputConnexion">
                     <div class="inputConnexionMail">
-                        <input type="mail" placeholder="****@mentalworks.fr" name="mail">
+                        <input type="email" placeholder="****@mentalworks.fr" name="mail">
                     </div>
                 </div>
 
