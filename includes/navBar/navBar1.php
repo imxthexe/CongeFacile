@@ -35,6 +35,10 @@
             <div class="img">
                 <img src="https://placehold.co/60x60" alt="profile">
             </div>
+            <div>
+                <p>Prénom Nom</p>
+                <p>Role</p>
+            </div>
         </div>
 
     </div>

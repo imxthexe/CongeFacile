@@ -104,14 +104,17 @@ header img {
     /* Équivalent de space-between mais en colonne */
     height: 100vh;
     /* Hauteur totale du conteneur */
+    -webkit-box-shadow: 4px 0px 22px -12px rgba(0,0,0,0.4);
+    -moz-box-shadow: 4px 0px 22px -12px rgba(0,0,0,0.4);
+    box-shadow: 4px 0px 22px -12px rgba(0,0,0,0.4);
 }
 
 .navBar .link nav hr {
-    margin-left: 40px;
+    margin: 20px 0 20px 40px;
 }
  
 .navBar .link nav {
-    margin-top: 110px;
+    margin-top: 130px;
     padding: 0 20px 20px 0;
 }
 
@@ -143,7 +146,14 @@ header img {
     }
 }
 
-.navBar .profile .img {
+.navBar .profile {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+
+}
+
+.navBar .profile .img img{
     border-radius: 40px;
 }
 
