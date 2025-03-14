@@ -55,14 +55,14 @@ p {
 }
 .top{
     border-radius: 15px;
-    background-color: #5C73A0;
+    background-color: var(--color_btn_navbarre);
     height: 25px;
     z-index: 5;
     margin:25px 40px 0 40px;
 }
 header {
     background-color: var(--color_btn);
-    color: var(--color-text);
+    color: var(--color_text);
     margin: -15px 25px;
     border-radius: 15px;
 
@@ -98,6 +98,154 @@ nav {
 }
 
 /* FIN Navbar */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Nouvelle demande */
+
+
+
+.Container-newdemande {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+}
+
+.Container-newdemande label{
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 20px;
+}
+.Container-newdemande input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.Container-newdemande input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+.Container-newdemande .file-input {
+    border: 1px dashed #ccc;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+.Container-newdemande button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+}
+.Container-newdemande button:hover {
+    background-color: var(--);
+}
+.datenewdemande{
+    display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
