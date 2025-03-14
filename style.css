@@ -13,8 +13,16 @@ body {
     font-family: "Epilogue";
 }
 
+:root {
+    --color_btn: #004C6C;
+    --color_title: #1B3168;
+    --color-text: #000000;
+    --color_btn_navbarre: #5C73A0;
+}
+
 h1 {
     font-size: 36px;
+    color: var(--color_title);
 }
 
 h2 {
@@ -49,13 +57,6 @@ header {
 }
 
 /* Fin Header */
-
-:root {
-    --color_btn: #004C6C;
-    --color_title: #1B3168;
-    --color-text: #000000;
-    --color_btn_navbarre: #5C73A0;
-}
 
 /* Navbar */
 
