@@ -49,3 +49,11 @@ header {
     --color-text: #000000;
     --color_btn_navbarre: #5C73A0;
 }
+
+/* Navbar */
+
+nav{
+    width: 300px;
+}
+
+/* FIN Navbar */
