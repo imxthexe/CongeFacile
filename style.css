@@ -13,23 +13,29 @@ body {
     font-family: "Epilogue";
 }
 
-h1
-{
-font-size: 36px;
+:root {
+    --color_btn: #004C6C;
+    --color_title: #1B3168;
+    --color-text: #000000;
+    --color_btn_navbarre: #5C73A0;
 }
-h2
-{
-font-size:24px;
+
+h1 {
+    font-size: 36px;
+    color: var(--color_title);
+}
+
+h2 {
+    font-size: 24px;
+    color: var(--color_title);
 }
 
 h3 {
     font-size: 21px;
 }
 
-p
-
 /*text*/
-    {
+p {
     font-size: 16px;
 }
 
@@ -37,6 +43,7 @@ p
     font-family: "Epilogue";
     src: url("font/Epilogue/Epilogue-VariableFont_wght.ttf") format("truetype");
 }
+
 /* Fin Reset CSS */
 
 /* Header */
@@ -50,16 +57,9 @@ header {
 
 /* Fin Header */
 
-:root {
-    --color_btn: #004C6C;
-    --color_title: #1B3168;
-    --color-text: #000000;
-    --color_btn_navbarre: #5C73A0;
-}
-
 /* Navbar */
 
-nav{
+nav {
     width: 300px;
     padding: 70px 20px 20px 20px;
 }
@@ -70,11 +70,11 @@ nav{
     margin: 0;
 }
 
-.navBar nav ul li{
+.navBar nav ul li {
     padding: 16px 0;
 }
 
-.navBar nav ul li a{
+.navBar nav ul li a {
     text-decoration: none;
     color: #5C73A0;
     font-size: 16px;
