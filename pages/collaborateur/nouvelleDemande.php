@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="../../style.css">
 <?php include'../../includes/header2.php'?>
-<div class="Container-newdemande">
+
+<div class="flex">
+    <?php  include'../../includes/navBar/navBar1.php'?>
+    <div class="Container-newdemande">
     
         <h1>Effectuer une nouvelle demande</1>
         <form>
@@ -31,4 +34,5 @@
             <button type="submit">Soumettre ma demande</button>
         </form>
    
+</div>
 </div>
