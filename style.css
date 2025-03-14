@@ -370,6 +370,7 @@ nav {
     text-align: center;
     padding: 10px;
     cursor: pointer;
+}
 .connexion p a {
     color: var(--color_btn);
 }
