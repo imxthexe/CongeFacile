@@ -48,13 +48,29 @@ p {
 
 /* Header */
 
+
+.header-container {
+    width: 100%;
+    margin: 0 auto;
+}
+.top{
+    border-radius: 15px;
+    background-color: #5C73A0;
+    height: 25px;
+    z-index: 5;
+    margin:25px 40px 0 40px;
+}
 header {
     background-color: var(--color_btn);
     color: var(--color-text);
-    padding: 10px;
-    text-align: center;
-}
+    margin: -15px 25px;
+    border-radius: 15px;
 
+}
+header img{
+    width: 250px;
+    padding:5px 25px 15px 25px;
+}
 /* Fin Header */
 
 /* Navbar */
