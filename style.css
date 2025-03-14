@@ -14,20 +14,27 @@ body {
 }
 
 h1
-{
-font-size: 36px;
-}
-h2
-{
-font-size:24px;
-}
- 
-h3
-{
-font-size:21px;
+
+/*grand titre*/
+    {
+    font-size: 36px;
 }
 
-p {
+h2
+
+/*petit titre*/
+    {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 21px;
+}
+
+p
+
+/*text*/
+    {
     font-size: 16px;
 }
 
@@ -61,7 +68,7 @@ header {
     height: 100vh;
 }
 
-.navBar nav{
+.navBar nav {
     width: 300px;
     padding: 70px 20px 20px 20px;
 }
