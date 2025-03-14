@@ -140,13 +140,11 @@ input {
     border-radius: 6px;
 }
 
-<<<<<<< HEAD
 .connexion p a {
     color: var(--color_btn);
 }
 
 /*FIN PageConnexion*/
-=======
 /*FIN PageConnexion*/
 
 
@@ -175,11 +173,15 @@ input {
 
 
 
-
+/* Accueil */
 
 .container {
     padding: 50px 0 0 300px;
-    width: 40%;
+    width: 55%;
+}
+
+.accueil h1 {
+    margin-bottom: 20px;
 }
 
 .steps {
@@ -257,4 +259,5 @@ input {
     text-align: center;
     padding: 5px;
 }
->>>>>>> 0d5c1d19e4c20bb649c9082e34b324c93b5b3630
+
+/* Fin Accueil */
