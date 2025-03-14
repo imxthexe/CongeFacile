@@ -27,16 +27,15 @@ h1 {
 
 h2 {
     font-size: 24px;
+    color: var(--color_title);
 }
 
 h3 {
     font-size: 21px;
 }
 
-p
-
 /*text*/
-    {
+p {
     font-size: 16px;
 }
 
