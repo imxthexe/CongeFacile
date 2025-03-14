@@ -4,19 +4,39 @@
 
 <body>
     <div class="navBar">
-        <nav>
-            <ul>
-                <li><a href="">Accueil</a></li>
-                <li><a href="">Nouvelle demande</a></li>
-                <li><a href="">Historique des demandes</a></li>
-            </ul>
-            <hr>
-            <ul>
-                <li><a href="">Mes informations</a></li>
-                <li><a href="">Mes préférences</a></li>
-                <li><a href="">Deconnexion</a></li>
-            </ul>
-        </nav>
+        <div class="link">
+            <nav>
+                <ul>
+                    <a href="#">
+                        <li>Accueil</li>
+                    </a>
+                    <a href="#">
+                        <li>Nouvelle demande</li>
+                    </a>
+                    <a href="#">
+                        <li>Historique des demandes</li>
+                    </a>
+                </ul>
+                <hr>
+                <ul>
+                    <a href="#">
+                        <li>Mes informations</li>
+                    </a>
+                    <a href="#">
+                        <li>Mes préférences</li>
+                    </a>
+                    <a href="#">
+                        <li>Deconnexion</li>
+                    </a>
+                </ul>
+            </nav>
+        </div>
+        <div class="profile">
+            <div class="img">
+                <img src="https://placehold.co/60x60" alt="profile">
+            </div>
+        </div>
+
     </div>
 
 

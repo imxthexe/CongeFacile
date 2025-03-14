@@ -90,26 +90,57 @@ header img {
 
 /* Navbar */
 
-nav {
-    width: 300px;
-    padding: 70px 20px 20px 20px;
+.navBar {
+    width:300px;
+    display: grid;
+    grid-template-rows: auto auto; /* Deux lignes pour empiler les divs */
+    align-content: space-between; /* Équivalent de space-between mais en colonne */
+    height: 100vh; /* Hauteur totale du conteneur */ 
 }
 
+<<<<<<< Updated upstream
 .navBar nav ul {
+=======
+.navBar .link nav hr{
+    margin-left: 40px;
+}
+
+.navBar .link nav {
+    margin-top: 110px;
+    padding: 0 20px 20px 0;
+}
+
+.navBar .link nav ul{
+>>>>>>> Stashed changes
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.navBar nav ul li {
-    padding: 16px 0;
+.navBar .link nav ul li {
+
+    padding: 16px 0px 16px 40px;
 }
 
-.navBar nav ul li a {
+.navBar .link nav ul a {
     text-decoration: none;
     color: var(--color_btn_navbarre);
     font-size: 16px;
     font-weight: 500;
+    padding: 16px 0;
+    width: 100%;
+}
+
+.navBar .link nav ul a:focus {
+    color: var(--color_btn);
+    li{
+        background-color: #004c6c20;
+        border-right: 3px solid #004c6c;
+    }
+}
+
+.navBar .profile .img{
+    border-radius: 40px;
 }
 
 /* FIN Navbar */
