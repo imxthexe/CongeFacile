@@ -326,15 +326,6 @@ input[type=email] {
     margin: 0 auto;
 }
 
-input[type=email] {
-    box-sizing: border-box;
-    background-color: white;
-    background-image: url('images/enveloppe.png');
-    background-size: 24px;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding-left: 60px;
-}
 
 .accueil .steps .CardsContainer {
     display: flex;
