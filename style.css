@@ -144,13 +144,23 @@ input {
     border-radius: 6px;
 }
 
+input[type=email] {
+    box-sizing: border-box;
+    background-color: white;
+    background-image: url('images/enveloppe.png');
+    background-size: 24px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 60px;
+}
+
 .connexion p a {
     color: var(--color_btn);
 }
 
 /*FIN PageConnexion*/
-=======
-/*FIN PageConnexion*/
+
+
 
 
 
@@ -242,31 +252,21 @@ input {
     z-index: 0;
     width: 95%;
     margin: 0 auto;
+}
 
-    input[type=email] {
-        box-sizing: border-box;
-        background-color: white;
-        background-image: url('images/enveloppe.png');
-        background-size: 24px;
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        padding-left: 60px;
-    }
 
-    .accueil .steps .CardsContainer {
-        display: flex;
-        justify-content: space-around;
-    }
+.accueil .steps .CardsContainer {
+    display: flex;
+    justify-content: space-around;
+}
 
-    .accueil .steps .CardsContainer .stepsCards {
-        background-color: #004C6C0D;
-        width: 244px;
-        height: 110px;
-        border-radius: 7px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-    >>>>>>>0d5c1d19e4c20bb649c9082e34b324c93b5b3630
+.accueil .steps .CardsContainer .stepsCards {
+    background-color: #004C6C0D;
+    width: 244px;
+    height: 110px;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
