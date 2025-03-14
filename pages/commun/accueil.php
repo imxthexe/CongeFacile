@@ -15,6 +15,8 @@
 
     <div class="containerAccueil">
 
+    <?php include "../../includes/navBar/navBar1.php" ?>
+
         <section class="accueil">
 
             <h1>CongéFacile</h1>
