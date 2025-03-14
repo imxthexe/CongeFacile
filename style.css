@@ -92,7 +92,7 @@ nav {
 
 .navBar nav ul li a {
     text-decoration: none;
-    color: #5C73A0;
+    color: var(--color_btn_navbarre);
     font-size: 16px;
     font-weight: 500;
 }
