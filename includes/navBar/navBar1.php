@@ -1,8 +1,9 @@
-<link rel="stylesheet" href="style.css">
+<html>
+
+<link rel="stylesheet" href="../../style.css">
 
 <body>
     <div class="navBar">
-
         <nav>
             <ul>
                 <li><a href="">Accueil</a></li>
@@ -18,4 +19,7 @@
         </nav>
     </div>
 
+
 </body>
+
+</html>
