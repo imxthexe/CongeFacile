@@ -98,12 +98,7 @@ header img {
     height: 100vh; /* Hauteur totale du conteneur */ 
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-.navBar nav ul {
-=======
-=======
->>>>>>> Stashed changes
+
 .navBar .link nav hr{
     margin-left: 40px;
 }
@@ -114,10 +109,6 @@ header img {
 }
 
 .navBar .link nav ul{
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     list-style: none;
     padding: 0;
     margin: 0;
