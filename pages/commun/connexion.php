@@ -9,9 +9,15 @@
 
 </head>
 
+<?php
+
+include '../../includes/header.html';
+
+?>
+
 <body>
 
-    <div class="containerConnexion">
+    <div class="containerConnexion page">
         <div class="connexion">
             <h1>CongéFacile</h1>
 
