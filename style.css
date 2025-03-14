@@ -286,7 +286,7 @@ input[type=email] {
 
 /* Accueil */
 
-.container {
+.containerAccueil {
     padding: 50px 0 0 300px;
     width: 55%;
 }
@@ -365,8 +365,8 @@ input[type=email] {
     justify-content: space-around;
 }
 
-.accueil .steps .CardsContainer p {
-    line-height: 30px;
+.accueil .hero {
+    line-height: 25px;
 }
 
 .accueil .steps .CardsContainer .stepsCards {
