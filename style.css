@@ -92,15 +92,18 @@ header img {
 /* Navbar */
 
 .navBar {
-    width:300px;
+    width: 300px;
     display: grid;
-    grid-template-rows: auto auto; /* Deux lignes pour empiler les divs */
-    align-content: space-between; /* Équivalent de space-between mais en colonne */
-    height: 100vh; /* Hauteur totale du conteneur */ 
+    grid-template-rows: auto auto;
+    /* Deux lignes pour empiler les divs */
+    align-content: space-between;
+    /* Équivalent de space-between mais en colonne */
+    height: 100vh;
+    /* Hauteur totale du conteneur */
 }
 
 
-.navBar .link nav hr{
+.navBar .link nav hr {
     margin-left: 40px;
 }
 
@@ -109,7 +112,7 @@ header img {
     padding: 0 20px 20px 0;
 }
 
-.navBar .link nav ul{
+.navBar .link nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -131,13 +134,14 @@ header img {
 
 .navBar .link nav ul a:focus {
     color: var(--color_btn);
-    li{
+
+    li {
         background-color: #004c6c20;
         border-right: 3px solid #004c6c;
     }
 }
 
-.navBar .profile .img{
+.navBar .profile .img {
     border-radius: 40px;
 }
 
@@ -239,6 +243,7 @@ textarea:focus {
     width: 215px;
     height: 50px;
     border-radius: 6px;
+    font-family: "Epilogue";
 }
 
 input[type=email] {
