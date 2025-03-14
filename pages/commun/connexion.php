@@ -41,9 +41,6 @@
             </form>
 
             <p>Vous avez oublié votre mot de passe ? <a href="">Cliquez ici</a> pour le réinitialiser.</p>
-
-
-
         </div>
     </div>
 

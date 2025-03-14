@@ -113,6 +113,10 @@ input {
     outline: none;
 }
 
+.labelConnexion {
+    margin-bottom: 15px;
+}
+
 .inputConnexion input {
     border: #DFE4EA solid 1px;
     margin-bottom: 30px;
@@ -129,6 +133,10 @@ input {
     width: 215px;
     height: 50px;
     border-radius: 6px;
+}
+
+.connexion p a {
+    color: var(--color_btn);
 }
 
 /*FIN PageConnexion*/
