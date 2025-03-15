@@ -64,6 +64,7 @@ input {
     border: none;
     outline: none;
     font-family: "Epilogue";
+    font-weight: 500;
 }
 
 input:hover {
@@ -354,7 +355,7 @@ input[type=email] {
 input[type=password] {
     background-image: url(images/coup-doeil.png);
     background-size: 24px;
-    background-position: 320px 10px;
+    background-position: 10px 10px;
     background-repeat: no-repeat;
     padding-left: 60px;
 }

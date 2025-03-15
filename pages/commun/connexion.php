@@ -11,10 +11,14 @@
 
 <?php
 
+include '../../includes/database.php';
 include '../../includes/header2.php';
+
 
 if ($REQUEST_METHOD = 'POST') {
     if (isset($data)) {
+        $index = [];
+        $index = $bdd->prepare("SELECT id FROM user ");
         $data = [];
         $password = [];
         $errors = [];
@@ -96,7 +100,6 @@ if ($REQUEST_METHOD = 'POST') {
 
 
 <?php
-
 
 
 include '../../includes/footer.php'
