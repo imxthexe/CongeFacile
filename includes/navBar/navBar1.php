@@ -7,7 +7,7 @@
         <div class="link">
             <nav>
                 <ul>
-                    <a href="#">
+                    <a href="../../pages/commun/accueil.php">
                         <li>Accueil</li>
                     </a>
                     <a href="#">
