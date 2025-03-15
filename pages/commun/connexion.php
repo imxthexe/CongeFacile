@@ -11,44 +11,47 @@
 
 <?php
 
-include '../../includes/header.html';
+include '../../includes/header2.php';
 
 ?>
 
 <body>
+    <div class="flex">
+        <!-- <?php include 'navBar2.php' ?> -->
+        <div class="containerConnexion page">
+            <div class="connexion">
+                <h1>CongéFacile</h1>
 
-    <div class="containerConnexion page">
-        <div class="connexion">
-            <h1>CongéFacile</h1>
+                <p>
+                    CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.
+                    Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.
+                    Connectez-vous ci-dessous pour accéder à votre espace.
+                </p>
 
-            <p>
-                CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.
-                Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.
-                Connectez-vous ci-dessous pour accéder à votre espace.
-            </p>
+                <h2>Connectez-vous</h2>
 
-            <h2>Connectez-vous</h2>
+                <form action="" class="FormConnexion">
 
-            <form action="" class="FormConnexion">
-
-                <div class="labelConnexion">Adresse Mail</div>
-                <div class="inputConnexion">
-                    <div class="inputConnexionMail">
-                        <input type="email" placeholder="****@mentalworks.fr" name="mail">
+                    <div class="labelConnexion">Adresse Mail</div>
+                    <div class="inputConnexion">
+                        <div class="inputConnexionMail">
+                            <input type="email" placeholder="****@mentalworks.fr" name="mail">
+                        </div>
                     </div>
-                </div>
 
-                <div class="labelConnexion">Mot de passe</div>
-                <div class="inputConnexion">
-                    <input type="password" name="password">
-                </div>
+                    <div class="labelConnexion">Mot de passe</div>
+                    <div class="inputConnexion">
+                        <input type="password" name="password">
+                    </div>
 
-                <input type="submit" value="Connexion au portail" class="inputConnexionSubmit">
-            </form>
+                    <input type="submit" value="Connexion au portail" class="inputConnexionSubmit">
+                </form>
 
-            <p>Vous avez oublié votre mot de passe ? <a href="">Cliquez ici</a> pour le réinitialiser.</p>
+                <p>Vous avez oublié votre mot de passe ? <a href="">Cliquez ici</a> pour le réinitialiser.</p>
+            </div>
         </div>
     </div>
+
 
 
 </body>
@@ -94,5 +97,6 @@ if ($REQUEST_METHOD = 'POST') {
     }
 }
 
+include '../../includes/footer.php'
 
 ?>

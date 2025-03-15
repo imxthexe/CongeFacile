@@ -60,6 +60,10 @@ input {
     font-family: "Epilogue";
 }
 
+input:hover {
+    cursor: pointer;
+}
+
 .page {
     padding: 0 0 0 5%;
 }
@@ -266,12 +270,16 @@ input[type=email] {
     color: var(--color_btn);
 }
 
+
+
 input[type=password] {
-    background-image: url(images/visible.png);
+    background-image: url(images/coup-doeil.png);
     background-size: 24px;
-    background-position: 300px 10px;
+    background-position: 10px 10px;
     background-repeat: no-repeat;
+    padding-left: 60px;
 }
+
 
 /*FIN PageConnexion*/
 
