@@ -22,7 +22,7 @@
         .headerRow {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
         .headerRow h2 {
             margin: 0;

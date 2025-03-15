@@ -21,7 +21,7 @@
         .containerPost .postes .headerRow {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
 
         .containerPost .postes .headerRow h2 {

@@ -22,7 +22,7 @@
         .containerDemandes .headerRow {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
 
         .containerDemandes .headerRow h2 {
