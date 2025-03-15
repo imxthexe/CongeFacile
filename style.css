@@ -23,6 +23,7 @@ body {
     --color_title: #1B3168;
     --color_text: #000000;
     --color_btn_navbarre: #5C73A0;
+    --gray: #637381;
 }
 
 h1 {
@@ -147,7 +148,52 @@ header img {
 
     li {
         background-color: #004c6c20;
-        border-right: 3px solid #004c6c;
+        border-right: 3.5px solid #004c6c;
+    }
+}
+
+.navBar .link nav details summary {
+    list-style: none;
+    margin: 0;
+    text-decoration: none;
+    color: var(--color_btn_navbarre);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    img{
+        width: 16px;
+        margin-left: 98px;
+        margin-bottom: -3px;
+    }
+}
+
+.navBar .link nav details[open] summary {
+    background-color: #004c6c20;
+    border-right: 3.5px solid #004c6c;
+}
+
+.navBar .link nav details ul li {
+    list-style: none;
+    padding: 16px 0px 16px 70px;
+    margin: 0;
+    text-decoration: none;
+    color: var(--color_btn_navrre);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.navBar .link nav details ul {
+    padding-top: 10px;
+}
+
+
+.navBar .link nav details ul a:focus {
+    color: var(--color_btn);
+    li {
+        background-color: white;
+        border-right: 0px;
+        color: var(--color_title);
     }
 }
 
@@ -161,6 +207,18 @@ header img {
 .navBar .profile .img img {
     border-radius: 40px;
     margin-right: 12px;
+}
+
+.navBar .profile .name {
+    color: var(--color_text);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.navBar .profile .role {
+    color: var(--gray);
+    font-weight: 500;
+    font-size: 16px;
 }
 
 /* FIN Navbar */
