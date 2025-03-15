@@ -333,7 +333,7 @@ textarea:focus {
     width: 215px;
     height: 50px;
     border-radius: 6px;
-    margin-bottom: 22Px;
+    margin: 0px 0 22Px 0;
 }
 
 input[type=email] {
@@ -353,6 +353,7 @@ input[type=email] {
 
 
 
+
 input[type=password] {
     background-image: url(images/coup-doeil.png);
     background-size: 24px;
@@ -360,7 +361,6 @@ input[type=password] {
     background-repeat: no-repeat;
     padding-left: 60px;
 }
-
 
 /*FIN PageConnexion*/
 
