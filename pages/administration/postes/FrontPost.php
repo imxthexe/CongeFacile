@@ -23,39 +23,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Postes</title>
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f8f9fa;
-                margin: 0;
-                padding: 40px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
+            .postContainer {
+                padding: 150px 0 0 50px;
+                width: 55%;
             }
 
-            .postContainer {
+            .post {
                 width: 70%;
                 background: white;
                 padding: 20px;
                 border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
-            h1 {
-                color: #1a1a1a;
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
+
 
             .btn {
-                background-color: #0d6efd;
                 color: white;
                 border: none;
                 padding: 10px 15px;
                 border-radius: 5px;
                 cursor: pointer;
-                font-size: 16px;
+                background-color: var(--color_btn);
+                width: 150px;
+                margin-left: 20px;
             }
 
             table {
@@ -64,16 +54,22 @@
                 margin-top: 20px;
             }
 
-            th,
-            td {
-                padding: 12px;
-                border-bottom: 1px solid #ddd;
-                text-align: left;
+            thead {
+                width: 100%;
             }
 
             th {
-                background-color: #f1f1f1;
-                font-weight: bold;
+                /* background-color: #f1f1f1; */
+                /* font-weight: bold; */
+                background-color: yellow;
+                width: 1500px;
+            }
+
+            td {
+                /* padding: 12px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+                width: 100%; */
             }
 
             .details-btn {
@@ -87,7 +83,6 @@
 
             .top-menu {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
             }
 
@@ -108,28 +103,26 @@
 
     <body>
 
-        <?php include "../../../includes/header3.php" ?>
+        <?php include "../../../includes/header.php" ?>
 
 
         <div class="flex">
-            <?php include "../../../includes/haader3.php" ?>
+            <?php include "../../../includes/navBar/navBar1.php" ?>
 
 
             <div class="postContainer">
 
-
                 <div class="post">
 
 
+
                     <div class="top-menu">
-                        <h1>Postes</h1>
+                        <h2>Postes</h2>
                         <button class="btn">Ajouter un poste</button>
                     </div>
 
-
                     <table>
                         <thead>
-
                             <tr>
                                 <th>
                                     Nom du poste
@@ -142,9 +135,7 @@
                             </tr>
                         </thead>
 
-
                         <tbody>
-
                             <tr>
                                 <td>Développeur Web</td>
                                 <td>13</td>
@@ -177,6 +168,7 @@
 
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
