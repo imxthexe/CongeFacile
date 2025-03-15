@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../../style.css">
-
 </head>
 
 <?php
@@ -14,15 +12,48 @@
 include '../../includes/database.php';
 include '../../includes/header2.php';
 
+$data = [];
+$errors = [];
+$REQUEST_METHOD = null;
 
-if ($REQUEST_METHOD = 'POST') {
+
+if ($REQUEST_METHOD === 'POST') {
+
+    // $index = [];
+    // $index = prepare("SELECT id FROM user ");
+    $data = $_POST;
     if (isset($data)) {
-        $index = [];
-        $index = $bdd->prepare("SELECT id FROM user ");
-        $data = [];
-        $password = [];
-        $errors = [];
-        $data = $_POST;
+
+        // $requete = $connexion->prepare(
+        //     'SELECT id, email, password
+        //     FROM user
+        //     WHERE email = :email'
+        // );
+
+        // $requete->bindParam('email', $data['email']);
+        // $requete->execute();
+        // $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
+
+        // if ($utilisateur === false) {
+        //     $erreurs['email'] = 'Compte non valide.';
+        // } else {
+        //     if (password_verify($data['password'], $utilisateur['password'])) {
+
+        //         $_SESSION['utilisateur'] = [
+        //             'id' => $utilisateur['id'],
+        //             'email' => $utilisateur['email']
+        //         ];
+
+
+
+        //         // On redirige l'utilisateur sur la page d'accueil.
+        //         header('Location: index.php');
+        //     } else {
+        //         // KO mot de passe incorrect
+        //         $erreurs['email'] = 'Compte non valide.';
+        //     }
+        // }
+
 
         $RegexMail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
 
@@ -39,9 +70,6 @@ if ($REQUEST_METHOD = 'POST') {
         } elseif (!preg_match($RegexMail, $data['email'])) {
             $errors['email'] = "Votre email est incorrect";
         }
-
-        $password = $data['password'];
-
 
         $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
         $requete->execute(
@@ -70,19 +98,21 @@ if ($REQUEST_METHOD = 'POST') {
 
                 <h2>Connectez-vous</h2>
 
-                <form action="" class="FormConnexion">
+                <form method="POST" class="FormConnexion">
 
                     <div class="labelConnexion">Adresse Mail</div>
                     <div class="inputConnexion">
                         <div class="inputConnexionMail">
-                            <input type="email" placeholder="****@mentalworks.fr" name="mail">
+                            <input type="email" placeholder="****@mentalworks.fr" name="email">
                         </div>
+                        <?php echo $errors['email'];  ?>
                     </div>
 
                     <div class="labelConnexion">Mot de passe</div>
                     <div class="inputConnexion">
                         <input type="password" name="password">
                     </div>
+                    <?php echo $errors['password']; ?>
 
                     <input type="submit" value="Connexion au portail" class="inputConnexionSubmit">
                 </form>

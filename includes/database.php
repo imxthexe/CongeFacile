@@ -1,12 +1,12 @@
 <?php
 
-$servername = 'localhost';
-$username = 'root';
-$password_db = '';
+$user = "root";
+$pass = "";
+$dbName = "conge_facile";
+
 try {
-    $bdd = new PDO("mysql:host=$servername;dbname=conge_facile", $username, $password_db);
-    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
+    $connexion = new \PDO("mysql:host=127.0.0.1;dbname=$dbName;charset=UTF8", $user, $pass);
+} catch (\Exception $exception) {
     echo 'Erreur lors de la connexion à la base de données.<br>';
     echo $exception->getMessage();
     exit;
