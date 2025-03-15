@@ -81,7 +81,7 @@ input {
     background-color: var(--color_btn_navbarre);
     height: 25px;
     z-index: 5;
-    margin: 25px 40px 0 40px;
+    margin: 12px 40px 0 40px;
 }
 
 header {
