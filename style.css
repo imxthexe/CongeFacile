@@ -115,12 +115,12 @@ header img {
 }
 
 .navBar .link nav hr {
-    margin: 20px 0 20px 40px;
+    margin: 20px 20px 20px 40px;
 }
 
 .navBar .link nav {
     margin-top: 130px;
-    padding: 0 20px 20px 0;
+    padding: 0 0 20px 0;
 }
 
 .navBar .link nav ul {
@@ -155,11 +155,12 @@ header img {
     display: flex;
     align-items: center;
     padding: 20px 0;
-
+    margin: 0 auto;
 }
 
 .navBar .profile .img img {
     border-radius: 40px;
+    margin-right: 12px;
 }
 
 /* FIN Navbar */
