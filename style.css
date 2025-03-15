@@ -57,6 +57,10 @@ input {
     font-family: "Epilogue";
 }
 
+.flex {
+    display: flex;
+}
+
 
 
 /* Fin Reset CSS */
@@ -378,6 +382,10 @@ input[type=password] {
     align-items: center;
     text-align: center;
     padding: 5px;
+}
+
+.accueil a{
+    color: var(--color_btn_navbarre);
 }
 
 /* Fin Accueil */
