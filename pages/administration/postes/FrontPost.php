@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../../style.css">
 
 </head>
 
@@ -108,11 +108,11 @@
 
     <body>
 
-        <?php include "../../includes/header2.php" ?>
+        <?php include "../../../includes/header3.php" ?>
 
 
         <div class="flex">
-            <?php include "../../includes/navBar/navBar1.php" ?>
+            <?php include "../../../includes/haader3.php" ?>
 
 
             <div class="postContainer">
