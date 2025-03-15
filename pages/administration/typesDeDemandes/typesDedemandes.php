@@ -98,7 +98,7 @@
         }
 
         .filterNb {
-            width: 45%;
+            width: 50%;
         }
 
         /* Bouton Détails */
@@ -178,7 +178,7 @@
                                 <input type="text" class="filterName"/>
                             </th>
                             <th>
-                                <input type="text" class="filterNb"/>
+                                <input type="number" class="filterNb"/>
                             </th>
                             <th></th>
                         </tr>
