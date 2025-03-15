@@ -1,3 +1,7 @@
+
+<!-- IL NE MANQUE QUE LE BURGER MENU A PARTIR DE 830PX ET LA PAGES EST ENTIEREMENT FINI -->
+ <!-- MAIS CEST A MTHIS DE FAIRE CAR CEST LUI QUI FAIT LA NAV BAR -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     <link rel="stylesheet" href="../../style.css">
 
 </head>
