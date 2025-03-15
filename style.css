@@ -29,11 +29,15 @@ body {
 h1 {
     font-size: 36px;
     color: var(--color_title);
+    font-weight: 600;
+    padding-bottom: 22px;
 }
 
 h2 {
     font-size: 24px;
     color: var(--color_title);
+    font-weight: 600;
+    padding-top: 40px;
 }
 
 h3 {
@@ -63,7 +67,7 @@ input:hover {
 }
 
 .page {
-    padding: 10% 0 0 5%;
+    padding: 10% 0 0 3%;
 }
 
 .flex {

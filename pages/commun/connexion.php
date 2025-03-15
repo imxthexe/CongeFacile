@@ -17,12 +17,12 @@ include '../../includes/header2.php';
 
 <body>
     <div class="flex">
-        <!-- <?php include 'navBar2.php' ?> -->
+        <?php include '../../includes/navBar/navBar3.php' ?>
         <div class="containerConnexion page">
             <div class="connexion">
                 <h1>CongéFacile</h1>
 
-                <p>
+                <p class="p_Connexion">
                     CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.
                     Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.
                     Connectez-vous ci-dessous pour accéder à votre espace.
@@ -47,7 +47,7 @@ include '../../includes/header2.php';
                     <input type="submit" value="Connexion au portail" class="inputConnexionSubmit">
                 </form>
 
-                <p>Vous avez oublié votre mot de passe ? <a href="">Cliquez ici</a> pour le réinitialiser.</p>
+                <p>Vous avez oublié votre mot de passe ? <a href="motDePasseOublie.php">Cliquez ici</a> pour le réinitialiser.</p>
             </div>
         </div>
     </div>
