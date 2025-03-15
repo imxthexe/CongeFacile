@@ -156,6 +156,7 @@
 
         <div class="containerPost">
             <section class="postes">
+                
                 <div class="headerRow">
                     <h2>Postes</h2>
                     <button class="addPostButton">Ajouter un poste</button>
