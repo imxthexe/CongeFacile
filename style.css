@@ -23,18 +23,17 @@ body {
     --color_title: #1B3168;
     --color_text: #000000;
     --color_btn_navbarre: #5C73A0;
+    --gray: #637381;
 }
 
 h1 {
     font-size: 36px;
     color: var(--color_title);
-    padding: 70px 0 46px 0;
 }
 
 h2 {
     font-size: 24px;
     color: var(--color_title);
-    padding-bottom: 22Px;
 }
 
 h3 {
@@ -44,7 +43,6 @@ h3 {
 /*text*/
 p {
     font-size: 16px;
-    padding-bottom: 40px;
 }
 
 
@@ -72,6 +70,8 @@ input:hover {
     display: flex;
 }
 
+
+
 /* Fin Reset CSS */
 
 /* Header */
@@ -81,6 +81,7 @@ input:hover {
     width: 100%;
     margin: 0 auto;
     height: 100px;
+    position: fixed;
 }
 
 .top {
@@ -88,7 +89,7 @@ input:hover {
     background-color: var(--color_btn_navbarre);
     height: 25px;
     z-index: 5;
-    margin: 25px 40px 0 40px;
+    margin: 12px 40px 0 40px;
 }
 
 header {
@@ -117,15 +118,18 @@ header img {
     /* Équivalent de space-between mais en colonne */
     height: 100vh;
     /* Hauteur totale du conteneur */
+    -webkit-box-shadow: 4px 0px 22px -12px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 0px 22px -12px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0px 22px -12px rgba(0, 0, 0, 0.4);
 }
 
 .navBar .link nav hr {
-    margin-left: 40px;
+    margin: 20px 20px 20px 40px;
 }
 
 .navBar .link nav {
-    margin-top: 110px;
-    padding: 0 20px 20px 0;
+    margin-top: 115px;
+    padding: 0 0 20px 0;
 }
 
 .navBar .link nav ul {
@@ -152,12 +156,79 @@ header img {
 
     li {
         background-color: #004c6c20;
-        border-right: 3px solid #004c6c;
+        border-right: 3.5px solid #004c6c;
     }
 }
 
-.navBar .profile .img {
+.navBar .link nav details summary {
+    list-style: none;
+    margin: 0;
+    text-decoration: none;
+    color: var(--color_btn_navbarre);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+
+    img {
+        width: 16px;
+        margin-left: 98px;
+        margin-bottom: -3px;
+    }
+}
+
+.navBar .link nav details[open] summary {
+    background-color: #004c6c20;
+    border-right: 3.5px solid #004c6c;
+}
+
+.navBar .link nav details ul li {
+    list-style: none;
+    padding: 16px 0px 16px 70px;
+    margin: 0;
+    text-decoration: none;
+    color: var(--color_btn_navrre);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.navBar .link nav details ul {
+    padding-top: 10px;
+}
+
+
+.navBar .link nav details ul a:focus {
+    color: var(--color_btn);
+
+    li {
+        background-color: white;
+        border-right: 0px;
+        color: var(--color_title);
+    }
+}
+
+.navBar .profile {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.navBar .profile .img img {
     border-radius: 40px;
+    margin-right: 12px;
+}
+
+.navBar .profile .name {
+    color: var(--color_text);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.navBar .profile .role {
+    color: var(--gray);
+    font-weight: 500;
+    font-size: 16px;
 }
 
 /* FIN Navbar */
@@ -171,8 +242,7 @@ header img {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 800px;
+    padding-top: 120px;
 }
 
 .Container-newdemande label {
@@ -234,6 +304,10 @@ textarea:focus {
 /*PageConnexion*/
 
 
+.connexion {
+    padding-left: 5%;
+}
+
 .labelConnexion {
     margin-bottom: 15px;
 }
@@ -286,11 +360,28 @@ input[type=password] {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Accueil */
 
 .containerAccueil {
-    padding: 50px 0 0 300px;
+    padding: 150px 0 0 50px;
     width: 55%;
+}
+
+.accueil .hero {
+    line-height: 25px;
 }
 
 .accueil h1 {
@@ -356,7 +447,6 @@ input[type=password] {
     margin: 0 auto;
 }
 
-
 .accueil .steps .CardsContainer {
     display: flex;
     justify-content: space-around;
@@ -367,9 +457,94 @@ input[type=password] {
     justify-content: space-around;
 }
 
-.accueil .hero {
-    line-height: 25px;
+@media (max-width: 1450px) {
+
+    .accueil .steps {
+        display: flex;
+    }
+
+    .accueil .progressContainer {
+        display: block;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 70%;
+        position: relative;
+        margin: 30px 0;
+    }
+
+    .accueil .stepCircle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        width: fit-content;
+    }
+
+    .accueil .circle {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #1f4a66;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #1f4a66;
+        background-color: #fff;
+        z-index: 1;
+        margin: 20px 0;
+    }
+
+    .accueil .circle.active {
+        background-color: #1f4a66;
+        color: #fff;
+    }
+
+    .accueil .label {
+        margin-top: 10px;
+        font-size: 1em;
+        color: #333;
+    }
+
+    .accueil .line {
+        height: 75%;
+        background-color: #1f4a66;
+        flex-grow: 1;
+        position: absolute;
+        top: 25px;
+        left: 27px;
+        right: 0;
+        z-index: 0;
+        width: 2px;
+        margin: 0;
+    }
+
+    .accueil .steps .CardsContainer {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .accueil .steps .CardsContainer {
+        display: block;
+        justify-content: space-around;
+    }
+
+    .accueil .steps .CardsContainer .stepsCards {
+        background-color: #004C6C0D;
+        width: 200px;
+        height: 80px;
+        margin: 20px 0;
+        border-radius: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+    }
 }
+
 
 .accueil .steps .CardsContainer .stepsCards {
     background-color: #004C6C0D;
@@ -382,5 +557,11 @@ input[type=password] {
     text-align: center;
     padding: 5px;
 }
+
+
+.accueil a {
+    color: var(--color_btn_navbarre);
+}
+
 
 /* Fin Accueil */

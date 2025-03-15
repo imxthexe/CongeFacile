@@ -7,7 +7,7 @@
         <div class="link">
             <nav>
                 <ul>
-                    <a href="#">
+                    <a href="../../pages/commun/accueil.php">
                         <li>Accueil</li>
                     </a>
                     <a href="#">
@@ -34,6 +34,10 @@
         <div class="profile">
             <div class="img">
                 <img src="https://placehold.co/60x60" alt="profile">
+            </div>
+            <div>
+                <p class="name">Prénom Nom</p>
+                <p class="role">Role</p>
             </div>
         </div>
 
