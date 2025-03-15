@@ -31,14 +31,14 @@ h1 {
     font-size: 36px;
     color: var(--color_title);
     font-weight: 600;
-    /* padding-bottom: 22px; */
-    /* Sauf si nécéssaire pas besoin de padding-top */
+    padding-bottom: 22px;
 }
 
 h2 {
     font-size: 24px;
     color: var(--color_title);
     font-weight: 600;
+    padding: 40px 0 22px 0;
     /* padding-top: 40px; */
     /* Sauf si nécéssaire pas besoin de padding-top */
 }
@@ -50,6 +50,7 @@ h3 {
 /*text*/
 p {
     font-size: 16px;
+    line-height: 24.57px;
 }
 
 
@@ -70,7 +71,7 @@ input:hover {
 }
 
 .page {
-    padding: 10% 0 0 3%;
+    padding: 150px 0 0 50px;
 }
 
 .flex {
@@ -311,10 +312,6 @@ textarea:focus {
 /*PageConnexion*/
 
 
-.connexion {
-    padding-left: 5%;
-}
-
 .labelConnexion {
     margin-bottom: 15px;
 }
@@ -335,6 +332,7 @@ textarea:focus {
     width: 215px;
     height: 50px;
     border-radius: 6px;
+    margin-bottom: 22Px;
 }
 
 input[type=email] {
@@ -356,7 +354,7 @@ input[type=email] {
 input[type=password] {
     background-image: url(images/coup-doeil.png);
     background-size: 24px;
-    background-position: 10px 10px;
+    background-position: 320px 10px;
     background-repeat: no-repeat;
     padding-left: 60px;
 }

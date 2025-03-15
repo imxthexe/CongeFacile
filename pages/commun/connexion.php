@@ -13,6 +13,42 @@
 
 include '../../includes/header2.php';
 
+if ($REQUEST_METHOD = 'POST') {
+    if (isset($data)) {
+        $data = [];
+        $password = [];
+        $errors = [];
+        $data = $_POST;
+
+        $RegexMail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+
+        $data['email'] = trim($data['email']);
+        $data['password'] = trim($data['password']);
+
+        $data['email'] = htmlspecialchars($data['email']);
+        $data['password'] = htmlspecialchars($data['password']);
+
+        if (empty($data['email'])) {
+            $errors['email'] = 'Veuillez renseigner votre email';
+        } elseif (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
+            $errors['email'] = 'Votre email est incorrect';
+        } elseif (!preg_match($RegexMail, $data['email'])) {
+            $errors['email'] = "Votre email est incorrect";
+        }
+
+        $password = $data['password'];
+
+
+        $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
+        $requete->execute(
+            array(
+                "email" => $data['email'],
+                "password" => $password
+            )
+        );
+    }
+}
+
 ?>
 
 <body>
@@ -23,8 +59,8 @@ include '../../includes/header2.php';
                 <h1>CongéFacile</h1>
 
                 <p class="p_Connexion">
-                    CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.
-                    Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.
+                    CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise. <br>
+                    Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer <br> vos absences en toute transparence et simplicité.
                     Connectez-vous ci-dessous pour accéder à votre espace.
                 </p>
 
@@ -61,41 +97,7 @@ include '../../includes/header2.php';
 
 <?php
 
-if ($REQUEST_METHOD = 'POST') {
-    if (isset($data)) {
-        $data = [];
-        $password = [];
-        $errors = [];
-        $data = $_POST;
 
-        $RegexMail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-
-        $data['email'] = trim($data['email']);
-        $data['password'] = trim($data['password']);
-
-        $data['email'] = htmlspecialchars($data['email']);
-        $data['password'] = htmlspecialchars($data['password']);
-
-        if (empty($data['email'])) {
-            $errors['email'] = 'Veuillez renseigner votre email';
-        } elseif (filter_var($data['email'], FILTER_VALIDATE_EMAIL) === false) {
-            $errors['email'] = 'Votre email est incorrect';
-        } elseif (!preg_match($RegexMail, $data['email'])) {
-            $errors['email'] = "Votre email est incorrect";
-        }
-
-        $password = $data['password'];
-
-
-        $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
-        $requete->execute(
-            array(
-                "email" => $data['email'],
-                "password" => $password
-            )
-        );
-    }
-}
 
 include '../../includes/footer.php'
 
