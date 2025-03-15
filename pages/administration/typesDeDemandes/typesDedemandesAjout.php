@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Types de demandes</title>
+    <title>DemandesAjout - Types de demandes</title>
 
     <link rel="stylesheet" href="../../../style.css">
 
@@ -14,13 +14,13 @@
             padding: 150px 0 0 50px;
         }
 
-        .containerAjoutDemande .administration {
+        .containerAjoutDemande .DemandesAjout {
             padding: 20px;
             width: 75%;
         }
 
 
-        .containerAjoutDemande .administration h2 {
+        .containerAjoutDemande .DemandesAjout h2 {
             font-size: 1.6rem;
             color: var(--color_title);
             margin-bottom: 30px;
@@ -92,7 +92,7 @@
         <?php include "../../../includes/navBar/navBar1.php"; ?>
 
         <div class="containerAjoutDemande">
-            <section class="administration">
+            <section class="DemandesAjout">
                 <h2>Types de demandes</h2>
 
                 <form class="editTypeForm">

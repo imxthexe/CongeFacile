@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Types de demandes</title>
+    <title>Demandes - Types de demandes</title>
 
     <link rel="stylesheet" href="../../../style.css">
 
@@ -14,7 +14,7 @@
             padding: 150px 0 0 50px;
         }
 
-        .containerDemandes .administration {
+        .containerDemandes .Demandes {
             padding: 20px;
             width: 75%;
         }
@@ -151,7 +151,7 @@
         <?php include "../../../includes/navBar/navBar1.php"; ?>
 
         <div class="containerDemandes">
-            <section class="administration">
+            <section class="Demandes">
 
                 <div class="headerRow">
                     <h2>Types de demandes</h2>
