@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes informations</title>
   <link rel="stylesheet" href="../../style.css">
   <style>
-    .containerMesInfos {
+    .page {
       flex: 1;
       padding: 80px 0 0 50px;
     }
-    .containerMesInfos .mesInfosSection {
+
+    .page .mesInfosSection {
       padding: 20px;
       width: 75%;
     }
-    .containerMesInfos .mesInfosSection h2 {
+
+    .page .mesInfosSection h2 {
       font-size: 1.6rem;
       color: var(--color_title);
       margin-bottom: 20px;
     }
-    .containerMesInfos .mesInfosForm {
+
+    .page .mesInfosForm {
       max-width: 600px;
     }
-    .containerMesInfos .mesInfosForm label {
+
+    .page .mesInfosForm label {
       display: block;
       margin-bottom: 6px;
       font-weight: 500;
     }
-    .containerMesInfos .mesInfosForm input[type="text"],
-    .containerMesInfos .mesInfosForm input[type="email"],
-    .containerMesInfos .mesInfosForm select,
-    .containerMesInfos .mesInfosForm input[type="password"] {
+
+    .page .mesInfosForm input[type="text"],
+    .page .mesInfosForm input[type="email"],
+    .page .mesInfosForm select,
+    .page .mesInfosForm input[type="password"] {
       width: 350px;
       height: 40px;
       padding: 8px 12px;
@@ -40,22 +46,23 @@
       margin-bottom: 20px;
     }
 
-    .containerMesInfos .mesInfosForm input[type="email"],
-    .containerMesInfos .mesInfosForm input[type="password"] {
-        padding-left: 40px;
+    .page .mesInfosForm input[type="email"],
+    .page .mesInfosForm input[type="password"] {
+      padding-left: 40px;
     }
 
-    .containerMesInfos .inlineFields {
+    .page .inlineFields {
       display: flex;
       gap: 20px;
       margin-bottom: 20px;
     }
-    .containerMesInfos .inlineFields .fieldGroup {
+
+    .page .inlineFields .fieldGroup {
       display: flex;
       flex-direction: column;
     }
 
-    .containerMesInfos .resetBtn {
+    .page .resetBtn {
       background-color: var(--color_btn);
       color: #fff;
       border: none;
@@ -65,27 +72,32 @@
       width: 250px;
       font-size: 1rem;
     }
-    .containerMesInfos .resetBtn:hover {
+
+    .page .resetBtn:hover {
       background-color: #1565C0;
     }
+
     @media screen and (max-width: 1080px) {
-      .containerMesInfos {
+      .page {
         padding: 80px 20px 0 20px;
       }
-      .containerMesInfos .inlineFields {
+
+      .page .inlineFields {
         display: block;
       }
-      .containerMesInfos .inlineFields .fieldGroup {
+
+      .page .inlineFields .fieldGroup {
         margin-bottom: 20px;
       }
     }
   </style>
 </head>
+
 <body>
   <?php include "../../includes/header2.php"; ?>
   <div class="flex">
     <?php include "../../includes/navBar/navBar1.php"; ?>
-    <div class="containerMesInfos">
+    <div class="page">
       <section class="mesInfosSection">
         <h2>Mes informations</h2>
         <form class="mesInfosForm">
@@ -147,4 +159,5 @@
     </div>
   </div>
 </body>
+
 </html>
