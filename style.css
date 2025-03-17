@@ -72,7 +72,8 @@ input:hover {
 }
 
 .page {
-    padding: 150px 0 0 50px;
+    flex: 1;
+    padding: 110px 0 0 320px;
 }
 
 .flex {
@@ -385,11 +386,10 @@ input[type=password] {
 
 /* Accueil */
 
-.containerAccueil {
-    padding: 150px 0 0 50px;
-    width: 55%;
+.accueil{
+    padding-top: 40px;
+    padding-left: 20px;
 }
-
 .accueil .hero {
     line-height: 25px;
 }

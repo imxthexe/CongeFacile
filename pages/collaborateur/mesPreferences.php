@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mes préférences</title>
   <link rel="stylesheet" href="../../style.css" />
   <style>
-    .containerPreferences {
+    .page {
       flex: 1;
       padding: 80px 0 0 50px;
     }
-    .containerPreferences .preferencesSection {
+
+    .page .preferencesSection {
       padding: 20px;
       width: 75%;
     }
-    .containerPreferences .preferencesSection h2 {
+
+    .page .preferencesSection h2 {
       font-size: 1.6rem;
       color: var(--color_title);
       margin-bottom: 20px;
@@ -26,29 +29,37 @@
       gap: 10px;
       margin-bottom: 20px;
     }
+
     .switchLabel {
       font-weight: 500;
       cursor: pointer;
     }
+
     .switchWrapper {
       position: relative;
       display: inline-block;
       width: 50px;
       height: 24px;
     }
+
     .switchWrapper input {
       opacity: 0;
       width: 0;
       height: 0;
     }
+
     .slider {
       position: absolute;
       cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background-color: #ccc;
       transition: 0.4s;
       border-radius: 24px;
     }
+
     .slider:before {
       position: absolute;
       content: "";
@@ -60,12 +71,15 @@
       transition: 0.4s;
       border-radius: 50%;
     }
-    .switchWrapper input:checked + .slider {
+
+    .switchWrapper input:checked+.slider {
       background-color: var(--color_btn);
     }
-    .switchWrapper input:checked + .slider:before {
+
+    .switchWrapper input:checked+.slider:before {
       transform: translateX(26px);
     }
+
     .saveBtn {
       background-color: var(--color_btn);
       color: #fff;
@@ -76,11 +90,13 @@
       font-size: 1rem;
       width: 250px;
     }
+
     .saveBtn:hover {
       background-color: #1565C0;
     }
+
     @media screen and (max-width: 1080px) {
-      .containerPreferences {
+      .page {
         padding: 80px 20px 0 20px;
       }
     }
@@ -88,11 +104,12 @@
 
 
 </head>
+
 <body>
   <?php include "../../includes/header2.php"; ?>
   <div class="flex">
     <?php include "../../includes/navBar/navBar1.php"; ?>
-    <div class="containerPreferences">
+    <div class="page">
       <section class="preferencesSection">
         <h2>Mes préférences</h2>
 
@@ -140,4 +157,5 @@
     window.onload = loadPreferences;
   </script>
 </body>
+
 </html>

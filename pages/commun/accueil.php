@@ -1,6 +1,5 @@
-
 <!-- IL NE MANQUE QUE LE BURGER MENU A PARTIR DE 830PX ET LA PAGES EST ENTIEREMENT FINI -->
- <!-- MAIS CEST A MTHIS DE FAIRE CAR CEST LUI QUI FAIT LA NAV -->
+<!-- MAIS CEST A MTHIS DE FAIRE CAR CEST LUI QUI FAIT LA NAV -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +20,7 @@
     <div class="flex">
         <?php include "../../includes/navBar/navBar1.php" ?>
 
-        <div class="containerAccueil">
+        <div class="page">
 
 
 

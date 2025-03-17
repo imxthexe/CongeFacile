@@ -29,50 +29,59 @@ $requete = $connexion->prepare(
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historique de mes demandes</title>
     <link rel="stylesheet" href="../../style.css">
     <style>
-        .containerHistoriqueUser {
+        .page {
             flex: 1;
             padding: 80px 0 0 50px;
         }
-        .containerHistoriqueUser .historiqueUserSection {
+
+        .page .historiqueUserSection {
             padding: 20px;
             width: 90%;
         }
-        .containerHistoriqueUser .headerRow {
+
+        .page .headerRow {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
         }
-        .containerHistoriqueUser .headerRow h2 {
+
+        .page .headerRow h2 {
             margin: 0;
             font-size: 1.6rem;
             color: var(--color_title);
         }
-        .containerHistoriqueUser .mesDemandesTable {
+
+        .page .mesDemandesTable {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
             background-color: #fff;
             border: 1px solid var(--border);
         }
-        .containerHistoriqueUser .mesDemandesTable thead {
+
+        .page .mesDemandesTable thead {
             background-color: var(--border);
         }
-        .containerHistoriqueUser .mesDemandesTable thead th {
+
+        .page .mesDemandesTable thead th {
             text-align: left;
             padding: 12px 0 12px 16px;
             border: none;
         }
+
         /* Ligne des filtres */
-        .containerHistoriqueUser .filtersRow th {
+        .page .filtersRow th {
             padding: 8px 0 8px 16px;
         }
-        .containerHistoriqueUser .filtersRow input {
+
+        .page .filtersRow input {
             width: 90%;
             height: 30px;
             padding: 0 8px;
@@ -80,18 +89,22 @@ $requete = $connexion->prepare(
             border-radius: 4px;
             font-size: 0.9rem;
         }
-        .containerHistoriqueUser .mesDemandesTable tbody tr {
+
+        .page .mesDemandesTable tbody tr {
             border-bottom: 1px solid #ccc;
         }
-        .containerHistoriqueUser .mesDemandesTable tbody tr:last-child {
+
+        .page .mesDemandesTable tbody tr:last-child {
             border-bottom: none;
         }
-        .containerHistoriqueUser .mesDemandesTable td {
+
+        .page .mesDemandesTable td {
             text-align: left;
             padding: 20px 16px;
             border: none;
         }
-        .containerHistoriqueUser .detailsButton {
+
+        .page .detailsButton {
             background-color: var(--border);
             color: #333;
             padding: 8px 12px;
@@ -99,35 +112,41 @@ $requete = $connexion->prepare(
             border-radius: 4px;
             cursor: pointer;
         }
-        .containerHistoriqueUser .detailsButton:hover {
+
+        .page .detailsButton:hover {
             background-color: #bbb;
         }
+
         @media screen and (max-width: 1080px) {
-            .containerHistoriqueUser .mesDemandesTable thead {
+            .page .mesDemandesTable thead {
                 display: none;
             }
-            .containerHistoriqueUser .mesDemandesTable tbody tr {
+
+            .page .mesDemandesTable tbody tr {
                 display: block;
                 margin-bottom: 15px;
                 border: 1px solid #ddd;
             }
-            .containerHistoriqueUser .mesDemandesTable tbody td {
+
+            .page .mesDemandesTable tbody td {
                 display: flex;
                 justify-content: space-between;
                 padding: 10px;
             }
-            .containerHistoriqueUser .mesDemandesTable tbody td::before {
+
+            .page .mesDemandesTable tbody td::before {
                 content: attr(data-label);
                 font-weight: bold;
             }
         }
     </style>
 </head>
+
 <body>
     <?php include "../../includes/header2.php"; ?>
     <div class="flex">
         <?php include "../../includes/navBar/navBar1.php"; ?>
-        <div class="containerHistoriqueUser">
+        <div class="page">
             <section class="historiqueUserSection">
                 <div class="headerRow">
                     <h2>Historique de mes demandes</h2>
@@ -187,4 +206,5 @@ $requete = $connexion->prepare(
         </div>
     </div>
 </body>
+
 </html>
