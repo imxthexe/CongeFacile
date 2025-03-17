@@ -51,7 +51,6 @@
       min-height: 150px;
       width: 725px;
     }
-    /* Inline container for date fields */
     .containerNouvelleDemande .inlineFields {
       display: flex;
       gap: 20px;

@@ -21,7 +21,6 @@
             width: 75%;
         }
 
-        /* Titre + bouton dans la même rangée */
         .containerManagers .headerRow {
             display: flex;
             align-items: center;
@@ -41,13 +40,12 @@
             border-radius: 4px;
             cursor: pointer;
             margin-left: 20px;
-            width: 150px; /* Ajuste selon tes besoins */
+            width: 150px;
         }
         .containerManagers .addManagerButton:hover {
             background-color: #1565C0;
         }
 
-        /* Tableau principal */
         .containerManagers .managersTable {
             width: 100%;
             border-collapse: collapse;
@@ -63,8 +61,6 @@
             padding: 12px 0 12px 16px;
             border: none;
         }
-
-        /* Séparation horizontale entre chaque ligne du tbody */
         .containerManagers .managersTable tbody tr {
             border-bottom: 1px solid #ccc;
         }
@@ -78,7 +74,6 @@
             border: none;
         }
 
-        /* Ligne de filtres dans le thead */
         .containerManagers .filtersRow input {
             padding: 4px 8px;
             border: 1px solid #ccc;
@@ -88,7 +83,7 @@
             height: 35px;
         }
 
-        /* Bouton Détails */
+
         .containerManagers .detailsButton {
             background-color: var(--border);
             color: #333;
@@ -101,7 +96,7 @@
             background-color: #bbb;
         }
 
-        /* Responsive */
+
         @media screen and (max-width: 1080px) {
             .containerManagers .managersTable thead {
                 display: none;
@@ -138,16 +133,15 @@
     <div class="flex">
         <?php include "../../../includes/navBar/navBar1.php"; ?>
 
-        <!-- Container spécifique pour la page "Managers" -->
+
         <div class="containerManagers">
             <section class="managersSection">
-                <!-- Titre + bouton d'ajout -->
+
                 <div class="headerRow">
                     <h2>Managers</h2>
                     <button class="addManagerButton">Ajouter un manager</button>
                 </div>
 
-                <!-- Tableau -->
                 <table class="managersTable">
                     <thead>
                         <tr>

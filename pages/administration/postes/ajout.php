@@ -79,7 +79,7 @@
             background-color: #1565C0;
         }
 
-        /* RESPONSIVE */
+
         @media screen and (max-width: 1080px) {
             .containerajout {
                 padding: 100px 20px 0 20px;

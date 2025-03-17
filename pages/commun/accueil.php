@@ -86,7 +86,6 @@
                 </div>
 
                 <p>En cas de difficulté avec l’application, veuillez envoyer un email à <u><a href="mailto:contact@mentalworks.fr">contact@mentalworks.fr.</a></u></p>
-
             </section>
         </div>
     </div>

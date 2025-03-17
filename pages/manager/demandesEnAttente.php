@@ -117,7 +117,6 @@
     <div class="flex"
         <?php include "../../includes/navBar/navBar1.php"; ?>
 
-        <!-- Container spécifique pour la page Demandes en attente -->
         <div class="containerDemandesAttente">
             <section class="demandesAttenteSection">
                 <div class="headerRow">
