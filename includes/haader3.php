@@ -1,3 +1,5 @@
+<?php include "database.php" ?>
+
 <html>
 <link rel="stylesheet" href="../style.css">
 
