@@ -182,7 +182,7 @@ try {
     <?php include "../../includes/header2.php"; ?>
     <div class="flex">
         <?php include "../../includes/navBar/navBar1.php"; ?>
-        <div class="containerHistoriqueUser">
+        <div class="containerHistoriqueUser page">
             <section class="historiqueUserSection">
                 <div class="headerRow">
                     <h2>Historique de mes demandes</h2>
