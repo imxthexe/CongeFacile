@@ -22,35 +22,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $data = $_POST;
 
-    // $requete = $connexion->prepare(
-    //     'SELECT id, email, password
-    //     FROM user
-    //     WHERE email = :email'
-    // );
+    $requete = $connexion->prepare(
+        'SELECT id, email, password
+        FROM user
+        WHERE email = :email
+    ');
+    
 
-    // $requete->bindParam('email', $data['email']);
-    // $requete->execute();
-    // $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
-
-    // if ($utilisateur === false) {
-    //     $erreurs['email'] = 'Compte non valide.';
-    // } else {
-    //     if (password_verify($data['password'], $utilisateur['password'])) {
-
-    //         $_SESSION['utilisateur'] = [
-    //             'id' => $utilisateur['id'],
-    //             'email' => $utilisateur['email']
-    //         ];
+    $requete->bindParam('email', $data['email']);
+    $requete->execute();
+    $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
 
 
+    if ($utilisateur === false) {
+        $erreurs['email'] = 'Compte non valide.';
+    } else {
+        if (password_verify($data['password'], $utilisateur['password'])) {
 
-    //         // On redirige l'utilisateur sur la page d'accueil.
-    //         header('Location: index.php');
-    //     } else {
-    //         // KO mot de passe incorrect
-    //         $erreurs['email'] = 'Compte non valide.';
-    //     }
-    // }
+            $_SESSION['utilisateur'] = [
+                'id' => $utilisateur['id'],
+                'email' => $utilisateur['email']
+            ];
+
+
+
+            // On redirige l'utilisateur sur la page d'accueil.
+            header('Location: index.php');
+        } else {    
+            // KO mot de passe incorrect
+            $erreurs['email'] = 'Compte non valide.';
+            echo "compte non valide";
+        }
+    }
 
 
     $RegexMail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
@@ -73,13 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = 'Veuillez saisir votre mot de passe.';
     }
 
-    // $requete = $bdd->prepare("INSERT INTO user VALUES (:email, :password");
-    // $requete->execute(
-    //     array(
-    //         "email" => $data['email'],
-    //         "password" => $password
-    //     )
-    // );
 }
 
 ?>
