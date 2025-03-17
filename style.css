@@ -91,6 +91,7 @@ input:hover {
     margin: 0 auto;
     height: 100px;
     position: fixed;
+    z-index: 10;
 }
 
 .top {
@@ -119,6 +120,8 @@ header img {
 /* Navbar */
 
 .navBar {
+    position: fixed;
+    z-index: 9;
     width: 300px;
     display: grid;
     grid-template-rows: auto auto;
