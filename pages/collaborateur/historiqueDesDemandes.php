@@ -1,3 +1,32 @@
+<?php 
+
+include '../../includes/database.php';
+include '../../includes/header2.php';
+include '../../includes/functions.php';
+
+$data = [];
+$errors = [];
+
+$requete = $connexion->prepare(
+    'SELECT id, request_type, manager_id, created_at, start_at, end_at
+    FROM user
+    WHERE email = :email
+');
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
