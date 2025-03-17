@@ -1,18 +1,54 @@
-<?php 
+<?php
 
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/functions.php';
 
-$data = [];
+$date   = [];
 $errors = [];
 
-$requete = $connexion->prepare(
-    'SELECT id, request_type, manager_id, created_at, start_at, end_at
-    FROM user
-    WHERE email = :email
-');
+// Définition de la requête SQL
+$sql = "SELECT 
+            r.created_at, 
+            r.start_at, 
+            r.end_at, 
+            DATEDIFF(r.end_at, r.start_at) AS nb_days,
+            p.first_name, 
+            p.last_name, 
+            rt.name AS request_type_name,
+            r.answer_comment
+        FROM request r
+        JOIN person p ON r.collaborator_id = p.id
+        JOIN request_type rt ON r.request_type_id = rt.id";
 
+try {
+    // Préparation et exécution de la requête
+    $stmt = $connexion->prepare($sql);
+    $stmt->execute();
+
+    // Récupération de tous les résultats sous forme de tableau associatif
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Parcours des résultats et stockage dans le tableau $date
+    foreach ($results as $row) {
+        $date[] = [
+            'created_at'       => $row['created_at'],
+            'start_at'         => $row['start_at'],
+            'end_at'           => $row['end_at'],
+            'nb_days'          => $row['nb_days'],
+            'first_name'       => $row['first_name'],
+            'last_name'        => $row['last_name'],
+            'request_type_name' => $row['request_type_name'],
+            'answer_comment'   => $row['answer_comment']
+        ];
+    }
+} catch (PDOException $e) {
+    // En cas d'erreur, on l'ajoute au tableau $errors
+    $errors[] = "Erreur d'exécution : " . $e->getMessage();
+}
+
+// Ici, le tableau $date contient toutes les informations récupérées
+// et le tableau $errors contient les éventuelles erreurs.
 
 
 
@@ -36,29 +72,29 @@ $requete = $connexion->prepare(
     <title>Historique de mes demandes</title>
     <link rel="stylesheet" href="../../style.css">
     <style>
-        .page {
+        .containerHistoriqueUser {
             flex: 1;
             padding: 80px 0 0 50px;
         }
 
-        .page .historiqueUserSection {
+        .containerHistoriqueUser .historiqueUserSection {
             padding: 20px;
             width: 90%;
         }
 
-        .page .headerRow {
+        .containerHistoriqueUser .headerRow {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
         }
 
-        .page .headerRow h2 {
+        .containerHistoriqueUser .headerRow h2 {
             margin: 0;
             font-size: 1.6rem;
             color: var(--color_title);
         }
 
-        .page .mesDemandesTable {
+        .containerHistoriqueUser .mesDemandesTable {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
@@ -66,22 +102,22 @@ $requete = $connexion->prepare(
             border: 1px solid var(--border);
         }
 
-        .page .mesDemandesTable thead {
+        .containerHistoriqueUser .mesDemandesTable thead {
             background-color: var(--border);
         }
 
-        .page .mesDemandesTable thead th {
+        .containerHistoriqueUser .mesDemandesTable thead th {
             text-align: left;
             padding: 12px 0 12px 16px;
             border: none;
         }
 
         /* Ligne des filtres */
-        .page .filtersRow th {
+        .containerHistoriqueUser .filtersRow th {
             padding: 8px 0 8px 16px;
         }
 
-        .page .filtersRow input {
+        .containerHistoriqueUser .filtersRow input {
             width: 90%;
             height: 30px;
             padding: 0 8px;
@@ -90,21 +126,21 @@ $requete = $connexion->prepare(
             font-size: 0.9rem;
         }
 
-        .page .mesDemandesTable tbody tr {
+        .containerHistoriqueUser .mesDemandesTable tbody tr {
             border-bottom: 1px solid #ccc;
         }
 
-        .page .mesDemandesTable tbody tr:last-child {
+        .containerHistoriqueUser .mesDemandesTable tbody tr:last-child {
             border-bottom: none;
         }
 
-        .page .mesDemandesTable td {
+        .containerHistoriqueUser .mesDemandesTable td {
             text-align: left;
             padding: 20px 16px;
             border: none;
         }
 
-        .page .detailsButton {
+        .containerHistoriqueUser .detailsButton {
             background-color: var(--border);
             color: #333;
             padding: 8px 12px;
@@ -113,28 +149,28 @@ $requete = $connexion->prepare(
             cursor: pointer;
         }
 
-        .page .detailsButton:hover {
+        .containerHistoriqueUser .detailsButton:hover {
             background-color: #bbb;
         }
 
         @media screen and (max-width: 1080px) {
-            .page .mesDemandesTable thead {
+            .containerHistoriqueUser .mesDemandesTable thead {
                 display: none;
             }
 
-            .page .mesDemandesTable tbody tr {
+            .containerHistoriqueUser .mesDemandesTable tbody tr {
                 display: block;
                 margin-bottom: 15px;
                 border: 1px solid #ddd;
             }
 
-            .page .mesDemandesTable tbody td {
+            .containerHistoriqueUser .mesDemandesTable tbody td {
                 display: flex;
                 justify-content: space-between;
                 padding: 10px;
             }
 
-            .page .mesDemandesTable tbody td::before {
+            .containerHistoriqueUser .mesDemandesTable tbody td::before {
                 content: attr(data-label);
                 font-weight: bold;
             }
@@ -146,7 +182,7 @@ $requete = $connexion->prepare(
     <?php include "../../includes/header2.php"; ?>
     <div class="flex">
         <?php include "../../includes/navBar/navBar1.php"; ?>
-        <div class="page">
+        <div class="containerHistoriqueUser">
             <section class="historiqueUserSection">
                 <div class="headerRow">
                     <h2>Historique de mes demandes</h2>
@@ -173,33 +209,28 @@ $requete = $connexion->prepare(
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label="Type de demande">Congé payé</td>
-                            <td data-label="Demandé le">10/11/2024 10:00</td>
-                            <td data-label="Date de début">10/12/2024 08:00</td>
-                            <td data-label="Date de fin">12/12/2024 08:00</td>
-                            <td data-label="Nb jours">3 jours</td>
-                            <td data-label="Statut">Accepté</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé maladie</td>
-                            <td data-label="Demandé le">08/12/2024 08:00</td>
-                            <td data-label="Date de début">09/12/2024 08:00</td>
-                            <td data-label="Date de fin">10/12/2024 08:00</td>
-                            <td data-label="Nb jours">2 jours</td>
-                            <td data-label="Statut">En cours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé sans solde</td>
-                            <td data-label="Demandé le">05/09/2024 10:00</td>
-                            <td data-label="Date de début">08/09/2024 08:00</td>
-                            <td data-label="Date de fin">10/09/2024 08:00</td>
-                            <td data-label="Nb jours">2 jours</td>
-                            <td data-label="Statut">Accepté</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
+                        <?php
+                        // Affichage des données stockées dans le tableau $date
+                        if (!empty($date)) {
+                            foreach ($date as $row) {
+                                // Calcul du libellé "jour(s)" en fonction du nombre de jours
+                                $jours = htmlspecialchars($row['nb_days']);
+                                $jours .= ($jours > 1) ? " jours" : " jour";
+
+                                echo "<tr>";
+                                echo "<td data-label='Type de demande'>" . htmlspecialchars($row['request_type_name']) . "</td>";
+                                echo "<td data-label='Demandé le'>" . htmlspecialchars($row['created_at']) . "</td>";
+                                echo "<td data-label='Date de début'>" . htmlspecialchars($row['start_at']) . "</td>";
+                                echo "<td data-label='Date de fin'>" . htmlspecialchars($row['end_at']) . "</td>";
+                                echo "<td data-label='Nb jours'>" . $jours . "</td>";
+                                echo "<td data-label='Statut'>" . htmlspecialchars($row['answer_comment']) . "</td>";
+                                echo "<td><button class='detailsButton'>Détails</button></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7'>Aucune donnée trouvée.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </section>
@@ -207,4 +238,4 @@ $requete = $connexion->prepare(
     </div>
 </body>
 
-</html>
+</html>²
