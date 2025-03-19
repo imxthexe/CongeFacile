@@ -217,6 +217,7 @@ try {
                                 $jours = htmlspecialchars($row['nb_days']);
                                 $jours .= ($jours > 1) ? " jours" : " jour";
 
+                                
                                 echo "<tr>";
                                 echo "<td data-label='Type de demande'>" . htmlspecialchars($row['request_type_name']) . "</td>";
                                 echo "<td data-label='Demandé le'>" . htmlspecialchars($row['created_at']) . "</td>";
