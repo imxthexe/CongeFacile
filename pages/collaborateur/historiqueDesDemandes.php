@@ -196,7 +196,7 @@ try {
                             <th>Date de fin</th>
                             <th>Nb jours</th>
                             <th>Statut</th>
-                            <th>jsp</th>
+                            <th></th>
                         </tr>
                         <tr class="filtersRow">
                             <th><input type="text" /></th>
