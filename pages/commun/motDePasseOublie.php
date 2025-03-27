@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <div class="flex">
     <?php include '../../includes/navBar/navBar3.php' ?>
     <div class=" page">

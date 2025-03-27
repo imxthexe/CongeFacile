@@ -366,6 +366,15 @@ input[type=password] {
     padding-left: 60px;
 }
 
+input[type=submit] {
+    background-color: var(--color_btn);
+    color: white;
+    width: 215px;
+    height: 50px;
+    border-radius: 6px;
+    margin: 0px 0 22Px 0;
+}
+
 /*FIN PageConnexion*/
 
 
@@ -378,14 +387,6 @@ input[type=password] {
 /* MOT DE PASSE Oublié  */
 
 
-
-input .submitMDP {
-    background-color: var(--color_btn);
-    color: white;
-    height: 50px;
-    border-radius: 6px;
-    margin: 0px 0 22Px 0;
-}
 
 
 
