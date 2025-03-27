@@ -23,17 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
     $requete = $connexion->prepare(
-        'SELECT id, email, password
+        'SELECT id, email, password, role
         FROM user
         WHERE email = :email
-    ');
-    
+    '
+    );
 
     $requete->bindParam('email', $data['email']);
     $requete->execute();
     $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
-
-
+    var_dump($utilisateur);
     if ($utilisateur === false) {
         $erreurs['email'] = 'Compte non valide.';
     } else {
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // On redirige l'utilisateur sur la page d'accueil.
             header('Location: index.php');
-        } else {    
+        } else {
             // KO mot de passe incorrect
             $erreurs['email'] = 'Compte non valide.';
             echo "compte non valide";
@@ -75,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['password'])) {
         $errors['password'] = 'Veuillez saisir votre mot de passe.';
     }
-
 }
 
 ?>
