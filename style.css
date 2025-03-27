@@ -73,7 +73,7 @@ input:hover {
 
 .page {
     flex: 1;
-    padding: 110px 0 0 320px;
+    padding: 150px 0 0 320px;
 }
 
 .flex {
@@ -340,6 +340,7 @@ textarea:focus {
     margin: 0px 0 22Px 0;
 }
 
+
 input[type=email] {
 
     background-color: white;
@@ -359,7 +360,6 @@ input[type=email] {
 
 
 input[type=password] {
-    background-image: url(images/coup-doeil.png);
     background-size: 24px;
     background-position: 10px 10px;
     background-repeat: no-repeat;
@@ -375,21 +375,28 @@ input[type=password] {
 
 
 
+/* MOT DE PASSE Oublié  */
 
 
 
-
-
+input .submitMDP {
+    background-color: var(--color_btn);
+    color: white;
+    height: 50px;
+    border-radius: 6px;
+    margin: 0px 0 22Px 0;
+}
 
 
 
 
 /* Accueil */
 
-.accueil{
+.accueil {
     padding-top: 40px;
     padding-left: 20px;
 }
+
 .accueil .hero {
     line-height: 25px;
 }

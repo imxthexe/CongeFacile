@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!-- <!DOCTYPE html>
+<html lang="fr"> -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,9 @@
 
     <link rel="stylesheet" href="../../../style.css">
 
+    <?php if ((!isset($_SESSION['utilisateur']) && $_SESSION['utilisateur'] != "manager")) {
+        header("Location : ../commun/connexion.php");
+    } ?>
     <style>
         .containerDemandesAttente {
             flex: 1;
@@ -111,89 +115,90 @@
         }
     </style>
 </head>
+
 <body>
-    <?php include "../../includes/header2.php"; ?>
 
     <div class="flex"
         <?php include "../../includes/navBar/navBar1.php"; ?>
 
-        <div class="containerDemandesAttente">
-            <section class="demandesAttenteSection">
-                <div class="headerRow">
-                    <h2>Demandes en attente</h2>
-                </div>
+        <div class="containerDemandesAttente page">
+        <section class="demandesAttenteSection">
+            <div class="headerRow">
+                <h2>Demandes en attente</h2>
+            </div>
 
-                <table class="demandesAttenteTable">
-                    <thead>
-                        <tr>
-                            <th>Type de demande</th>
-                            <th>Demande le</th>
-                            <th>Collaborateur</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
-                            <th>Nb jours</th>
-                            <th></th>
-                        </tr>
-                        <tr class="filtersRow">
-                            <th><input type="text"/></th>
-                            <th><input type="date"/></th>
-                            <th><input type="text"/></th>
-                            <th><input type="date"/></th>
-                            <th><input type="date"/></th>
-                            <th><input type="number"/></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Type de demande">Congé sans solde</td>
-                            <td data-label="Demande le">03/01/2024 08:00</td>
-                            <td data-label="Collaborateur">Lucas Dupas</td>
-                            <td data-label="Date de début">10/01/2024 08:00</td>
-                            <td data-label="Date de fin">15/01/2024 08:00</td>
-                            <td data-label="Nb jours">5 jours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé payé</td>
-                            <td data-label="Demande le">29/12/2023 08:00</td>
-                            <td data-label="Collaborateur">Jeff Martins</td>
-                            <td data-label="Date de début">12/01/2024 08:00</td>
-                            <td data-label="Date de fin">20/01/2024 08:00</td>
-                            <td data-label="Nb jours">8 jours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé sans solde</td>
-                            <td data-label="Demande le">05/01/2024 08:00</td>
-                            <td data-label="Collaborateur">Adrien Turcey</td>
-                            <td data-label="Date de début">09/01/2024 08:00</td>
-                            <td data-label="Date de fin">15/01/2024 08:00</td>
-                            <td data-label="Nb jours">6 jours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé maladie</td>
-                            <td data-label="Demande le">10/01/2024 08:00</td>
-                            <td data-label="Collaborateur">Nicolas Verdier</td>
-                            <td data-label="Date de début">15/01/2024 08:00</td>
-                            <td data-label="Date de fin">18/01/2024 08:00</td>
-                            <td data-label="Nb jours">3 jours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Type de demande">Congé sans solde</td>
-                            <td data-label="Demande le">28/12/2023 08:00</td>
-                            <td data-label="Collaborateur">Jeff Martins</td>
-                            <td data-label="Date de début">07/01/2024 08:00</td>
-                            <td data-label="Date de fin">12/01/2024 08:00</td>
-                            <td data-label="Nb jours">5 jours</td>
-                            <td><button class="detailsButton">Détails</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
+            <table class="demandesAttenteTable">
+                <thead>
+                    <tr>
+                        <th>Type de demande</th>
+                        <th>Demande le</th>
+                        <th>Collaborateur</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Nb jours</th>
+                        <th></th>
+                    </tr>
+                    <tr class="filtersRow">
+                        <th><input type="text" /></th>
+                        <th><input type="date" /></th>
+                        <th><input type="text" /></th>
+                        <th><input type="date" /></th>
+                        <th><input type="date" /></th>
+                        <th><input type="number" /></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Type de demande">Congé sans solde</td>
+                        <td data-label="Demande le">03/01/2024 08:00</td>
+                        <td data-label="Collaborateur">Lucas Dupas</td>
+                        <td data-label="Date de début">10/01/2024 08:00</td>
+                        <td data-label="Date de fin">15/01/2024 08:00</td>
+                        <td data-label="Nb jours">5 jours</td>
+                        <td><button class="detailsButton">Détails</button></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Type de demande">Congé payé</td>
+                        <td data-label="Demande le">29/12/2023 08:00</td>
+                        <td data-label="Collaborateur">Jeff Martins</td>
+                        <td data-label="Date de début">12/01/2024 08:00</td>
+                        <td data-label="Date de fin">20/01/2024 08:00</td>
+                        <td data-label="Nb jours">8 jours</td>
+                        <td><button class="detailsButton">Détails</button></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Type de demande">Congé sans solde</td>
+                        <td data-label="Demande le">05/01/2024 08:00</td>
+                        <td data-label="Collaborateur">Adrien Turcey</td>
+                        <td data-label="Date de début">09/01/2024 08:00</td>
+                        <td data-label="Date de fin">15/01/2024 08:00</td>
+                        <td data-label="Nb jours">6 jours</td>
+                        <td><button class="detailsButton">Détails</button></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Type de demande">Congé maladie</td>
+                        <td data-label="Demande le">10/01/2024 08:00</td>
+                        <td data-label="Collaborateur">Nicolas Verdier</td>
+                        <td data-label="Date de début">15/01/2024 08:00</td>
+                        <td data-label="Date de fin">18/01/2024 08:00</td>
+                        <td data-label="Nb jours">3 jours</td>
+                        <td><button class="detailsButton">Détails</button></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Type de demande">Congé sans solde</td>
+                        <td data-label="Demande le">28/12/2023 08:00</td>
+                        <td data-label="Collaborateur">Jeff Martins</td>
+                        <td data-label="Date de début">07/01/2024 08:00</td>
+                        <td data-label="Date de fin">12/01/2024 08:00</td>
+                        <td data-label="Nb jours">5 jours</td>
+                        <td><button class="detailsButton">Détails</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
     </div>
 </body>
+
 </html>
