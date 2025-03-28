@@ -1,4 +1,5 @@
 <?php
+session_start();
 $titre = "Connexion";
 include '../../includes/database.php';
 include '../../includes/header2.php';
@@ -17,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data['email'] = trim($data['email']);
     $data['password'] = trim($data['password']);
 
-    $data['email'] = htmlspecialchars($data['email']);
-    $data['password'] = htmlspecialchars($data['password']);
 
     if (empty($data['email'])) {
         $errors['email'] = 'Veuillez renseigner votre email';
@@ -32,37 +31,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = 'Veuillez saisir votre mot de passe.';
     }
 
-
-    $requete = $bdd->prepare(
-        'SELECT id, email, password, role
-        FROM user
-        WHERE email = :email
-    '
-    );
-
-
-    $requete->bindParam('email', $data['email']);
-    $requete->execute();
-    $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
-    if ($utilisateur === false) {
-        $errors['email'] = 'Compte non valide.';
-    } else {
-        if (password_verify($data['password'], $utilisateur["password"])) {
-
-            $_SESSION['utilisateur'] = [
-                'id' => $utilisateur['id'],
-                'email' => $utilisateur['email'],
-                'role' => $utilisateur['role']
-            ];
+    if (empty($errors)) {
+        $requete = $bdd->prepare(
+            'SELECT id, email, password, role
+            FROM user
+            WHERE email = :email
+        '
+        );
 
 
-            if ($utilisateur['role'] == "manager") {
-                header("Location:../manager/demandesEnAttente.php");
-            } else if ($utilisateur['role'] == "collaborateur") {
-                header("Location:accueil.php");
-            }
+        $requete->bindParam('email', $data['email']);
+        $requete->execute();
+        $utilisateur = $requete->fetch(\PDO::FETCH_ASSOC);
+        if ($utilisateur === false) {
+            $errors['email'] = 'Email ou mot de passe incorrect.';
         } else {
-            $errors['password'] = 'mot de passe incorrect ';
+            if (password_verify($data['password'], $utilisateur["password"])) {
+
+                $_SESSION['utilisateur'] = [
+                    'id' => $utilisateur['id'],
+                    'email' => $utilisateur['email'],
+                    'role' => $utilisateur['role']
+                ];
+
+
+                if ($utilisateur['role'] == "manager") {
+                    header("Location:../manager/demandesEnAttente.php");
+                    exit;
+                } else if ($utilisateur['role'] == "collaborateur") {
+                    header("Location:accueil.php");
+                    exit;
+                }
+            } else {
+                $errors['password'] = 'mot de passe incorrect ';
+            }
         }
     }
 }

@@ -1,157 +1,157 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+session_start();
+$titre = 'Nouvelle demande';
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Effectuer une nouvelle demande</title>
-  <link rel="stylesheet" href="../../style.css">
+include "../../includes/database.php";
+include "../../includes/header2.php";
+include "../../includes/functions.php";
 
-  <?php if ((!isset($_SESSION['utilisateur']) && $_SESSION['utilisateur'] != "collaborateur")) {
-    header("Location : ../commun/connexion.php");
-  } ?>
+$data = [];
+$errors = [];
 
-  <style>
-    .page {
-      flex: 1;
-      padding: 80px 0 0 50px;
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $data = $_POST;
 
-    .page .nouvelleDemandeSection {
-      padding: 20px;
-      width: 75%;
-    }
+  $RequeteRecupRequest_typeID = $bdd->prepare('SELECT id FROM request_type WHERE name=:name');
+  $RequeteRecupRequest_typeID->bindParam(':name', $data['typeDemande']);
+  $RequeteRecupRequest_typeID->execute();
+  $idRequest_type = $RequeteRecupRequest_typeID->fetch(PDO::FETCH_ASSOC);
 
-    .page .nouvelleDemandeSection h2 {
-      font-size: 1.6rem;
-      color: var(--color_title);
-      margin-bottom: 30px;
-    }
+  $RequeteRecupDepartment_ID = $bdd->prepare('SELECT department_id FROM person where id=:id');
+  $RequeteRecupDepartment_ID->bindParam(':id', $_SESSION['utilisateur']['id']);
+  $RequeteRecupDepartment_ID->execute();
+  $RecupDepartment_ID = $RequeteRecupDepartment_ID->fetch(PDO::FETCH_ASSOC);
 
-    .page .nouvelleDemandeForm {
-      max-width: 600px;
-    }
+  $data['dateDebut'] = trim($data['dateDebut']);
+  $data['dateFin'] = trim($data['dateFin']);
+  $data['nbJours'] = trim($data['nbJours']);
 
-    .page .nouvelleDemandeForm label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
+  $data['dateDebut'] = htmlspecialchars($data['dateDebut']);
+  $data['dateFin'] = htmlspecialchars($data['dateFin']);
+  $data['nbJours'] = htmlspecialchars($data['nbJours']);
 
-    .page .nouvelleDemandeForm select,
-    .page .nouvelleDemandeForm input[type="date"],
-    .page .nouvelleDemandeForm input[type="file"],
-    .page .nouvelleDemandeForm input[type="text"],
-    .page .nouvelleDemandeForm input[type="number"],
-    .page .nouvelleDemandeForm textarea {
-      width: 350px;
-      height: 40px;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
+  if (isset($data['commentaire'])) {
+    $data['typeDemande'] = trim($data['typeDemande']);
+    $data['commentaire'] = htmlspecialchars($data['commentaire']);
+  }
 
-    .nbJours {
-      background-color: var(--border);
-    }
+  if (empty($data['typeDemande'])) {
+    $errors['typeDemande'] = 'Veuillez renseigner le type de votre demande';
+  } else if (filter_var($data['typeDemande'], FILTER_VALIDATE_INT) === true) {
+    $errors['typeDemande'] = 'Votre type de demande est incorrect';
+  }
 
-    .page .nouvelleDemandeForm textarea {
-      resize: none;
-      min-height: 150px;
-      width: 725px;
-    }
+  if (empty($data['dateDebut'])) {
+    $errors['dateDebut'] = 'Veuillez renseigner votre premier jour de congé';
+  }
 
-    .page .inlineFields {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
+  if (empty($data['dateFin'])) {
+    $errors['dateFin'] = 'Veuillez renseigner votre dernier jour de congé';
+  }
 
-    .page .inlineFields .fieldGroup {
-      display: flex;
-      flex-direction: column;
-    }
+  if (empty($data['nbJours'])) {
+    $errors['nbJours'] = 'Veuillez renseigner la durée de votre congé ci-dessus';
+  } else if (filter_var($data['nbJours'], FILTER_VALIDATE_INT) === false) {
+    $errors['nbJours'] = 'Durée du congé incorrecte';
+  }
 
-    .page .submitBtn {
-      background-color: var(--color_btn);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 16px;
-      cursor: pointer;
-      width: 200px;
-      display: block;
-      margin-top: 20px;
-    }
+  $date = date("Y-m-d H:i:s");
+  $collaborateurId = $_SESSION['utilisateur']['id'];
+  $request_typeID = $idRequest_type['id'];
+  $department_id = $RecupDepartment_ID['department_id'];
 
-    .page .submitBtn:hover {
-      background-color: #1565C0;
-    }
+  $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request VALUES(0,:request_type_id,:collaborator_id,:department_id,:created_at,:start_at,:end_at,:receipt_file,:answer_comment,:answer_at)");
+  $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
+  $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
+  $requeteNouvelleDemande->bindParam(':department_id', $department_id);
+  $requeteNouvelleDemande->bindParam(':created_at', $date);
+  $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
+  $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
+  $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+  $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
+  $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
+  $requeteNouvelleDemande->execute();
+}
 
-    .ErrorP {
-      margin: 20px 0;
-    }
 
-    @media screen and (max-width: 1080px) {
-      .page {
-        padding: 100px 20px 0 20px;
-      }
 
-      .page .inlineFields {
-        display: block;
-      }
-    }
-  </style>
-</head>
 
-<body>
-  <?php include "../../includes/header2.php"; ?>
-  <div class="flex">
-    <?php include "../../includes/navBar/navBar1.php"; ?>
-    <div class="page">
-      <section class="nouvelleDemandeSection">
-        <h2>Effectuer une nouvelle demande</h2>
-        <form class="nouvelleDemandeForm">
-          <label for="typeDemande">Type de demande</label>
-          <select id="typeDemande" name="typeDemande" required>
-            <option value="">Sélectionner un type</option>
-            <option value="congePaye">Congé payé</option>
-            <option value="congeSansSolde">Congé sans solde</option>
-            <option value="congeMaladie">Congé maladie</option>
-            <option value="autre">Autre</option>
-          </select>
+?>
 
-          <div class="inlineFields">
-            <div class="fieldGroup">
-              <label for="dateDebut">Date début</label>
-              <input type="date" id="dateDebut" name="dateDebut" required />
-            </div>
-            <div class="fieldGroup">
-              <label for="dateFin">Date de fin</label>
-              <input type="date" id="dateFin" name="dateFin" required />
-            </div>
+
+
+
+<div class="flex">
+  <?php include "../../includes/navBar/navBar1.php"; ?>
+  <div class="ContainerNouvelleDemande page">
+    <section class="nouvelleDemandeSection">
+      <h2>Effectuer une nouvelle demande</h2>
+      <form class="nouvelleDemandeForm" method="POST">
+        <label for="typeDemande">Type de demande</label>
+        <select id="typeDemande" name="typeDemande" required value="<?php afficheValeur('typeDemande', $data) ?>">
+          <option value="">Sélectionner un type</option>
+          <option value="Congé payé">Congé payé</option>
+          <option value="Congé sans solde">Congé sans solde</option>
+          <option value="Congé maladie">Congé maladie</option>
+        </select>
+        <?php afficheErreur('typeDemande', $errors) ?>
+
+        <div class="inlineFields">
+          <div class="fieldGroup">
+            <label for="dateDebut">Date début</label>
+            <input type="date" id="dateDebut" name="dateDebut" required value="<?php afficheValeur('dateDebut', $data) ?>" />
+            <?php afficheErreur('dateDebut', $errors) ?>
           </div>
+          <div class="fieldGroup">
+            <label for="dateFin">Date de fin</label>
+            <input type="date" id="dateFin" name="dateFin" required value="<?php afficheValeur('dateFin', $data) ?>" />
+            <?php afficheErreur('dateFin', $errors) ?>
+          </div>
+        </div>
 
-          <label for="nbJours">Nombre de jours demandés</label>
-          <input class="nbJours" type="number" id="nbJours" name="nbJours" placeholder="0" require />
+        <label for="nbJours">Nombre de jours demandés</label>
+        <input class="nbJours" type="number" id="nbJours" name="nbJours" placeholder="0" required value="<?php afficheValeur('nbJours', $data) ?>" />
+        <?php afficheErreur('nbJours', $errors) ?>
 
-          <label for="justificatif">Justificatif si applicable</label>
-          <input type="text" id="justificatif" name="justificatif" placeholder="Sélectionner un fichier" />
-          <!-- je sais que le type est file mais sur le visuel j'arrrive pas a le changer donc fuck -->
+        <label for="justificatif">Justificatif si applicable</label>
+        <input type="file" id="justificatif" name="justificatif" value="Sélectionner un fichier" />
 
-          <label for="commentaire">Commentaire supplémentaire</label>
-          <textarea id="commentaire" name="commentaire" placeholder="Si congé exceptionnel ou sans solde, vous pouvez préciser votre demande."></textarea>
+        <label for="commentaire">Commentaire supplémentaire</label>
+        <textarea id="commentaire" name="commentaire" placeholder="Si congé exceptionnel ou sans solde, vous pouvez préciser votre demande."></textarea>
 
-          <button type="submit" class="submitBtn">Soumettre ma demande</button>
-        </form>
+        <input type="submit" class="submitBtn" value="Soumettre ma demande" />
+      </form>
 
-        <p class="ErrorP">* En cas d'erreur de saisie ou de changement, vous poourrez moifier ovtre demande tant que celle-ci n'a pas été validée par le manager</p>
+      <p class="ErrorP">* En cas d'erreur de saisie ou de changement, vous pourrez modifier votre demande tant que celle-ci n'a pas été validée par le manager</p>
 
-      </section>
-    </div>
+    </section>
   </div>
-</body>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const dateDebut = document.getElementById("dateDebut");
+    const dateFin = document.getElementById("dateFin");
+    const nbJours = document.getElementById("nbJours");
 
-</html>
+    function calculerNbJours() {
+      const debut = new Date(dateDebut.value);
+      const fin = new Date(dateFin.value);
+
+      if (!isNaN(debut) && !isNaN(fin) && fin >= debut) {
+        const difference = Math.ceil((fin - debut) / (1000 * 60 * 60 * 24));
+        nbJours.value = difference;
+      } else {
+        nbJours.value = 0;
+      }
+    }
+
+    dateDebut.addEventListener("change", calculerNbJours);
+    dateFin.addEventListener("change", calculerNbJours);
+  });
+</script>
+<?php
+
+var_dump($RecupDepartment_ID);
+include '../../includes/footer.php';
+
+?>

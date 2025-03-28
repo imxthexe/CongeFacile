@@ -2,9 +2,12 @@
 $titre = 'Nouvelle demande';
 include '../../includes/database.php';
 include '../../includes/header2.php';
+
+
+
+
 ?>
 
-<link rel="stylesheet" href="../../style.css">
 
 <div class="flex">
     <?php include "../../includes/navBar/navBar1.php"; ?>
