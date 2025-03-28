@@ -29,28 +29,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $data['email'];
 
-    $recupPerson_id = $bdd->prepare("SELECT person_id FROM user WHERE email = :email ");
-    $recupPerson_id->bindParam(':email', $data['email']);
-    $recupPerson_id->execute();
-    $id = $recupPerson_id->fetch(PDO::FETCH_ASSOC);
-
-    $RecupNomEtPrenom = $bdd->prepare("SELECT last_name, first_name FROM person WHERE id = :id");
-    $RecupNomEtPrenom->bindParam(':id', $id['person_id']);
-    $RecupNomEtPrenom->execute();
-    $NomEtPrenom = $RecupNomEtPrenom->fetch(PDO::FETCH_ASSOC);
-
-    $Prenom = $NomEtPrenom['first_name'];
-    $Nom = $NomEtPrenom['last_name'];
-
-
-
     if (empty($errors)) {
-        $to = "deoliveiradiego953@gmail.cpm";
-        $subject = "CongéFacile : $Nom $Prenom demande un changement de mot de passe";
-        $message = "$Nom $Prenom demande un changement de mot de passe" . "<br>"  . "$email de la personne : “utilisateur@mentalworks.fr”.";
-        $headers = "From: $to\r\n";
+        $recupPerson_id = $bdd->prepare("SELECT person_id FROM user WHERE email = :email ");
+        $recupPerson_id->bindParam(':email', $data['email']);
+        $recupPerson_id->execute();
+        $id = $recupPerson_id->fetch(PDO::FETCH_ASSOC);
 
-        mail($to, $subject, $message, $headers);
+        $RecupNomEtPrenom = $bdd->prepare("SELECT last_name, first_name FROM person WHERE id = :id");
+        $RecupNomEtPrenom->bindParam(':id', $id['person_id']);
+        $RecupNomEtPrenom->execute();
+        $NomEtPrenom = $RecupNomEtPrenom->fetch(PDO::FETCH_ASSOC);
+        $Prenom = $NomEtPrenom['first_name'];
+        $Nom = $NomEtPrenom['last_name'];
+    }
+
+    if (empty($errors) && isset($Prenom) && isset($Nom)) {
+        // FONCTION MAIL A REALISER
     }
 }
 ?>
@@ -77,5 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
 
-            <input type="submit" value="Demander à réinitialiser mon mot de passe" class="submitMDP">
+            <input style="font-size: 18px;" type="submit" value="Demander à réinitialiser mon mot de passe" class="submitMDP">
         </form>
+        <p><a href="../commun/connexion.php">Cliquez ici</a> pour retourner à la page de connexion</p>
+    </div>
+</div>

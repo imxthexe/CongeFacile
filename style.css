@@ -23,6 +23,7 @@ body {
     --color_title: #1B3168;
     --color_text: #000000;
     --color_btn_navbarre: #5C73A0;
+    --color_href_a: rgba(0, 76, 108, 1);
     --gray: #637381;
     --border: #EAECF0;
 }
@@ -53,6 +54,14 @@ p {
     line-height: 24.57px;
 }
 
+a {
+    text-decoration: none;
+}
+
+p a {
+    color: var(--color_href_a);
+    font-weight: 800;
+}
 
 
 @font-face {
@@ -73,7 +82,7 @@ input:hover {
 
 .page {
     flex: 1;
-    padding: 150px 0 0 320px;
+    padding: 150px 0 0 350px;
 }
 
 .flex {
@@ -332,12 +341,7 @@ textarea:focus {
 }
 
 .inputConnexionSubmit {
-    background-color: var(--color_btn);
-    color: white;
     width: 215px;
-    height: 50px;
-    border-radius: 6px;
-    margin: 0px 0 22Px 0;
 }
 
 
@@ -351,25 +355,19 @@ input[type=email] {
     padding-left: 60px;
 }
 
-
-.connexion p a {
-    color: var(--color_btn);
-}
-
-
-
-
 input[type=password] {
     background-size: 24px;
     background-position: 10px 10px;
     background-repeat: no-repeat;
+    background-image: url('images/coup-doeil.png');
     padding-left: 60px;
 }
 
 input[type=submit] {
     background-color: var(--color_btn);
     color: white;
-    width: 215px;
+    width: fit-content;
+    padding: 10px;
     height: 50px;
     border-radius: 6px;
     margin: 0px 0 22Px 0;
@@ -389,7 +387,7 @@ input[type=submit] {
 
 
 
-
+/*FIN MDP OUBLIE*/
 
 /* Accueil */
 

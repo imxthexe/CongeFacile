@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($utilisateur['role'] == "manager") {
                 header("Location:../manager/demandesEnAttente.php");
             } else if ($utilisateur['role'] == "collaborateur") {
-                header("Location : commun/accueil.php");
+                header("Location:accueil.php");
             }
         } else {
             $errors['password'] = 'mot de passe incorrect ';
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="labelConnexion">Mot de passe</div>
                 <div class="inputConnexion">
-                    <input type="password" name="password" value="<?php echo afficheValeur('password', $data); ?>">
+                    <input type="password" name="password">
                     <?php echo afficheErreur('password', $errors); ?>
                 </div>
 

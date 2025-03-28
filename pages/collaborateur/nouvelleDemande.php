@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Effectuer une nouvelle demande</title>
   <link rel="stylesheet" href="../../style.css">
+
+  <?php if ((!isset($_SESSION['utilisateur']) && $_SESSION['utilisateur'] != "collaborateur")) {
+    header("Location : ../commun/connexion.php");
+  } ?>
+
   <style>
     .page {
       flex: 1;
