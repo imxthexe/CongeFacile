@@ -581,3 +581,112 @@ input[type=submit] {
 
 
 /* Fin Accueil */
+
+
+/* PAGE NOUVELLE DEMANDE COLLAB*/
+
+
+.containerDemandesAttente {
+    flex: 1;
+    padding: 80px 0 0 50px;
+}
+
+.containerDemandesAttente .demandesAttenteSection {
+    padding: 20px;
+    width: 90%;
+}
+
+.containerDemandesAttente .headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.containerDemandesAttente .headerRow h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.containerDemandesAttente .demandesAttenteTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.containerDemandesAttente .demandesAttenteTable thead {
+    background-color: var(--border);
+}
+
+.containerDemandesAttente .demandesAttenteTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+.containerDemandesAttente .filtersRow th {
+    padding: 8px 0 8px 16px;
+}
+
+.containerDemandesAttente .filtersRow input {
+    width: 90%;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.containerDemandesAttente .demandesAttenteTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.containerDemandesAttente .demandesAttenteTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.containerDemandesAttente .demandesAttenteTable td {
+    text-align: left;
+    padding: 20px 16px;
+    border: none;
+}
+
+.containerDemandesAttente .detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.containerDemandesAttente .detailsButton:hover {
+    background-color: #bbb;
+}
+
+@media screen and (max-width: 1080px) {
+    .containerDemandesAttente .demandesAttenteTable thead {
+        display: none;
+    }
+
+    .containerDemandesAttente .demandesAttenteTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .containerDemandesAttente .demandesAttenteTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .containerDemandesAttente .demandesAttenteTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+}
+
+
+/* FIN PAGE NOUVELLE DEMANDE COLLAB*/
