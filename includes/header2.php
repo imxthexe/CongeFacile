@@ -7,9 +7,12 @@
     <title><?php echo $titre ?></title>
 </head>
 
-<div class="header-container">
-    <div class="top"></div>
-    <header>
-        <img src="../../images/logo-mentalworks-blanc.png" alt="">
-    </header>
-</div>
+<html>
+
+<body>
+    <div class="header-container">
+        <div class="top"></div>
+        <header>
+            <img src="../../images/logo-mentalworks-blanc.png" alt="">
+        </header>
+    </div>
