@@ -781,3 +781,108 @@ input[type=submit] {
 }
 
 /* FIN PAGE NVL DEMANDE*/
+
+
+/*  CSS HISTORIQUE DES DEMANDES  DE CHAQUE COLLAB */
+
+
+.containerHistoriqueUser .historiqueUserSection {
+    padding: 20px;
+    width: 90%;
+}
+
+.containerHistoriqueUser .headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.containerHistoriqueUser .headerRow h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.containerHistoriqueUser .mesDemandesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.containerHistoriqueUser .mesDemandesTable thead {
+    background-color: var(--border);
+}
+
+.containerHistoriqueUser .mesDemandesTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+/* Ligne des filtres */
+.containerHistoriqueUser .filtersRow th {
+    padding: 8px 0 8px 16px;
+}
+
+.containerHistoriqueUser .filtersRow input {
+    width: 90%;
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.containerHistoriqueUser .mesDemandesTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.containerHistoriqueUser .mesDemandesTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.containerHistoriqueUser .mesDemandesTable td {
+    text-align: left;
+    padding: 20px 16px;
+    border: none;
+}
+
+.containerHistoriqueUser .detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.containerHistoriqueUser .detailsButton:hover {
+    background-color: #bbb;
+}
+
+@media screen and (max-width: 1080px) {
+    .containerHistoriqueUser .mesDemandesTable thead {
+        display: none;
+    }
+
+    .containerHistoriqueUser .mesDemandesTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .containerHistoriqueUser .mesDemandesTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .containerHistoriqueUser .mesDemandesTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+}
+
+/* FIN HISTORIQUES DES DEMANDES DE CHAQUE COLLAB  */

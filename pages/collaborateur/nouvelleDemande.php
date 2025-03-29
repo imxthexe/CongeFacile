@@ -150,8 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   });
 </script>
 <?php
-
-var_dump($RecupDepartment_ID);
 include '../../includes/footer.php';
 
 ?>

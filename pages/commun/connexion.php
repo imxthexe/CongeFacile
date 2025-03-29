@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-
+<link rel="stylesheet" href="../../style.css">
 <div class="flex">
     <?php include '../../includes/navBar/navBar3.php' ?>
     <div class="containerConnexion page">
