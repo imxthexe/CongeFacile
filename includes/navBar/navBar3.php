@@ -1,3 +1,10 @@
+<body>
+
+    <link rel="stylesheet" href="../../style.css">
+    <input type="checkbox" id="checkbox">
+    <label for="checkbox" class="toggle">
+    </label>
+
     <div class="navBar">
         <div class="link">
             <nav>
@@ -11,3 +18,4 @@
             </nav>
         </div>
     </div>
+</body>
