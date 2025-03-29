@@ -260,9 +260,9 @@ header img {
 @media screen and (max-width: 1050px) {
 
     #checkbox {
-        left: 40px;
-        top: 100px;
-        position: absolute;
+        right: 60px;
+        top: 52px;
+        position: fixed;
         display: block;
         z-index: 123456789;
     }
@@ -282,7 +282,7 @@ header img {
     }
     .page {
         flex: 1;
-        padding: 150px 0 0 0;
+        padding: 150px 0 0 40px;
     }
 }
 
