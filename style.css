@@ -253,6 +253,41 @@ header img {
     font-size: 16px;
 }
 
+#checkbox {
+    display: none;
+}
+
+@media screen and (max-width: 1050px) {
+
+    #checkbox {
+        left: 40px;
+        top: 100px;
+        position: absolute;
+        display: block;
+        z-index: 123456789;
+    }
+
+    .navBar {
+        left: -100%;
+        transition: left 0.3s ease-in-out;
+        position: fixed;
+        background: white;
+        width: 300px;
+        height: 100vh;
+        box-shadow: 4px 0px 22px -12px rgba(0, 0, 0, 0.4);
+    }
+
+    #checkbox:checked ~ .navBar {
+        left: 0;
+    }
+    .page {
+        flex: 1;
+        padding: 150px 0 0 0;
+    }
+}
+
+
+
 /* FIN Navbar */
 
 
