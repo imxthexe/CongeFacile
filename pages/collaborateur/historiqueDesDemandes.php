@@ -1,5 +1,6 @@
 <?php
 
+$titre = 'Historique des demandes';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/functions.php';
