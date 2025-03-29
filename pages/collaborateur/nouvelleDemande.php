@@ -60,7 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $request_typeID = $idRequest_type['id'];
   $department_id = $RecupDepartment_ID['department_id'];
 
-  $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request VALUES(0,:request_type_id,:collaborator_id,:department_id,:created_at,:start_at,:end_at,:receipt_file,:answer_comment,:answer_at)");
+  $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
+    (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
+    VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
   $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
   $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
   $requeteNouvelleDemande->bindParam(':department_id', $department_id);

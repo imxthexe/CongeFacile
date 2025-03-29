@@ -8,7 +8,7 @@ $date   = [];
 $errors = [];
 
 
-var_dump($_SESSION['utilisateur']);
+// var_dump($_SESSION['utilisateur']);
 $idCollab = $_SESSION['utilisateur']['id'];
 
 $requeteRecupRequest_type = $bdd->prepare("SELECT 
@@ -29,12 +29,7 @@ $requeteRecupRequest_type->bindParam(':id', $idCollab);
 $requeteRecupRequest_type->execute();
 $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
 
-// $requeteRecupRequest_type_name = $bdd->prepare('SELECT name FROM request_type WHERE id = :id');
-// $requeteRecupRequest_type_name->bindParam(':id', $requetes['request_type_id']);
-// $requete_name = $requeteRecupRequest_type_name->fetchAll(PDO::FETCH_ASSOC);
 
-
-var_dump($requetes);
 
 
 ?>
@@ -57,6 +52,7 @@ var_dump($requetes);
                         <th>Date de fin</th>
                         <th>Nb jours</th>
                         <th>Statut</th>
+                        <th></th>
                     </tr>
                     <tr class="filtersRow">
                         <th><input type="text" /></th>
@@ -70,15 +66,15 @@ var_dump($requetes);
                 </thead>
                 <tbody>
                     <?php
-                    if (!empty($date)) {
-                        foreach ($date as $row) {
+                    if (!empty($requetes)) {
+                        foreach ($requetes as $requete) {
                             echo "<tr>";
-                            echo "<td data-label='Type de demande'>" . htmlspecialchars($row['request_type_name']) . "</td>";
-                            echo "<td data-label='Demandé le'>" . htmlspecialchars($row['created_at']) . "</td>";
-                            echo "<td data-label='Date de début'>" . htmlspecialchars($row['start_at']) . "</td>";
-                            echo "<td data-label='Date de fin'>" . htmlspecialchars($row['end_at']) . "</td>";
-                            echo "<td data-label='Nb jours'>" . $jours . "</td>";
-                            echo "<td data-label='Statut'>" . htmlspecialchars($row['answer_comment']) . "</td>";
+                            echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
+                            echo "<td data-label='Demandé le'>" . htmlspecialchars($requete['request_date']) . "</td>";
+                            echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
+                            echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
+                            echo "<td data-label='Nb jours'>" . 'Ca arrive' . "</td>";
+                            echo "<td data-label='Statut'>" . htmlspecialchars($requete['status']) . "</td>";
                             echo "<td><button class='detailsButton'>Détails</button></td>";
                             echo "</tr>";
                         }
