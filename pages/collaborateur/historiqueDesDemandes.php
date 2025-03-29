@@ -1,5 +1,6 @@
 <?php
 
+$titre = 'Historique des demandes';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/functions.php';
@@ -7,48 +8,6 @@ include '../../includes/functions.php';
 $date   = [];
 $errors = [];
 
-// Définition de la requête SQL
-$sql = "SELECT 
-            r.created_at, 
-            r.start_at, 
-            r.end_at, 
-            DATEDIFF(r.end_at, r.start_at) AS nb_days,
-            p.first_name, 
-            p.last_name, 
-            rt.name AS request_type_name,
-            r.answer_comment
-        FROM request r
-        JOIN person p ON r.collaborator_id = p.id
-        JOIN request_type rt ON r.request_type_id = rt.id";
-
-try {
-    // Préparation et exécution de la requête
-    $stmt = $connexion->prepare($sql);
-    $stmt->execute();
-
-    // Récupération de tous les résultats sous forme de tableau associatif
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Parcours des résultats et stockage dans le tableau $date
-    foreach ($results as $row) {
-        $date[] = [
-            'created_at'       => $row['created_at'],
-            'start_at'         => $row['start_at'],
-            'end_at'           => $row['end_at'],
-            'nb_days'          => $row['nb_days'],
-            'first_name'       => $row['first_name'],
-            'last_name'        => $row['last_name'],
-            'request_type_name' => $row['request_type_name'],
-            'answer_comment'   => $row['answer_comment']
-        ];
-    }
-} catch (PDOException $e) {
-    // En cas d'erreur, on l'ajoute au tableau $errors
-    $errors[] = "Erreur d'exécution : " . $e->getMessage();
-}
-
-// Ici, le tableau $date contient toutes les informations récupérées
-// et le tableau $errors contient les éventuelles erreurs.
 
 
 
