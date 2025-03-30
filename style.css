@@ -2129,3 +2129,77 @@ input[type=submit] {
 }
 
 /* FIN AJOUT TDD*/
+
+/* AJOUT D'UN NOUVEAU POSTE*/
+
+.containerajout .ajout {
+    padding: 20px;
+    width: 75%;
+}
+
+.containerajout .ajout h2 {
+    font-size: 1.6rem;
+    color: var(--color_title);
+    margin-bottom: 30px;
+}
+
+.containerajout .editajoutForm {
+    max-width: 400px;
+}
+
+.containerajout .editajoutForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.containerajout .editajoutForm input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+
+.containerajout .actionButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.containerajout .deleteBtn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.containerajout .deleteBtn:hover {
+    background-color: #c0392b;
+}
+
+.containerajout .updateBtn {
+    background-color: var(--color_btn);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.containerajout .updateBtn:hover {
+    background-color: #1565C0;
+}
+
+
+@media screen and (max-width: 1080px) {
+    .containerajout {
+        padding: 100px 20px 0 20px;
+    }
+}
+
+
+/* FIN D'AJOUT*/

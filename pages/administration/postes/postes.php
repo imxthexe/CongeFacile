@@ -20,7 +20,7 @@ include '../../../includes/header3.php';
 
             <div class="headerRow">
                 <h2>Postes</h2>
-                <button class="addPostButton"><a href="ajout.php">Ajouter un poste</a></button>
+                <button class="addPostButton"><a style="color: white; font-family:epilogue;" href="ajout.php">Ajouter un poste</a></button>
             </div>
 
             <table class="postesTable">
