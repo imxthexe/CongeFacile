@@ -51,7 +51,7 @@
                             </a>
                         </ul>
                     </details>
-                    <a href="#">
+                    <a href="../../deconnexion.php">
                         <li>Deconnexion</li>
                     </a>
                 </ul>

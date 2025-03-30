@@ -13,7 +13,7 @@ include '../../../includes/header3.php';
     <div class="containerajout page">
         <section class="ajout">
 
-            <h2>Développeur Web</h2>
+            <h1>Ajouter un nouveau poste </h1>
 
             <form class="editajoutForm">
                 <label for="nomajoute">Nom du ajoute</label>

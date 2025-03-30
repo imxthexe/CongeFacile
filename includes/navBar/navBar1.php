@@ -1,8 +1,3 @@
-<?php
-
-session_start();
-
-?>
 <link
     rel="stylesheet" href="../../style.css">
 
@@ -32,7 +27,7 @@ session_start();
                     <a href="../../pages/collaborateur/mesPreferences.php">
                         <li>Mes préférences</li>
                     </a>
-                    <a href="#">
+                    <a href="../../deconnexion.php">
                         <li>Deconnexion</li>
                     </a>
                 </ul>
