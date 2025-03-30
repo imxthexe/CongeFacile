@@ -8,7 +8,7 @@ $date   = [];
 $errors = [];
 
 
-// var_dump($_SESSION['utilisateur']);
+
 $idCollab = $_SESSION['utilisateur']['id'];
 
 $requeteRecupRequest_type = $bdd->prepare("SELECT 

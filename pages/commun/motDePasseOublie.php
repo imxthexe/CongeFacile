@@ -34,13 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $recupPerson_id->bindParam(':email', $data['email']);
         $recupPerson_id->execute();
         $id = $recupPerson_id->fetch(PDO::FETCH_ASSOC);
-
-        $RecupNomEtPrenom = $bdd->prepare("SELECT last_name, first_name FROM person WHERE id = :id");
-        $RecupNomEtPrenom->bindParam(':id', $id['person_id']);
-        $RecupNomEtPrenom->execute();
-        $NomEtPrenom = $RecupNomEtPrenom->fetch(PDO::FETCH_ASSOC);
-        $Prenom = $NomEtPrenom['first_name'];
-        $Nom = $NomEtPrenom['last_name'];
     }
 
     if (empty($errors) && isset($Prenom) && isset($Nom)) {

@@ -927,11 +927,6 @@ input[type=submit] {
 /*HISTORIQUE DES DEMANDES MANAGER*/
 
 
-<style>.containerHistorique {
-    flex: 1;
-    padding: 80px 0 0 50px;
-}
-
 .containerHistorique .historiqueSection {
     padding: 20px;
     width: 90%;
@@ -1036,10 +1031,7 @@ input[type=submit] {
 
 /* MES INFORMATIONS MANAGER*/
 
-.containerMesInfos {
-    flex: 1;
-    padding: 80px 0 0 50px;
-}
+
 
 .containerMesInfos .mesInfosSection {
     padding: 20px;
@@ -1132,10 +1124,7 @@ input[type=submit] {
 /* MES PREFERENCES MANAGER */
 
 
-.containerPreferences {
-    flex: 1;
-    padding: 80px 0 0 50px;
-}
+
 
 .containerPreferences .preferencesSection {
     padding: 20px;
@@ -1232,10 +1221,7 @@ input[type=submit] {
 
 /* PAGE MON EQUIPE MANAGER */
 
-.containerMonEquipe {
-    flex: 1;
-    padding: 120px 0 0 50px;
-}
+
 
 .containerMonEquipe .monEquipeSection {
     padding: 20px;
@@ -1365,3 +1351,781 @@ input[type=submit] {
 
 
 /* FIN PAGE MON EQUIPE MANAGER */
+
+/* PAGE INFOS MEMBRE DE L'EQUIPE MANAGER */
+
+
+.containerUserDetail .userDetailSection {
+    padding: 20px;
+    width: 75%;
+}
+
+.containerUserDetail .userDetailSection h2 {
+    font-size: 1.6rem;
+    color: var(--color_title);
+    margin-bottom: 10px;
+}
+
+.containerUserDetail .userDetailSection .profilRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.containerUserDetail .userDetailSection .profilRow p {
+    color: #555;
+    margin: 0;
+}
+
+/* Formulaire */
+.containerUserDetail .userEditForm {
+    max-width: 600px;
+}
+
+.containerUserDetail .userEditForm label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.containerUserDetail .userEditForm input[type="text"],
+.containerUserDetail .userEditForm input[type="email"],
+.containerUserDetail .userEditForm input[type="password"],
+.containerUserDetail .userEditForm select {
+    width: 350px;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.containerUserDetail .userEditForm input[type="email"],
+.containerUserDetail .userEditForm input[type="password"] {
+    padding-left: 40px;
+}
+
+/* Groupes de champs côte à côte */
+.containerUserDetail .inlineFields {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.containerUserDetail .inlineFields .fieldGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Boutons */
+.btnContainer {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.deleteBtn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 200px;
+}
+
+.deleteBtn:hover {
+    background-color: #c0392b;
+}
+
+.updateBtn {
+    background-color: var(--color_btn);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.updateBtn:hover {
+    background-color: #1565C0;
+}
+
+/* Style du toggle switch */
+.switchWrapper {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switchWrapper input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #fff;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.switchWrapper input:checked+.slider {
+    background-color: var(--color_btn);
+}
+
+.switchWrapper input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+@media screen and (max-width: 1080px) {
+    .containerUserDetail {
+        padding: 100px 20px 0 20px;
+    }
+
+    .containerUserDetail .inlineFields {
+        display: block;
+    }
+
+    .containerUserDetail .inlineFields .fieldGroup {
+        margin-bottom: 20px;
+    }
+
+    .btnContainer {
+        display: block;
+    }
+
+    .deleteBtn,
+    .updateBtn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* FIN PAGE INFOS MEMBRE DE L'EQUIPE MANAGER */
+
+
+/* ESPACE ADMIN EN DESSOUS !!! */
+
+
+
+/* DIRECTIONS SERVICES */
+
+.administration {
+    padding: 20px;
+    width: 75%;
+}
+
+.headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.headerRow h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.addPostButton {
+    background-color: var(--color_btn);
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 200px;
+}
+
+.addPostButton:hover {
+    background-color: #1565C0;
+}
+
+.directionsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.directionsTable thead {
+    background-color: var(--border);
+}
+
+.directionsTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+.directionsTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.directionsTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.directionsTable td {
+    text-align: left;
+    padding: 12px 16px;
+    border: none;
+}
+
+.filtersRow input {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.detailsButton:hover {
+    background-color: #bbb;
+}
+
+@media screen and (max-width: 1080px) {
+    .directionsTable thead {
+        display: none;
+    }
+
+    .directionsTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .directionsTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .directionsTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .addPostButton {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .headerRow {
+        display: block;
+    }
+}
+
+
+/* FIN DIRECTION SERVICES */
+
+
+/* PAGE MANAGERS ( administration) */
+
+
+
+.containerManagers .managersSection {
+    padding: 20px;
+    width: 75%;
+}
+
+.containerManagers .headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.containerManagers .headerRow h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.containerManagers .addManagerButton {
+    background-color: var(--color_btn);
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 150px;
+}
+
+.containerManagers .addManagerButton:hover {
+    background-color: #1565C0;
+}
+
+.containerManagers .managersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.containerManagers .managersTable thead {
+    background-color: var(--border);
+}
+
+.containerManagers .managersTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+.containerManagers .managersTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.containerManagers .managersTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.containerManagers .managersTable td {
+    text-align: left;
+    padding: 20px 16px;
+    border: none;
+}
+
+.containerManagers .filtersRow input {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+    height: 35px;
+}
+
+
+.containerManagers .detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.containerManagers .detailsButton:hover {
+    background-color: #bbb;
+}
+
+
+@media screen and (max-width: 1080px) {
+    .containerManagers .managersTable thead {
+        display: none;
+    }
+
+    .containerManagers .managersTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .containerManagers .managersTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .containerManagers .managersTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .containerManagers .addManagerButton {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .containerManagers .headerRow {
+        display: block;
+    }
+}
+
+/* FIN PAGE MANAGERS */
+
+
+/* PAGE POSTE */
+
+.containerPost {
+    padding-right: 30px;
+}
+
+.containerPost .postes .headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.containerPost .postes .headerRow h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.containerPost .postes .addPostButton {
+    background-color: var(--color_btn);
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 150px;
+}
+
+.containerPost .postes .addPostButton:hover {
+    background-color: #1565C0;
+}
+
+.containerPost .postes .postesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.containerPost .postes .postesTable thead {
+    background-color: var(--border);
+}
+
+.containerPost .postes .postesTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+
+.containerPost .postes .postesTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.containerPost .postes .postesTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.containerPost .postes .postesTable td {
+    text-align: left;
+    padding: 12px 16px;
+    border: none;
+}
+
+.containerPost .postes .filtersRow input {
+    padding: 4px 8px;
+    border: 1px solid #fff;
+
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: black;
+    border: 1px solid #ccc;
+    height: 45px;
+}
+
+.containerPost .postes .filterName {
+    width: 100%;
+    margin-right: 200px;
+}
+
+.containerPost .postes .filterNb {
+    width: 50%;
+}
+
+
+.containerPost .postes .detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.containerPost .postes .detailsButton:hover {
+    background-color: #bbb;
+}
+
+
+@media screen and (max-width: 1080px) {
+    .containerPost .postes .postesTable thead {
+        display: none;
+    }
+
+    .containerPost .postes .postesTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .containerPost .postes .postesTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .containerPost .postes .postesTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .containerPost .postes .addPostButton {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .containerPost .postes .headerRow {
+        display: block;
+    }
+}
+
+/* fin page poste */
+
+
+/* PAGE TYPE DE DEMANDE */
+
+
+
+.containerDemandes .Demandes {
+    padding: 20px;
+    width: 75%;
+}
+
+.containerDemandes .headerRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.containerDemandes .headerRow h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem;
+    color: var(--color_title);
+}
+
+.containerDemandes .addDemandeButton {
+    background-color: var(--color_btn);
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 250px;
+}
+
+.containerDemandes .addDemandeButton:hover {
+    background-color: #1565C0;
+}
+
+.containerDemandes .demandeTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid var(--border);
+}
+
+.containerDemandes .demandeTable thead {
+    background-color: var(--border);
+}
+
+.containerDemandes .demandeTable thead th {
+    text-align: left;
+    padding: 12px 0 12px 16px;
+    border: none;
+}
+
+.containerDemandes .demandeTable tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.containerDemandes .demandeTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+.containerDemandes .demandeTable td {
+    text-align: left;
+    padding: 12px 16px;
+    border: none;
+}
+
+.containerDemandes .filtersRow input {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    height: 45px;
+}
+
+.containerDemandes .filterName {
+    width: 100%;
+    margin-right: 200px;
+}
+
+.containerDemandes .filterNb {
+    width: 50%;
+}
+
+.containerDemandes .detailsButton {
+    background-color: var(--border);
+    color: #333;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.containerDemandes .detailsButton:hover {
+    background-color: #bbb;
+}
+
+@media screen and (max-width: 1080px) {
+    .containerDemandes .demandeTable thead {
+        display: none;
+    }
+
+    .containerDemandes .demandeTable tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .containerDemandes .demandeTable tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .containerDemandes .demandeTable tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+
+    .containerDemandes .addDemandeButton {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .containerDemandes .headerRow {
+        display: block;
+    }
+}
+
+/* FIN PAGE TYPE DE DEMANDE*/
+
+/*AJOUT TYPE DE DEMANDE */
+
+
+
+.containerAjoutDemande .DemandesAjout {
+    padding: 20px;
+    width: 75%;
+}
+
+
+.containerAjoutDemande .DemandesAjout h2 {
+    font-size: 1.6rem;
+    color: var(--color_title);
+    margin-bottom: 30px;
+}
+
+
+.containerAjoutDemande .editTypeForm {
+    max-width: 400px;
+}
+
+.containerAjoutDemande .editTypeForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.containerAjoutDemande .editTypeForm input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.containerAjoutDemande .actionButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.containerAjoutDemande .deleteBtn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.containerAjoutDemande .deleteBtn:hover {
+    background-color: #c0392b;
+}
+
+.containerAjoutDemande .updateBtn {
+    background-color: var(--color_btn);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.containerAjoutDemande .updateBtn:hover {
+    background-color: #1565C0;
+}
+
+@media screen and (max-width: 1080px) {
+    .containerAjoutDemande .containerAjoutDemande {
+        padding: 100px 20px 0 20px;
+    }
+}
+
+/* FIN AJOUT TDD*/
