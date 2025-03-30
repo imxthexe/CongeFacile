@@ -8,7 +8,7 @@
         <div class="link">
             <nav>
                 <ul>
-                    <a href="#">
+                    <a href="../../pages/commun/index.php">
                         <li>Connexion</li>
                     </a>
                 </ul>
