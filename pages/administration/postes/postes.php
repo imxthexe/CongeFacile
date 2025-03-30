@@ -13,7 +13,6 @@ $recupNombrePostes = $bdd->prepare("SELECT
             GROUP BY de.id, de.name");
 $recupNombrePostes->execute();
 $Postes = $recupNombrePostes->fetchAll(pdo::FETCH_ASSOC);
-var_dump($Postes);
 
 ?>
 
@@ -46,13 +45,13 @@ var_dump($Postes);
 
                 <tbody>
                     <?php
-                    if (!empty($requetes_types)) {
-                        foreach ($requetes_types as $requete) {
-                            $id = $requete['request_type_id'];
+                    if (!empty($Postes)) {
+                        foreach ($Postes as $Poste) {
+                            $id = $Poste['department_id'];
                             echo "<tr>";
-                            echo "<td data-label='Nom du poste'>" . htmlspecialchars($requete['request_type']) . "</td>";
-                            echo "<td data-label='Nb personnes liées'>" . htmlspecialchars($requete['total_requests']) . "</td>";
-                            echo "<td><button class='detailsButton'><a  style='color:black;' href='typesDedemandeDetails.php?id=$id'>Détails</a></button></td>";
+                            echo "<td data-label='Nom du poste'>" . htmlspecialchars($Poste['department']) . "</td>";
+                            echo "<td data-label='Nb personnes liées'>" . htmlspecialchars($Poste['total_person']) . "</td>";
+                            echo "<td><button class='detailsButton'><a  style='color:black;' href='modifications.php?id=$id'>Détails</a></button></td>";
                             echo "</tr>";
                         }
                     } else {
