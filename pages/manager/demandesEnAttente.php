@@ -1,16 +1,14 @@
 <?php
+session_start();
 $titre = 'Nouvelle demande';
 include '../../includes/database.php';
 include '../../includes/header2.php';
-
-
-
 
 ?>
 
 
 <div class="flex">
-    <?php include "../../includes/navBar/navBar1.php"; ?>
+    <?php include "../../includes/navBar/navBar2.php"; ?>
 
     <div class="containerDemandesAttente page">
         <section class="demandesAttenteSection">

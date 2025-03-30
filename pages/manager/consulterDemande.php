@@ -118,7 +118,7 @@
 <body>
     <?php include "../../includes/header2.php"; ?>
     <div class="flex">
-        <?php include "../../includes/navBar/navBar1.php"; ?>
+        <?php include "../../includes/navBar/navBar2.php"; ?>
         <div class="containerDemandeDetail">
             <section class="demandeDetailSection">
                 <h2>Demande de Lucas Dupas</h2>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Détails du compte - Lucas Dupas</title>
   <link rel="stylesheet" href="../../style.css" />
   <style>
@@ -10,34 +11,41 @@
       flex: 1;
       padding: 80px 0 0 50px;
     }
+
     .containerUserDetail .userDetailSection {
       padding: 20px;
       width: 75%;
     }
+
     .containerUserDetail .userDetailSection h2 {
       font-size: 1.6rem;
       color: var(--color_title);
       margin-bottom: 10px;
     }
+
     .containerUserDetail .userDetailSection .profilRow {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 20px;
     }
+
     .containerUserDetail .userDetailSection .profilRow p {
       color: #555;
       margin: 0;
     }
+
     /* Formulaire */
     .containerUserDetail .userEditForm {
       max-width: 600px;
     }
+
     .containerUserDetail .userEditForm label {
       display: block;
       margin-bottom: 6px;
       font-weight: 500;
     }
+
     .containerUserDetail .userEditForm input[type="text"],
     .containerUserDetail .userEditForm input[type="email"],
     .containerUserDetail .userEditForm input[type="password"],
@@ -50,26 +58,31 @@
       font-size: 1rem;
       margin-bottom: 20px;
     }
+
     .containerUserDetail .userEditForm input[type="email"],
     .containerUserDetail .userEditForm input[type="password"] {
-      padding-left: 40px ;
+      padding-left: 40px;
     }
+
     /* Groupes de champs côte à côte */
     .containerUserDetail .inlineFields {
       display: flex;
       gap: 20px;
       margin-bottom: 20px;
     }
+
     .containerUserDetail .inlineFields .fieldGroup {
       display: flex;
       flex-direction: column;
     }
+
     /* Boutons */
     .btnContainer {
       display: flex;
       gap: 20px;
       margin-top: 20px;
     }
+
     .deleteBtn {
       background-color: #e74c3c;
       color: #fff;
@@ -79,9 +92,11 @@
       cursor: pointer;
       width: 200px;
     }
+
     .deleteBtn:hover {
       background-color: #c0392b;
     }
+
     .updateBtn {
       background-color: var(--color_btn);
       color: #fff;
@@ -91,9 +106,11 @@
       cursor: pointer;
       width: 150px;
     }
+
     .updateBtn:hover {
       background-color: #1565C0;
     }
+
     /* Style du toggle switch */
     .switchWrapper {
       position: relative;
@@ -101,22 +118,25 @@
       width: 50px;
       height: 24px;
     }
+
     .switchWrapper input {
       opacity: 0;
       width: 0;
       height: 0;
     }
+
     .slider {
       position: absolute;
       cursor: pointer;
-      top: 0; 
-      left: 0; 
-      right: 0; 
+      top: 0;
+      left: 0;
+      right: 0;
       bottom: 0;
       background-color: #ccc;
       transition: 0.4s;
       border-radius: 24px;
     }
+
     .slider:before {
       position: absolute;
       content: "";
@@ -128,25 +148,32 @@
       transition: 0.4s;
       border-radius: 50%;
     }
-    .switchWrapper input:checked + .slider {
+
+    .switchWrapper input:checked+.slider {
       background-color: var(--color_btn);
     }
-    .switchWrapper input:checked + .slider:before {
+
+    .switchWrapper input:checked+.slider:before {
       transform: translateX(26px);
     }
+
     @media screen and (max-width: 1080px) {
       .containerUserDetail {
         padding: 100px 20px 0 20px;
       }
+
       .containerUserDetail .inlineFields {
         display: block;
       }
+
       .containerUserDetail .inlineFields .fieldGroup {
         margin-bottom: 20px;
       }
+
       .btnContainer {
         display: block;
       }
+
       .deleteBtn,
       .updateBtn {
         width: 100%;
@@ -159,6 +186,7 @@
       const profilActif = localStorage.getItem("profilActif") === "true";
       document.getElementById("profilActif").checked = profilActif;
     }
+
     function saveProfilActif() {
       const profilActif = document.getElementById("profilActif").checked;
       localStorage.setItem("profilActif", profilActif);
@@ -167,10 +195,11 @@
     window.onload = loadProfilActif;
   </script>
 </head>
+
 <body>
   <?php include "../../includes/header2.php"; ?>
   <div class="flex">
-    <?php include "../../includes/navBar/navBar1.php"; ?>
+    <?php include "../../includes/navBar/navBar2.php"; ?>
     <div class="containerUserDetail">
       <section class="userDetailSection">
         <h2>Lucas Dupas</h2>
@@ -184,34 +213,31 @@
 
         <form class="userEditForm" onsubmit="saveProfilActif(); return false;">
           <label for="userEmail">Adresse email - champ obligatoire</label>
-          <input 
-            type="email" 
-            id="userEmail" 
-            name="userEmail" 
-            value="j.martins@mentalworks.fr" 
-            required
-          />
+          <input
+            type="email"
+            id="userEmail"
+            name="userEmail"
+            value="j.martins@mentalworks.fr"
+            required />
 
           <div class="inlineFields">
             <div class="fieldGroup">
               <label for="userLastName">Nom de famille - champ obligatoire</label>
-              <input 
-                type="text" 
-                id="userLastName" 
-                name="userLastName" 
-                value="Martins" 
-                required
-              />
+              <input
+                type="text"
+                id="userLastName"
+                name="userLastName"
+                value="Martins"
+                required />
             </div>
             <div class="fieldGroup">
               <label for="userFirstName">Prénom - champ obligatoire</label>
-              <input 
-                type="text" 
-                id="userFirstName" 
-                name="userFirstName" 
-                value="Jeff" 
-                required
-              />
+              <input
+                type="text"
+                id="userFirstName"
+                name="userFirstName"
+                value="Jeff"
+                required />
             </div>
           </div>
 
@@ -248,19 +274,17 @@
           <div class="inlineFields">
             <div class="fieldGroup">
               <label for="newPassword">Nouveau mot de passe</label>
-              <input 
-                type="password" 
-                id="newPassword" 
-                name="newPassword"
-              />
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword" />
             </div>
             <div class="fieldGroup">
               <label for="confirmPassword">Confirmation de mot de passe</label>
-              <input 
-                type="password" 
-                id="confirmPassword" 
-                name="confirmPassword"
-              />
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword" />
             </div>
           </div>
 
@@ -273,4 +297,5 @@
     </div>
   </div>
 </body>
+
 </html>

@@ -1,5 +1,7 @@
+<?php session_start();  ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +10,6 @@
     <link rel="stylesheet" href="../../../style.css">
 
     <style>
-
-        .containerPost {
-            flex: 1;
-            padding: 150px 0 0 50px;
-        }
-
         .administration {
             padding: 20px;
             width: 75%;
@@ -24,11 +20,13 @@
             align-items: center;
             margin-bottom: 50px;
         }
+
         .headerRow h2 {
             margin: 0;
             font-size: 1.6rem;
             color: var(--color_title);
         }
+
         .addPostButton {
             background-color: var(--color_btn);
             color: #fff;
@@ -39,6 +37,7 @@
             margin-left: 20px;
             width: 200px;
         }
+
         .addPostButton:hover {
             background-color: #1565C0;
         }
@@ -50,9 +49,11 @@
             background-color: #fff;
             border: 1px solid var(--border);
         }
+
         .directionsTable thead {
             background-color: var(--border);
         }
+
         .directionsTable thead th {
             text-align: left;
             padding: 12px 0 12px 16px;
@@ -62,6 +63,7 @@
         .directionsTable tbody tr {
             border-bottom: 1px solid #ccc;
         }
+
         .directionsTable tbody tr:last-child {
             border-bottom: none;
         }
@@ -88,6 +90,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .detailsButton:hover {
             background-color: #bbb;
         }
@@ -96,16 +99,19 @@
             .directionsTable thead {
                 display: none;
             }
+
             .directionsTable tbody tr {
                 display: block;
                 margin-bottom: 15px;
                 border: 1px solid #ddd;
             }
+
             .directionsTable tbody td {
                 display: flex;
                 justify-content: space-between;
                 padding: 10px;
             }
+
             .directionsTable tbody td::before {
                 content: attr(data-label);
                 font-weight: bold;
@@ -116,17 +122,19 @@
                 margin-left: 0;
                 margin-top: 10px;
             }
+
             .headerRow {
                 display: block;
             }
         }
     </style>
 </head>
+
 <body>
     <?php include "../../../includes/header.php"; ?>
 
     <div class="flex">
-        <?php include "../../../includes/navBar/navBar1.php"; ?>
+        <?php include "../../../includes/navBar/navBar2.php"; ?>
 
         <div class="containerPost">
             <section class="administration">
@@ -177,4 +185,5 @@
         </div>
     </div>
 </body>
+
 </html>

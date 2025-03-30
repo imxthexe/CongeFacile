@@ -1,8 +1,12 @@
 <!-- IL MANQUE LE BURGER MENU, QUAND IL PASSE EN RESPONSIVE FAUT CHANGER LE NAV BAR POUR S'ADPATER ET NORMALEMENT FINI-->
 <!-- TOUJOURS LE PROBLEME DE HEADER QUI CASSE LES COUILLES -->
- <!-- JE COMPREND PAS LE STYLE NE FONCITONE QUE DANS LE FICHIER DIRECT, LE LINK STYLESHEET NE FONCITONNE -->
+<!-- JE COMPREND PAS LE STYLE NE FONCITONE QUE DANS LE FICHIER DIRECT, LE LINK STYLESHEET NE FONCITONNE -->
+<?php
 
- <!DOCTYPE html>
+session_start();
+
+?>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -14,8 +18,7 @@
 
     <style>
         .containerPost {
-            padding: 150px 0 0 50px;
-            width: 65%;
+            padding-right: 30px;
         }
 
         .containerPost .postes .headerRow {
@@ -149,14 +152,14 @@
 </head>
 
 <body>
-    <?php include "../../../includes/header.php"; ?>
+    <?php include "../../../includes/header3.php"; ?>
 
     <div class="flex">
-        <?php include "../../../includes/navBar/navBar1.php"; ?>
+        <?php include "../../../includes/navBar/navBar2.php"; ?>
 
-        <div class="containerPost">
+        <div class="containerPost page">
             <section class="postes">
-                
+
                 <div class="headerRow">
                     <h2>Postes</h2>
                     <button class="addPostButton">Ajouter un poste</button>

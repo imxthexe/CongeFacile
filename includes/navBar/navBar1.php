@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="../../style.css">
+<?php
+
+session_start();
+
+?>
+<link
+    rel="stylesheet" href="../../style.css">
 
 <body>
     <input type="checkbox" id="checkbox">
@@ -37,8 +43,8 @@
                 <img src="https://placehold.co/60x60" alt="profile">
             </div>
             <div>
-                <p class="name">Prénom Nom</p>
-                <p class="role">Role</p>
+                <p class="name"><?php echo $_SESSION['utilisateur']['prenom'] . ' ' . $_SESSION['utilisateur']['nom'] ?></p>
+                <p class="role"><?= $_SESSION['utilisateur']['role'] ?></p>
             </div>
         </div>
     </div>

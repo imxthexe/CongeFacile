@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -148,7 +149,7 @@
     <?php include "../../../includes/header.php"; ?>
 
     <div class="flex">
-        <?php include "../../../includes/navBar/navBar1.php"; ?>
+        <?php include "../../../includes/navBar/navBar2.php"; ?>
 
         <div class="containerDemandes">
             <section class="Demandes">

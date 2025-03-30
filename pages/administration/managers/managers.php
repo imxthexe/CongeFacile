@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,12 +27,14 @@
             align-items: center;
             margin-bottom: 50px;
         }
+
         .containerManagers .headerRow h2 {
             margin: 0;
             padding: 0;
             font-size: 1.6rem;
             color: var(--color_title);
         }
+
         .containerManagers .addManagerButton {
             background-color: var(--color_btn);
             color: #fff;
@@ -42,6 +45,7 @@
             margin-left: 20px;
             width: 150px;
         }
+
         .containerManagers .addManagerButton:hover {
             background-color: #1565C0;
         }
@@ -53,17 +57,21 @@
             background-color: #fff;
             border: 1px solid var(--border);
         }
+
         .containerManagers .managersTable thead {
             background-color: var(--border);
         }
+
         .containerManagers .managersTable thead th {
             text-align: left;
             padding: 12px 0 12px 16px;
             border: none;
         }
+
         .containerManagers .managersTable tbody tr {
             border-bottom: 1px solid #ccc;
         }
+
         .containerManagers .managersTable tbody tr:last-child {
             border-bottom: none;
         }
@@ -92,6 +100,7 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .containerManagers .detailsButton:hover {
             background-color: #bbb;
         }
@@ -101,16 +110,19 @@
             .containerManagers .managersTable thead {
                 display: none;
             }
+
             .containerManagers .managersTable tbody tr {
                 display: block;
                 margin-bottom: 15px;
                 border: 1px solid #ddd;
             }
+
             .containerManagers .managersTable tbody td {
                 display: flex;
                 justify-content: space-between;
                 padding: 10px;
             }
+
             .containerManagers .managersTable tbody td::before {
                 content: attr(data-label);
                 font-weight: bold;
@@ -121,17 +133,19 @@
                 margin-left: 0;
                 margin-top: 10px;
             }
+
             .containerManagers .headerRow {
                 display: block;
             }
         }
     </style>
 </head>
+
 <body>
     <?php include "../../../includes/header.php"; ?>
 
     <div class="flex">
-        <?php include "../../../includes/navBar/navBar1.php"; ?>
+        <?php include "../../../includes/navBar/navBar2.php"; ?>
 
 
         <div class="containerManagers">
@@ -152,13 +166,13 @@
                         </tr>
                         <tr class="filtersRow">
                             <th>
-                                <input type="text"/>
+                                <input type="text" />
                             </th>
                             <th>
-                                <input type="text"/>
+                                <input type="text" />
                             </th>
                             <th>
-                                <input type="text"/>
+                                <input type="text" />
                             </th>
                             <th></th>
                         </tr>
@@ -188,4 +202,5 @@
         </div>
     </div>
 </body>
+
 </html>
