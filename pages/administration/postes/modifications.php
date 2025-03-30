@@ -8,7 +8,7 @@ include '../../../includes/functions.php';
 $id = $_GET['id'];
 
 $recupRequest_name = $bdd->prepare('SELECT name FROM department WHERE id = :id');
-$recupRequest_name->bindParam('id', $id);
+$recupRequest_name->bindParam(':id', $id);
 $recupRequest_name->execute();
 $name = $recupRequest_name->fetch(pdo::FETCH_ASSOC);
 
@@ -19,9 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
     if (empty($data['poste'])) {
-        $errors['poste'] == 'Veuillez renseigner un nouveau type de congé';
+        $errors['poste'] = 'Veuillez renseigner le nouveau nom de ce poste';
+    } else if ($data['poste'] == $name['name']) {
+        $errors['poste'] = 'Veuillez changer le nom pour le modifier';
+    }
+
+    var_dump($data, $id);
+
+    if (empty($errors)) {
+        $ModifNomPoste = $bdd->prepare("UPDATE department
+        SET name = :nom
+        WHERE id = :id");
+        $ModifNomPoste->bindValue(':nom', $data['poste']);
+        $ModifNomPoste->bindValue(':id', $id);
+        $ModifNomPoste->execute();
+        header('Location: postes.php');
     }
 }
+
+
 ?>
 
 <link rel="stylesheet" href="../../../style.css">

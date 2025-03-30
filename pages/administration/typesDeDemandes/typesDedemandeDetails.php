@@ -20,6 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($data['type'])) {
         $errors['type'] == 'Veuillez renseigner un nouveau type de congé';
+    } else if ($data['type'] == $name['name']) {
+        $errors['type'] = 'Veuillez changer le nom pour le modifier';
+    }
+
+    if (empty($errors)) {
+        $ModifNomPoste = $bdd->prepare("UPDATE request_type
+        SET name = :nom
+        WHERE id = :id");
+        $ModifNomPoste->bindValue(':nom', $data['type']);
+        $ModifNomPoste->bindValue(':id', $id);
+        $ModifNomPoste->execute();
+        header('Location: typesDedemandes.php');
     }
 }
 ?>

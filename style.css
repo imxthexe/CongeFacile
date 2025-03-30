@@ -233,7 +233,7 @@ header img {
 .navBar .profile {
     display: flex;
     align-items: center;
-    padding: 20px 0 ;
+    padding: 20px 0;
     margin: 0 0 0 40px;
 }
 
@@ -888,9 +888,7 @@ input[type=submit] {
 }
 
 @media screen and (max-width: 1080px) {
-    .page {
-        padding: 80px 20px 0 20px;
-    }
+
 
     .page .inlineFields {
         display: block;
@@ -990,11 +988,7 @@ input[type=submit] {
     background-color: #1565C0;
 }
 
-@media screen and (max-width: 1080px) {
-    .page {
-        padding: 80px 20px 0 20px;
-    }
-}
+
 
 /* FIN PAGE MES PREF COLLAB*/
 

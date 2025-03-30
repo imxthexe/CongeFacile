@@ -4,6 +4,27 @@ $titre = 'Historique des demandes en attente';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 
+$recupRequetesCollab = $bdd->prepare("SELECT 
+    col.last_name AS collaborator_last_name,
+    col.first_name AS collaborator_first_name,
+    rt.name AS request_type,
+    req.created_at,
+    req.start_at,
+    req.end_at,
+    CASE 
+        WHEN req.answer IS NULL THEN 'En cours'
+        WHEN req.answer = 0 THEN 'Refusé'
+        WHEN req.answer = 1 THEN 'Validé'
+        ELSE 'Statut inconnu' 
+    END AS statut
+FROM request req
+JOIN request_type rt ON req.request_type_id = rt.id
+JOIN person col ON req.collaborator_id = col.id
+WHERE req.answer IS NULL
+           ");
+
+$recupRequetesCollab->execute();
+$requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
 ?>
 
 
@@ -38,51 +59,23 @@ include '../../includes/header2.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td data-label="Type de demande">Congé sans solde</td>
-                        <td data-label="Collaborateur">Lucas Dupas</td>
-                        <td data-label="Date de début">03/01/2024 08:00</td>
-                        <td data-label="Date de fin">10/01/2024 08:00</td>
-                        <td data-label="Nb jours">0.5 jours</td>
-                        <td data-label="Statut">Validé</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Type de demande">Congé payé</td>
-                        <td data-label="Collaborateur">Jeff Martins</td>
-                        <td data-label="Date de début">29/12/2023 08:00</td>
-                        <td data-label="Date de fin">12/01/2024 08:00</td>
-                        <td data-label="Nb jours">8 jours</td>
-                        <td data-label="Statut">Validé</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Type de demande">Congé sans solde</td>
-                        <td data-label="Collaborateur">Adrien Turcey</td>
-                        <td data-label="Date de début">05/01/2024 08:00</td>
-                        <td data-label="Date de fin">09/01/2024 08:00</td>
-                        <td data-label="Nb jours">4 jours</td>
-                        <td data-label="Statut">Refusé</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Type de demande">Congé maladie</td>
-                        <td data-label="Collaborateur">Nicolas Verdier</td>
-                        <td data-label="Date de début">10/01/2024 08:00</td>
-                        <td data-label="Date de fin">15/01/2024 08:00</td>
-                        <td data-label="Nb jours">0.5 jours</td>
-                        <td data-label="Statut">Validé</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Type de demande">Congé sans solde</td>
-                        <td data-label="Collaborateur">Jeff Martins</td>
-                        <td data-label="Date de début">28/12/2023 08:00</td>
-                        <td data-label="Date de fin">07/01/2024 08:00</td>
-                        <td data-label="Nb jours">10 jours</td>
-                        <td data-label="Statut">Validé</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
+                    <?php
+                    if (!empty($requetes)) {
+                        foreach ($requetes as $requete) {
+                            echo "<tr>";
+                            echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
+                            echo "<td data-label='Nb jours'>"  . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";
+                            echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
+                            echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
+                            echo "<td data-label='Date de fin'>" . 'Ca arrrive' . "</td>";
+                            echo "<td data-label='Demandé le'>" . htmlspecialchars($requete['statut']) . "</td>";
+                            echo "<td><button class='detailsButton'>Détails</button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>Aucune demande trouvée.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </section>
