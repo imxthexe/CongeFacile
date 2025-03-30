@@ -4,9 +4,16 @@ $titre = 'Historique des demandes en attente';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 
-// $recupNombrePostes = $bdd->prepare('');
-// $recupNombrePostes->execute();
-// $Postes = $recupNombrePostes->fetchAll(pdo::FETCH_ASSOC);
+$recupNombrePostes = $bdd->prepare("SELECT 
+                de.id AS department_id, 
+                de.name AS department,
+                COUNT(per.id) AS total_person
+            FROM department de
+            LEFT JOIN person per ON per.department_id = de.id
+            GROUP BY de.id, de.name");
+$recupNombrePostes->execute();
+$Postes = $recupNombrePostes->fetchAll(pdo::FETCH_ASSOC);
+var_dump($Postes);
 
 ?>
 

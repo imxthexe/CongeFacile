@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $titre = "mot_de_passe oublié ";
 
 include '../../includes/database.php';
