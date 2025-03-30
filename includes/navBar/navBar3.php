@@ -62,7 +62,7 @@
                 <img src="https://placehold.co/60x60" alt="profile">
             </div>
             <div>
-                <p class="name"><?php echo $_SESSION['utilisateur']['prenom'] . ' ' . $_SESSION['utilisateur']['nom'] ?></p>
+                <p class="name"><?php $_SESSION['utilisateur']['prenom'] . ' ' . $_SESSION['utilisateur']['nom'] ?></p>
                 <p class="role"><?= $_SESSION['utilisateur']['role'] ?></p>
             </div>
         </div>
