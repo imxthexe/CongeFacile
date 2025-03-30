@@ -146,7 +146,7 @@ header img {
 }
 
 .navBar .link nav hr {
-    margin: 20px 20px 20px 40px;
+    margin: 20px 0 20px 40px;
     width: 260px;
 }
 
@@ -233,8 +233,8 @@ header img {
 .navBar .profile {
     display: flex;
     align-items: center;
-    padding: 20px 0;
-    margin: 0 auto;
+    padding: 20px 0 ;
+    margin: 0 0 0 40px;
 }
 
 .navBar .profile .img img {
