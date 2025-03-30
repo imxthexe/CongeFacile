@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="flex">
-    <?php include '../../includes/navBar/navBar3.php' ?>
+    <?php include '../../includes/navBar/navBar4.php' ?>
     <div class=" page">
         <div class="connexion">
             <h1>Mot de passe oublié</h1>
@@ -66,6 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <input style="font-size: 18px;" type="submit" value="Demander à réinitialiser mon mot de passe" class="submitMDP">
         </form>
-        <p><a href="../commun/connexion.php">Cliquez ici</a> pour retourner à la page de connexion</p>
+        <p><a href="../../pages/commun/index.php">Cliquez ici</a> pour retourner à la page de connexion</p>
     </div>
 </div>
