@@ -63,7 +63,7 @@ p a {
     font-weight: 800;
 }
 
-.messageSuccès {
+.messageSucces {
     position: absolute;
     background: rgb(68, 124, 68);
     border: green;
@@ -77,6 +77,12 @@ p a {
     align-items: center;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.hiddenMessageSucces {
+    transform: translateX(-100%);
+    opacity: 0;
 }
 
 @font-face {

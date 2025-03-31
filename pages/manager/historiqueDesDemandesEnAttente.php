@@ -21,7 +21,7 @@ $recupRequetesCollab = $bdd->prepare("SELECT
 FROM request req
 JOIN request_type rt ON req.request_type_id = rt.id
 JOIN person col ON req.collaborator_id = col.id
-WHERE req.answer IS NULL
+
            ");
 
 $recupRequetesCollab->execute();
