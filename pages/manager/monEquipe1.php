@@ -5,19 +5,19 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
-$querry = $bdd->prepare("SELECT 
-                        p.id, 
-                        p.last_name, 
-                        p.first_name, 
-                        p.manager_id, 
-                        d.name AS department_name, 
-                        po.name AS position_name, 
-                        p.alert_new_request, 
-                        p.alert_on_answer, 
-                        p.alert_before_vacation
-                        FROM person p
-                        LEFT JOIN department d ON p.department_id = d.id
-                        LEFT JOIN position po ON p.position_id = po.id;
+$querry = $bdd->prepare(
+    "SELECT 
+    p.last_name AS Nom,
+    p.first_name AS Prénom,
+    u.email AS Email,
+    d.name AS Département,
+    r.created_at AS Date_Demande
+    FROM request r
+    JOIN person p ON r.collaborator_id = p.id
+    JOIN user u ON p.id = u.person_id
+    JOIN department d ON p.department_id = d.id
+    ORDER BY r.created_at DESC;
+
 ");
 
 $querry->execute();
