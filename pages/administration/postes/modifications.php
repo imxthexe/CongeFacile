@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['poste'] = 'Veuillez changer le nom pour le modifier';
     }
 
-    var_dump($data, $id);
 
     if (empty($errors)) {
         $ModifNomPoste = $bdd->prepare("UPDATE department
