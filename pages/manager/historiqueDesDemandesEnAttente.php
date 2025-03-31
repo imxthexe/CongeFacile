@@ -64,7 +64,7 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
                     if (!empty($requetes)) {
 
                         foreach ($requetes as $requete) {
-                            
+
                             echo "<tr>";
                             echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                             echo "<td data-label='Nb jours'>"  . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";

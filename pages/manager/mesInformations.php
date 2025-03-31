@@ -3,6 +3,7 @@ session_start();
 $titre = 'Mes informations';
 include '../../includes/database.php';
 include '../../includes/header2.php';
+include '../../includes/verifSecuriteManager.php';
 
 ?>
 <link rel="stylesheet" href="../../style.css" />
