@@ -4,7 +4,27 @@ $titre = 'Mes informations';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 
+$querry = $bdd->prepare("SELECT 
+                        p.id, 
+                        p.last_name, 
+                        p.first_name, 
+                        p.manager_id, 
+                        d.name AS department_name, 
+                        po.name AS position_name, 
+                        p.alert_new_request, 
+                        p.alert_on_answer, 
+                        p.alert_before_vacation
+                        FROM person p
+                        LEFT JOIN department d ON p.department_id = d.id
+                        LEFT JOIN position po ON p.position_id = po.id;
+");
+
+$querry->execute();
+$Postes = $querry->fetchAll(pdo::FETCH_ASSOC);
+
+
 ?>
+
 <link rel="stylesheet" href="../../style.css" />
 
 <div class="flex">
@@ -35,46 +55,22 @@ include '../../includes/header2.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td data-label="Nom">Martins</td>
-                        <td data-label="Prénom">Jeff</td>
-                        <td data-label="Adresse email">j.martins@mentalworks.fr</td>
-                        <td data-label="Poste">Directeur technique</td>
-                        <td data-label="Nb congés posés sur l'année">12</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom">Turcey</td>
-                        <td data-label="Prénom">Adrien</td>
-                        <td data-label="Adresse email">a.turcey@mentalworks.fr</td>
-                        <td data-label="Poste">Lead Développeur</td>
-                        <td data-label="Nb congés posés sur l'année">8</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom">Beharien</td>
-                        <td data-label="Prénom">Matthieu</td>
-                        <td data-label="Adresse email">m.beharien@mentalworks.fr</td>
-                        <td data-label="Poste">Développeur Web</td>
-                        <td data-label="Nb congés posés sur l'année">4</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom">Rivien</td>
-                        <td data-label="Prénom">Mathias</td>
-                        <td data-label="Adresse email">m.rivien@mentalworks.fr</td>
-                        <td data-label="Poste">Développeur Web</td>
-                        <td data-label="Nb congés posés sur l'année">3</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom">Dupas</td>
-                        <td data-label="Prénom">Lucas</td>
-                        <td data-label="Adresse email">l.dupas@mentalworks.fr</td>
-                        <td data-label="Poste">Test</td>
-                        <td data-label="Nb congés posés sur l'année">5</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
+
+                    <?php foreach ($managers as $manager): ?>
+
+
+                        <tr>
+                            <td data-label="Nom">Martins</td>
+                            <td data-label="Prénom">Jeff</td>
+                            <td data-label="Adresse email">j.martins@mentalworks.fr</td>
+                            <td data-label="Poste">Directeur technique</td>
+                            <td data-label="Nb congés posés sur l'année">12</td>
+                            <td><a href="monEquipe2.php"><button class="detailsButton">Détails</button></a></td>
+                        </tr>
+
+                    <?php endforeach; ?>
+
+
                 </tbody>
             </table>
         </section>
