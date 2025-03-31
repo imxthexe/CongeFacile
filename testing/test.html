@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <a href="#" class="link">Lien 1</a>
+    <a href="#" class="link">Lien 2</a>
+    
+    <script>
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function() {
+            document.querySelectorAll(".link").forEach(el => el.style.color = ""); // Réinitialise les autres liens
+            this.style.color = "red"; // Applique la couleur au lien cliqué
+        });
+    });
+    </script>
+    
+    
+</body>
+</html>

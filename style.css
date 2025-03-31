@@ -189,7 +189,7 @@ header img {
     width: 100%;
 }
 
-.navBar .link nav ul a:focus {
+.active-link {
     color: var(--color_btn);
 
     li {
@@ -235,15 +235,6 @@ header img {
 }
 
 
-.navBar .link nav details ul a:focus {
-    color: var(--color_btn);
-
-    li {
-        background-color: white;
-        border-right: 0px;
-        color: var(--color_title);
-    }
-}
 
 .navBar .profile {
     display: flex;
@@ -914,7 +905,7 @@ input[type=submit] {
     }
 }
 
-</style>
+
 /* FIN PAGE MES INFOS COLLAB  */
 
 
