@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $requeteNouvelleDemande->execute();
 }
 
-
+/* il faut récuperer la liste des noms des type de requetes pour le select du formulaire*/
 
 
 ?>
