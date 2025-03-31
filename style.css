@@ -63,6 +63,21 @@ p a {
     font-weight: 800;
 }
 
+.messageSuccès {
+    position: absolute;
+    background: rgb(68, 124, 68);
+    border: green;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    font-size: 25px;
+    z-index: 99;
+    top: 50%;
+    align-items: center;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 
 @font-face {
     font-family: "Epilogue";

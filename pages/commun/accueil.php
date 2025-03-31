@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include '../../includes/verifSession.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
