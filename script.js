@@ -1,15 +1,23 @@
 let messageSucces = document.getElementById('messageSucces');
 
-// Fonction pour afficher le message
-function showMessage() {
-    messageSucces.classList.add('show');
 
-    // Masquer après 2 secondes
-    setTimeout(() => {
-        messageSucces.classList.remove('show');
-        messageSucces.classList.add('hide');
-    }, 2000);
+if (!localStorage.getItem('messageShown')) {
+    function showMessage() {
+        messageSucces.classList.add('show');
+
+
+        setTimeout(() => {
+            messageSucces.classList.remove('show');
+            messageSucces.classList.add('hide');
+
+
+            localStorage.setItem('messageShown', 'true');
+        }, 2000);
+    }
+
+
+    showMessage();
+} else {
+
+    messageSucces.style.display = 'none';
 }
-
-// Exécuter la fonction pour voir l'effet
-showMessage();
