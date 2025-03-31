@@ -6,30 +6,6 @@ include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
 
-$id = $_GET['id'];
-
-// $recupRequest_name = $bdd->prepare('SELECT name FROM department WHERE id = :id');
-// $recupRequest_name->bindParam(':id', $id);
-// $recupRequest_name->execute();
-// $name = $recupRequest_name->fetch(pdo::FETCH_ASSOC);
-
-$data = [];
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $data = $_POST;
-
-
-        $querry = $bdd->prepare("UPDATE department
-                                SET name = :nom
-                                WHERE id = :id");
-                                
-        $querry->bindValue(':nom', $data['poste']);
-        $querry->bindValue(':id', $id);
-        $querry->execute();
-        header('Location: postes.php');
-}
 
 
 ?>
@@ -153,3 +129,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
