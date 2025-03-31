@@ -105,17 +105,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
+
+
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="userDirection">Direction/Service - champ obligatoire</label>
             <select id="userDirection" name="userDirection" required>
-              <option value="1" <?php echo ($manager["department_id"] == 1) ? 'selected' : ''; ?>>BU Symfony</option>
+            <option value="1" <?php echo ($manager["department_id"] == 1) ? 'selected' : ''; ?>>BU Symfony</option>
               <option value="2" <?php echo ($manager["department_id"] == 2) ? 'selected' : ''; ?>>BU Wordpress</option>
               <option value="3" <?php echo ($manager["department_id"] == 3) ? 'selected' : ''; ?>>BU Applications mobiles</option>
               <option value="4" <?php echo ($manager["department_id"] == 4) ? 'selected' : ''; ?>>BU Marketing</option>
             </select>
           </div>
+          <div class="fieldGroup">
+            <label for="userPoste">Poste - champ obligatoire</label>
+            <select id="userPoste" name="userPoste" required>
+              <option value="Directeur technique">Directeur technique</option>
+              <option value="Alternant développeur" selected>Alternant développeur</option>
+              <option value="Développeur Web">Développeur Web</option>
+              <option value="Graphiste">Graphiste</option>
+            </select>
+          </div>
         </div>
+
+        <label for="userManager">Manager</label>
+          <select id="userManager" name="userManager">
+            <option value="Frédéric Salesse" selected>Frédéric Salesse</option>
+            <option value="Olivier Salesse">Olivier Salesse</option>
+            <option value="Jean-Noël Martin">Jean-Noël Martin</option>
+            <option value="Matthias Rivien">Matthias Rivien</option>
+          </select>
+
+          <div class="inlineFields">
+            <div class="fieldGroup">
+              <label for="newPassword">Nouveau mot de passe</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword" />
+            </div>
+            <div class="fieldGroup">
+              <label for="confirmPassword">Confirmation de mot de passe</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword" />
+            </div>
+          </div>
+
+        
 
         <div class="btnContainer">
           <button type="submit" name="delete" class="deleteBtn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">Supprimer le compte</button>
