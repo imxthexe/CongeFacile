@@ -4,6 +4,7 @@ $titre = 'Historique des demandes en attente';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 
+
 $recupRequetesCollab = $bdd->prepare("SELECT 
     col.last_name AS collaborator_last_name,
     col.first_name AS collaborator_first_name,
@@ -61,6 +62,7 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
                 <tbody>
                     <?php
                     if (!empty($requetes)) {
+
                         foreach ($requetes as $requete) {
                             echo "<tr>";
                             echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
