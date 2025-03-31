@@ -50,6 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['dateFin'] = 'Veuillez renseigner votre dernier jour de congé';
   }
 
+  if ($data['dateFin'] <= $data['dateDebut']) {
+    $errors['dateFin'] = "Durée de congé incorrecte";
+  }
+
   if (empty($data['nbJours'])) {
     $errors['nbJours'] = 'Veuillez renseigner la durée de votre congé ci-dessus';
   } else if (filter_var($data['nbJours'], FILTER_VALIDATE_INT) === false) {
@@ -61,22 +65,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $request_typeID = $idRequest_type['id'];
   $department_id = $RecupDepartment_ID['department_id'];
 
-  $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
+  if (empty($errors)) {
+    $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
     (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
     VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
-  $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
-  $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
-  $requeteNouvelleDemande->bindParam(':department_id', $department_id);
-  $requeteNouvelleDemande->bindParam(':created_at', $date);
-  $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
-  $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
-  $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
-  $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
-  $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
-  $requeteNouvelleDemande->execute();
+    $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
+    $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
+    $requeteNouvelleDemande->bindParam(':department_id', $department_id);
+    $requeteNouvelleDemande->bindParam(':created_at', $date);
+    $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
+    $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
+    $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+    $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
+    $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
+    $requeteNouvelleDemande->execute();
+    header("Location: historiqueDesDemandes.php");
+  }
+
+  $requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
+  $requeteRecupTypeDeConge->execute();
+  $TypeConge = $requeteRecupTypeDeConge->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/* il faut récuperer la liste des noms des type de requetes pour le select du formulaire*/
+/* il faut récuperer la liste des noms des type de requetes pour le select du formulaire et faire un for each*/
 
 
 ?>
@@ -91,24 +102,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Effectuer une nouvelle demande</h2>
       <form class="nouvelleDemandeForm" method="POST">
         <label for="typeDemande">Type de demande</label>
-        <select id="typeDemande" name="typeDemande" required value="<?php afficheValeur('typeDemande', $data) ?>">
+        <select id="typeDemande" name="typeDemande" required value="<?php echo afficheValeur('typeDemande', $data) ?>">
           <option value="">Sélectionner un type</option>
           <option value="Congé payé">Congé payé</option>
           <option value="Congé sans solde">Congé sans solde</option>
           <option value="Congé maladie">Congé maladie</option>
         </select>
-        <?php afficheErreur('typeDemande', $errors) ?>
+        <?= afficheErreur('typeDemande', $errors) ?>
 
-        <div class="inlineFields">
+        <div class="inlineFields block">
           <div class="fieldGroup">
             <label for="dateDebut">Date début</label>
-            <input type="date" id="dateDebut" name="dateDebut" required value="<?php afficheValeur('dateDebut', $data) ?>" />
-            <?php afficheErreur('dateDebut', $errors) ?>
+            <input type="date" id="dateDebut" name="dateDebut" required value="<?= afficheValeur('dateDebut', $data) ?>" />
+            <?= afficheErreur('dateDebut', $errors) ?>
           </div>
           <div class="fieldGroup">
             <label for="dateFin">Date de fin</label>
-            <input type="date" id="dateFin" name="dateFin" required value="<?php afficheValeur('dateFin', $data) ?>" />
-            <?php afficheErreur('dateFin', $errors) ?>
+            <input type="date" id="dateFin" name="dateFin" required value="<?= afficheValeur('dateFin', $data) ?>" />
+            <?= afficheErreur('dateFin', $errors) ?>
           </div>
         </div>
 

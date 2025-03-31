@@ -806,6 +806,10 @@ input[type=submit] {
     margin-bottom: 20px;
 }
 
+.block {
+    display: block !important;
+}
+
 .page .inlineFields .fieldGroup {
     display: flex;
     flex-direction: column;
