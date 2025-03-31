@@ -5,8 +5,13 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
+$id = $_SESSION['utilisateur']['id'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+  
+}
 
 ?>
 
@@ -129,24 +134,3 @@ include '../../includes/verifSecuriteManager.php';
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
