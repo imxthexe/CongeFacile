@@ -18,10 +18,11 @@ $querry = $bdd->prepare(
     JOIN department d ON p.department_id = d.id
     ORDER BY r.created_at DESC;
 
-");
+"
+);
 
 $querry->execute();
-$Postes = $querry->fetchAll(pdo::FETCH_ASSOC);
+$managers = $querry->fetchAll(pdo::FETCH_ASSOC);
 
 
 ?>
@@ -56,20 +57,21 @@ $Postes = $querry->fetchAll(pdo::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if (!empty($managers)): ?>
+                        <?php foreach ($managers as $manager): ?>
 
-                    <?php foreach ($managers as $manager): ?>
 
+                            <tr>
+                                <td data-label="Nom"> <?php echo htmlspecialchars($manager["Nom"]) ?></td>
+                                <td data-label="Prénom"> <?php echo htmlspecialchars($manager["Prénom"]) ?></td>
+                                <td data-label="Adresse email"> <?php echo htmlspecialchars($manager["Email"]) ?></td>
+                                <td data-label="Poste"> <?php echo htmlspecialchars($manager["Département"]) ?></td>
+                                <td data-label="Nb congés posés sur l'année"> <?php echo htmlspecialchars($manager["Date_Demande"]) ?></td>
+                                <td><a href="monEquipe2.php"><button class="detailsButton">Détails</button></a></td>
+                            </tr>
 
-                        <tr>
-                            <td data-label="Nom">Martins</td>
-                            <td data-label="Prénom">Jeff</td>
-                            <td data-label="Adresse email">j.martins@mentalworks.fr</td>
-                            <td data-label="Poste">Directeur technique</td>
-                            <td data-label="Nb congés posés sur l'année">12</td>
-                            <td><a href="monEquipe2.php"><button class="detailsButton">Détails</button></a></td>
-                        </tr>
-
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
 
                 </tbody>
