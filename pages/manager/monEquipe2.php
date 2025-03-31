@@ -5,7 +5,35 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
+
+$id = $_GET['id'];
+
+// $recupRequest_name = $bdd->prepare('SELECT name FROM department WHERE id = :id');
+// $recupRequest_name->bindParam(':id', $id);
+// $recupRequest_name->execute();
+// $name = $recupRequest_name->fetch(pdo::FETCH_ASSOC);
+
+$data = [];
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $data = $_POST;
+
+
+        $querry = $bdd->prepare("UPDATE department
+                                SET name = :nom
+                                WHERE id = :id");
+                                
+        $querry->bindValue(':nom', $data['poste']);
+        $querry->bindValue(':id', $id);
+        $querry->execute();
+        header('Location: postes.php');
+}
+
+
 ?>
+
 <link rel="stylesheet" href="../../style.css" />
 
 
@@ -13,7 +41,7 @@ include '../../includes/verifSecuriteManager.php';
   <?php include "../../includes/navBar/navBar2.php"; ?>
   <div class="containerUserDetail page">
     <section class="userDetailSection">
-      <h2>Lucas Dupas</h2>
+      <h2><?php echo $_SESSION['utilisateur']['nom'] . " " . $_SESSION['utilisateur']['prenom'] ?></h2>
       <div class="profilRow">
         <label class="switchWrapper">
           <input type="checkbox" id="profilActif" />
@@ -28,7 +56,7 @@ include '../../includes/verifSecuriteManager.php';
           type="email"
           id="userEmail"
           name="userEmail"
-          value="j.martins@mentalworks.fr"
+          value="<?php echo $_SESSION['utilisateur']['email'] ?>"
           required />
 
         <div class="inlineFields">
@@ -38,7 +66,7 @@ include '../../includes/verifSecuriteManager.php';
               type="text"
               id="userLastName"
               name="userLastName"
-              value="Martins"
+              value="<?php echo $_SESSION['utilisateur']['nom'] ?>"
               required />
           </div>
           <div class="fieldGroup">
@@ -47,7 +75,7 @@ include '../../includes/verifSecuriteManager.php';
               type="text"
               id="userFirstName"
               name="userFirstName"
-              value="Jeff"
+              value="<?php echo $_SESSION['utilisateur']['role'] ?>"
               required />
           </div>
         </div>
@@ -107,6 +135,7 @@ include '../../includes/verifSecuriteManager.php';
     </section>
   </div>
 </div>
+
 <script>
   function loadProfilActif() {
     const profilActif = localStorage.getItem("profilActif") === "true";
@@ -120,6 +149,7 @@ include '../../includes/verifSecuriteManager.php';
   }
   window.onload = loadProfilActif;
 </script>
+
 </body>
 
 </html>
