@@ -63,27 +63,36 @@ p a {
     font-weight: 800;
 }
 
-.messageSucces {
+.message {
     position: absolute;
-    background: rgb(68, 124, 68);
+    background: var(--color_btn);
     border: green;
     color: white;
     width: fit-content;
     height: fit-content;
     padding: 20px;
     font-size: 25px;
-    z-index: 99;
+    left: 20px;
     top: 50%;
+    z-index: 99;
     align-items: center;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    border-radius: 10px;
+    opacity: 1;
+    transition: transform 0.5s ease-out;
 }
 
-.hiddenMessageSucces {
-    transform: translateX(-100%);
-    opacity: 0;
+.show {
+    right: 50px;
+    opacity: 1;
 }
+
+.hide {
+    left: -600px;
+    transition: 5s;
+}
+
+
+
 
 @font-face {
     font-family: "Epilogue";

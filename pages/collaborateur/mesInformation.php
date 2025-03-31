@@ -3,7 +3,8 @@ session_start();
 $titre = 'Historique des demandes';
 include '../../includes/database.php';
 include '../../includes/functions.php';
-include '../../includes/header2.php'
+include '../../includes/header2.php';
+include '../../includes/verifSecuriteCollaborateur.php';
 
 ?>
 

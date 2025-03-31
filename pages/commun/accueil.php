@@ -2,6 +2,7 @@
 session_start();
 
 include '../../includes/verifSession.php';
+include '../../includes/verifSecuriteCollaborateur.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +95,7 @@ include '../../includes/verifSession.php';
     </div>
 
 
-
+    <script src="../../script.js"></script>
 </body>
 
 </html>

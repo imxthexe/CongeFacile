@@ -5,6 +5,7 @@ $titre = 'Nouvelle demande';
 include "../../includes/database.php";
 include "../../includes/header2.php";
 include "../../includes/functions.php";
+include '../../includes/verifSecuriteCollaborateur.php';
 
 $data = [];
 $errors = [];
