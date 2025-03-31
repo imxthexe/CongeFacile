@@ -21,7 +21,7 @@ $recupRequetesCollab = $bdd->prepare("SELECT
 FROM request req
 JOIN request_type rt ON req.request_type_id = rt.id
 JOIN person col ON req.collaborator_id = col.id
-WHERE req.answer IS NULL
+
            ");
 
 $recupRequetesCollab->execute();
@@ -64,6 +64,7 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
                     if (!empty($requetes)) {
 
                         foreach ($requetes as $requete) {
+                            
                             echo "<tr>";
                             echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                             echo "<td data-label='Nb jours'>"  . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";

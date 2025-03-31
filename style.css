@@ -63,6 +63,36 @@ p a {
     font-weight: 800;
 }
 
+.message {
+    position: absolute;
+    background: var(--color_btn);
+    border: green;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    font-size: 25px;
+    left: 20px;
+    top: 50%;
+    z-index: 99;
+    align-items: center;
+    border-radius: 10px;
+    opacity: 0;
+    transition: transform 0.5s ease-out;
+}
+
+.show {
+    right: 50px;
+    opacity: 1;
+}
+
+.hide {
+    left: -600px;
+    transition: 5s;
+}
+
+
+
 
 @font-face {
     font-family: "Epilogue";
@@ -2408,6 +2438,96 @@ input[type=submit] {
         padding: 100px 20px 0 20px;
     }
 }
+
+
+/* FIN D'AJOUT*/
+
+
+
+
+.containerManagerDetail .managerDetail {
+    padding: 20px;
+    width: 75%;
+}
+
+.containerManagerDetail .managerDetail h2 {
+    font-size: 1.6rem;
+    color: var(--color_title);
+    margin-bottom: 30px;
+}
+
+.containerManagerDetail .managerEditForm {
+    max-width: 600px;
+}
+
+.containerManagerDetail .managerEditForm label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.containerManagerDetail .managerEditForm input[type="text"],
+.containerManagerDetail .managerEditForm input[type="email"],
+.containerManagerDetail .managerEditForm input[type="password"] {
+    width: 350px;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#managerEmail {
+    padding-left: 50px;
+}
+
+.containerManagerDetail .managerEditForm input {
+    margin-bottom: 20px;
+}
+
+.containerManagerDetail .inlineFields {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.containerManagerDetail .inlineFields .fieldGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerManagerDetail .managerUpdateBtn {
+    background-color: var(--color_btn);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 12px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.containerManagerDetail .managerUpdateBtn:hover {
+    background-color: #1565C0;
+}
+
+@media screen and (max-width: 1080px) {
+    .containerManagerDetail {
+        padding: 100px 20px 0 20px;
+    }
+
+    .containerManagerDetail .inlineFields {
+        display: block;
+    }
+
+    .containerManagerDetail .inlineFields .fieldGroup {
+        margin-bottom: 20px;
+    }
+}
+
+
+
+/*AJOUT TYPE DE DEMANDE */
 
 
 /* FIN D'AJOUT*/

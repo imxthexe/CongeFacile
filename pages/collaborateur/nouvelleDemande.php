@@ -5,6 +5,7 @@ $titre = 'Nouvelle demande';
 include "../../includes/database.php";
 include "../../includes/header2.php";
 include "../../includes/functions.php";
+include '../../includes/verifSecuriteCollaborateur.php';
 
 $data = [];
 $errors = [];
@@ -75,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $requeteNouvelleDemande->execute();
 }
 
-
+/* il faut récuperer la liste des noms des type de requetes pour le select du formulaire*/
 
 
 ?>

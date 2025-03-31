@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include '../../includes/verifSession.php';
+include '../../includes/verifSecuriteCollaborateur.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +95,7 @@ session_start();
     </div>
 
 
-
+    <script src="../../script.js"></script>
 </body>
 
 </html>

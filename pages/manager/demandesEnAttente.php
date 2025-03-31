@@ -3,6 +3,8 @@ session_start();
 $titre = 'Nouvelle demande';
 include '../../includes/database.php';
 include '../../includes/header2.php';
+include '../../includes/verifSession.php';
+include '../../includes/verifSecuriteManager.php';
 
 $recupRequetesCollab = $bdd->prepare("SELECT 
                 col.last_name AS collaborator_last_name,
@@ -73,10 +75,12 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
             </table>
         </section>
     </div>
+    <script src="../../script.js"></script>
 </div>
 
 <?php
 
 include '../../includes/footer.php';
+
 
 ?>
