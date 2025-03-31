@@ -3,6 +3,9 @@
 <body>
     <input type="checkbox" id="checkbox">
     <label for="checkbox" class="toggle">
+        <div id="bar1" class="bars"></div>
+        <div id="bar2" class="bars"></div>
+        <div id="bar3" class="bars"></div>
     </label>
     <div class="navBar">
         <div class="link">
