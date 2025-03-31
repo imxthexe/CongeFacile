@@ -68,6 +68,7 @@ $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
                     <?php
                     if (!empty($requetes)) {
                         foreach ($requetes as $requete) {
+                            
                             echo "<tr>";
                             echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                             echo "<td data-label='Demandé le'>" . htmlspecialchars($requete['request_date']) . "</td>";
