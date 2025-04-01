@@ -8,16 +8,22 @@ include '../../includes/verifSecuriteManager.php';
 $id = $_SESSION['utilisateur']['id']; // ID de l'utilisateur connecté
 
 // Récupération des informations de l'utilisateur connecté
-$query = $bdd->prepare("SELECT 
+$query = $bdd->prepare("
+    SELECT 
         p.last_name AS Nom,
         p.first_name AS Prénom,
         u.email AS Email,
         d.name AS Département,
-        d.id AS department_id
+        d.id AS department_id,
+        pos.id AS position_id,
+        pos.name AS Position,
+        p.manager_id AS manager_id
     FROM user u
     JOIN person p ON u.person_id = p.id
     JOIN department d ON p.department_id = d.id
-    WHERE u.id = :id");
+    JOIN positions pos ON p.position_id = pos.id
+    WHERE u.id = :id
+");
 $query->bindParam(':id', $id);
 $query->execute();
 $manager = $query->fetch(PDO::FETCH_ASSOC);
@@ -27,18 +33,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = $_POST['userLastName'];
         $prenom = $_POST['userFirstName'];
         $email = $_POST['userEmail'];
-        $department_id = $_POST['userDirection']; // ID du département
+        $department_id = $_POST['userDepartment']; // ID du département
+        $position_id = $_POST['userPosition']; // ID du poste
+        $manager_id = $_POST['userManager']; // ID du manager
         $newPassword = $_POST['newPassword'];
         $confirmPassword = $_POST['confirmPassword'];
 
         try {
             $bdd->beginTransaction();
 
-            // Mise à jour du nom et prénom dans la table person
-            $queryPerson = $bdd->prepare("UPDATE person SET last_name = :nom, first_name = :prenom, department_id = :department WHERE id = (SELECT person_id FROM user WHERE id = :id)");
+            // Mise à jour des informations dans la table person
+            $queryPerson = $bdd->prepare("
+                UPDATE person 
+                SET last_name = :nom, 
+                    first_name = :prenom, 
+                    department_id = :department, 
+                    position_id = :position, 
+                    manager_id = :manager 
+                WHERE id = (SELECT person_id FROM user WHERE id = :id)
+            ");
             $queryPerson->bindParam(':nom', $nom);
             $queryPerson->bindParam(':prenom', $prenom);
             $queryPerson->bindParam(':department', $department_id);
+            $queryPerson->bindParam(':position', $position_id);
+            $queryPerson->bindParam(':manager', $manager_id);
             $queryPerson->bindParam(':id', $id);
             $queryPerson->execute();
 
@@ -114,22 +132,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
-        <!-- Positoin -->
         <div class="inlineFields">
           <div class="fieldGroup">
-            <label for="userDirection">Direction/Service - champ obligatoire</label>
-            <select id="userDirection" name="userDirection" required>
+            <label for="userPosition">Poste - champ obligatoire</label>
+            <select id="userPosition" name="userPosition" required>
               <option value="1" <?php echo ($manager["position_id"] == 1) ? 'selected' : ''; ?>>Marketing</option>
-              <option value="2" <?php echo ($manager["position_id"] == 2) ? 'selected' : ''; ?>>Developpement web</option>
+              <option value="2" <?php echo ($manager["position_id"] == 2) ? 'selected' : ''; ?>>Développement Web</option>
             </select>
           </div>
-          <!-- departement -->
           <div class="fieldGroup">
-            <label for="userPoste">Poste - champ obligatoire</label>
-            <select id="userPoste" name="userPoste" required>
-              <option value="1" <?php echo ($manager["department_id"] == 1) ? 'selected' : ''; ?>>Collaborateur</option>
-              <option value="2" <?php echo ($manager["department_id"] == 2) ? 'selected' : ''; ?>>Manager</option>
-
+            <label for="userDepartment">Département - champ obligatoire</label>
+            <select id="userDepartment" name="userDepartment" required>
+              <option value="1" <?php echo ($manager["department_id"] == 1) ? 'selected' : ''; ?>>BU Symfony</option>
+              <option value="2" <?php echo ($manager["department_id"] == 2) ? 'selected' : ''; ?>>BU Wordpress</option>
             </select>
           </div>
         </div>
@@ -143,17 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword" />
+            <input type="password" id="newPassword" name="newPassword" />
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword" />
+            <input type="password" id="confirmPassword" name="confirmPassword" />
           </div>
         </div>
 
