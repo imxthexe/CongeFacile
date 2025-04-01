@@ -14,64 +14,73 @@ $query = $bdd->prepare("SELECT
         u.email AS Email,
         d.name AS Département,
         d.id AS department_id
-        FROM user u
-        JOIN person p ON u.person_id = p.id
-        JOIN department d ON p.department_id = d.id
-        WHERE u.id = :id
-");
-
+    FROM user u
+    JOIN person p ON u.person_id = p.id
+    JOIN department d ON p.department_id = d.id
+    WHERE u.id = :id");
 $query->bindParam(':id', $id);
 $query->execute();
 $manager = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['update'])) { // Mise à jour des informations
-    $nom = $_POST['userLastName'];
-    $prenom = $_POST['userFirstName'];
-    $email = $_POST['userEmail'];
-    $department_id = $_POST['userDirection']; // ID du département
+    if (isset($_POST['update'])) { // Mise à jour des informations
+        $nom = $_POST['userLastName'];
+        $prenom = $_POST['userFirstName'];
+        $email = $_POST['userEmail'];
+        $department_id = $_POST['userDirection']; // ID du département
+        $newPassword = $_POST['newPassword'];
+        $confirmPassword = $_POST['confirmPassword'];
 
-    try {
-      $bdd->beginTransaction();
+        try {
+            $bdd->beginTransaction();
 
-      // Mise à jour du nom et prénom dans la table person
-      $queryPerson = $bdd->prepare("UPDATE person SET last_name = :nom, first_name = :prenom, department_id = :department WHERE id = (SELECT person_id FROM user WHERE id = :id)");
-      $queryPerson->bindParam(':nom', $nom);
-      $queryPerson->bindParam(':prenom', $prenom);
-      $queryPerson->bindParam(':department', $department_id);
-      $queryPerson->bindParam(':id', $id);
-      $queryPerson->execute();
+            // Mise à jour du nom et prénom dans la table person
+            $queryPerson = $bdd->prepare("UPDATE person SET last_name = :nom, first_name = :prenom, department_id = :department WHERE id = (SELECT person_id FROM user WHERE id = :id)");
+            $queryPerson->bindParam(':nom', $nom);
+            $queryPerson->bindParam(':prenom', $prenom);
+            $queryPerson->bindParam(':department', $department_id);
+            $queryPerson->bindParam(':id', $id);
+            $queryPerson->execute();
 
-      // Mise à jour de l'email dans la table user
-      $queryUser = $bdd->prepare("UPDATE user SET email = :email WHERE id = :id");
-      $queryUser->bindParam(':email', $email);
-      $queryUser->bindParam(':id', $id);
-      $queryUser->execute();
+            // Mise à jour de l'email dans la table user
+            $queryUser = $bdd->prepare("UPDATE user SET email = :email WHERE id = :id");
+            $queryUser->bindParam(':email', $email);
+            $queryUser->bindParam(':id', $id);
+            $queryUser->execute();
 
-      $bdd->commit();
-      header("Location: monEquipe2.php");
-      exit;
-    } catch (Exception $e) {
-      $bdd->rollBack();
-      echo "Erreur lors de la mise à jour : " . $e->getMessage();
+            // Mise à jour du mot de passe si fourni et confirmé
+            if (!empty($newPassword) && $newPassword === $confirmPassword) {
+                $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+                $queryPassword = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
+                $queryPassword->bindParam(':password', $hashedPassword);
+                $queryPassword->bindParam(':id', $id);
+                $queryPassword->execute();
+            }
+
+            $bdd->commit();
+            header("Location: monEquipe2.php");
+            exit;
+        } catch (Exception $e) {
+            $bdd->rollBack();
+            echo "Erreur lors de la mise à jour : " . $e->getMessage();
+        }
+    } elseif (isset($_POST['delete'])) { // Suppression du compte
+        try {
+            $bdd->beginTransaction();
+
+            // Suppression de l'utilisateur
+            $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
+            $queryDeleteUser->bindParam(':id', $id);
+            $queryDeleteUser->execute();
+
+            $bdd->commit();
+            header("Location: monEquipe2.php");
+            exit;
+        } catch (Exception $e) {
+            $bdd->rollBack();
+            echo "Erreur lors de la suppression : " . $e->getMessage();
+        }
     }
-  } elseif (isset($_POST['delete'])) { // Suppression du compte
-    try {
-      $bdd->beginTransaction();
-
-      // Suppression de l'utilisateur et de la personne associée
-      $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
-      $queryDeleteUser->bindParam(':id', $id);
-      $queryDeleteUser->execute();
-
-      $bdd->commit();
-      header("Location: monEquipe2.php");
-      exit;
-    } catch (Exception $e) {
-      $bdd->rollBack();
-      echo "Erreur lors de la suppression : " . $e->getMessage();
-    }
-  }
 }
 ?>
 
@@ -104,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="userFirstName" name="userFirstName" value="<?php echo htmlspecialchars($manager["Prénom"]) ?>" required />
           </div>
         </div>
-
 
         <!-- Positoin -->
         <div class="inlineFields">
@@ -149,17 +157,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
-
-
         <div class="btnContainer">
-          <button type="submit" name="delete" class="deleteBtn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">Supprimer le compte</button>
+          <button type="submit" name="delete" class="deleteBtn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">Supprimer</button>
           <button type="submit" name="update" class="updateBtn">Mettre à jour</button>
         </div>
       </form>
     </section>
   </div>
 </div>
-
 </body>
-
 </html>
