@@ -5,9 +5,9 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
-$id = $_SESSION['utilisateur']['id']; // ID de l'utilisateur connecté
+$id = $_SESSION['utilisateur']['id'];
 
-// Récupération des informations de l'utilisateur connecté
+
 $query = $bdd->prepare("
     SELECT 
         p.last_name AS Nom,
@@ -18,39 +18,38 @@ $query = $bdd->prepare("
         pos.id AS position_id,
         pos.name AS Position,
         p.manager_id AS manager_id
-    FROM user u
-    JOIN person p ON u.person_id = p.id
-    JOIN department d ON p.department_id = d.id
-    JOIN positions pos ON p.position_id = pos.id
-    WHERE u.id = :id
+        FROM user u
+        JOIN person p ON u.person_id = p.id
+        JOIN department d ON p.department_id = d.id
+        JOIN positions pos ON p.position_id = pos.id
+        WHERE u.id = :id
 ");
 $query->bindParam(':id', $id);
 $query->execute();
 $manager = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['update'])) { // Mise à jour des informations
+    if (isset($_POST['update'])) {
         $nom = $_POST['userLastName'];
         $prenom = $_POST['userFirstName'];
         $email = $_POST['userEmail'];
-        $department_id = $_POST['userDepartment']; // ID du département
-        $position_id = $_POST['userPosition']; // ID du poste
-        $manager_id = $_POST['userManager']; // ID du manager
+        $department_id = $_POST['userDepartment'];
+        $position_id = $_POST['userPosition'];
+        $manager_id = $_POST['userManager'];
         $newPassword = $_POST['newPassword'];
         $confirmPassword = $_POST['confirmPassword'];
 
         try {
-            $bdd->beginTransaction();
+            $bdd->beginTransaction(); // fonction php qui permet de démarer une transaction et voir si tout va bien
 
-            // Mise à jour des informations dans la table person
-            $queryPerson = $bdd->prepare("
-                UPDATE person 
-                SET last_name = :nom, 
+            // update person
+            $queryPerson = $bdd->prepare("UPDATE person 
+                    SET last_name = :nom, 
                     first_name = :prenom, 
                     department_id = :department, 
                     position_id = :position, 
                     manager_id = :manager 
-                WHERE id = (SELECT person_id FROM user WHERE id = :id)
+                    WHERE id = (SELECT person_id FROM user WHERE id = :id)
             ");
             $queryPerson->bindParam(':nom', $nom);
             $queryPerson->bindParam(':prenom', $prenom);
@@ -60,16 +59,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $queryPerson->bindParam(':id', $id);
             $queryPerson->execute();
 
-            // Mise à jour de l'email dans la table user
-            $queryUser = $bdd->prepare("UPDATE user SET email = :email WHERE id = :id");
+            // Update email
+            $queryUser = $bdd->prepare("UPDATE user 
+                                        SET email = :email 
+                                        WHERE id = :id");
             $queryUser->bindParam(':email', $email);
             $queryUser->bindParam(':id', $id);
             $queryUser->execute();
 
-            // Mise à jour du mot de passe si fourni et confirmé
+            // mot de passe
             if (!empty($newPassword) && $newPassword === $confirmPassword) {
                 $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-                $queryPassword = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
+                $queryPassword = $bdd->prepare("UPDATE user 
+                                                SET password = :password 
+                                                WHERE id = :id");
                 $queryPassword->bindParam(':password', $hashedPassword);
                 $queryPassword->bindParam(':id', $id);
                 $queryPassword->execute();
@@ -82,11 +85,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $bdd->rollBack();
             echo "Erreur lors de la mise à jour : " . $e->getMessage();
         }
-    } elseif (isset($_POST['delete'])) { // Suppression du compte
+    } elseif (isset($_POST['delete'])) {
         try {
             $bdd->beginTransaction();
 
-            // Suppression de l'utilisateur
             $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
             $queryDeleteUser->bindParam(':id', $id);
             $queryDeleteUser->execute();
