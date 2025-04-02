@@ -3,6 +3,7 @@ session_start();
 $titre = 'Historique des demandes en attente';
 include '../../includes/database.php';
 include '../../includes/header2.php';
+include '../../includes/verifSecuriteManager.php';
 
 
 $recupRequetesCollab = $bdd->prepare("SELECT 

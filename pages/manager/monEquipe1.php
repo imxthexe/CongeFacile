@@ -11,18 +11,21 @@ $querry = $bdd->prepare(
     p.first_name AS Prénom,
     u.email AS Email,
     d.name AS Département,
-    r.created_at AS Date_Demande
-    FROM request r
-    JOIN person p ON r.collaborator_id = p.id
-    JOIN user u ON p.id = u.person_id
-    JOIN department d ON p.department_id = d.id
-    ORDER BY r.created_at DESC;
+    COALESCE(COUNT(r.id), 0) AS Nombre_Conge
+FROM person p
+JOIN user u ON p.id = u.person_id
+JOIN department d ON p.department_id = d.id
+LEFT JOIN request r ON p.id = r.collaborator_id 
+    AND YEAR(r.start_at) = YEAR(CURDATE()) 
+WHERE u.role = 'collaborateur' 
+GROUP BY p.id, p.last_name, p.first_name, u.email;
 
 "
 );
 
 $querry->execute();
 $managers = $querry->fetchAll(pdo::FETCH_ASSOC);
+var_dump($managers);
 
 
 ?>
@@ -66,7 +69,7 @@ $managers = $querry->fetchAll(pdo::FETCH_ASSOC);
                                 <td data-label="Prénom"> <?php echo htmlspecialchars($manager["Prénom"]) ?></td>
                                 <td data-label="Adresse email"> <?php echo htmlspecialchars($manager["Email"]) ?></td>
                                 <td data-label="Poste"> <?php echo htmlspecialchars($manager["Département"]) ?></td>
-                                <td data-label="Nb congés posés sur l'année"> <?php echo htmlspecialchars($manager["Date_Demande"]) ?></td>
+                                <td data-label="Nb congés posés sur l'année"> <?php echo htmlspecialchars($manager["Nombre_Conge"]) ?></td>
                                 <td><a href="monEquipe2.php"><button class="detailsButton">Détails</button></a></td>
                             </tr>
 
