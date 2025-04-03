@@ -7,7 +7,7 @@
 function afficheErreur(string $nomDuChamp, array $erreurs): string
 {
     if (isset($erreurs[$nomDuChamp])) {
-        return '<div class="errors" style="color: red; padding-bottom:30px;">' . $erreurs[$nomDuChamp] . '</span>';
+        return '<span class="errors" style="color: red; padding-bottom:30px;">' . $erreurs[$nomDuChamp] . '</span>';
     }
 
     return '';

@@ -4,8 +4,9 @@ $titre = 'Mes informations';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
+include '../../includes/functions.php';
 
-$id = $_SESSION['utilisateur']['id'];
+$id = $_GET['id'];
 
 
 $query = $bdd->prepare("
@@ -28,22 +29,23 @@ $query->bindParam(':id', $id);
 $query->execute();
 $manager = $query->fetch(PDO::FETCH_ASSOC);
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['update'])) {
-        $nom = $_POST['userLastName'];
-        $prenom = $_POST['userFirstName'];
-        $email = $_POST['userEmail'];
-        $department_id = $_POST['userDepartment'];
-        $position_id = $_POST['userPosition'];
-        $manager_id = $_POST['userManager'];
-        $newPassword = $_POST['newPassword'];
-        $confirmPassword = $_POST['confirmPassword'];
+  if (isset($_POST['update'])) {
+    $nom = $_POST['userLastName'];
+    $prenom = $_POST['userFirstName'];
+    $email = $_POST['userEmail'];
+    $department_id = $_POST['userDepartment'];
+    $position_id = $_POST['userPosition'];
+    $manager_id = $_POST['userManager'];
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
 
-        try {
-            $bdd->beginTransaction(); // fonction php qui permet de démarer une transaction et voir si tout va bien
+    try {
+      $bdd->beginTransaction(); // fonction php qui permet de démarer une transaction et voir si tout va bien
 
-            // update person
-            $queryPerson = $bdd->prepare("UPDATE person 
+      // update person
+      $queryPerson = $bdd->prepare("UPDATE person 
                     SET last_name = :nom, 
                     first_name = :prenom, 
                     department_id = :department, 
@@ -51,57 +53,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     manager_id = :manager 
                     WHERE id = (SELECT person_id FROM user WHERE id = :id)
             ");
-            $queryPerson->bindParam(':nom', $nom);
-            $queryPerson->bindParam(':prenom', $prenom);
-            $queryPerson->bindParam(':department', $department_id);
-            $queryPerson->bindParam(':position', $position_id);
-            $queryPerson->bindParam(':manager', $manager_id);
-            $queryPerson->bindParam(':id', $id);
-            $queryPerson->execute();
+      $queryPerson->bindParam(':nom', $nom);
+      $queryPerson->bindParam(':prenom', $prenom);
+      $queryPerson->bindParam(':department', $department_id);
+      $queryPerson->bindParam(':position', $position_id);
+      $queryPerson->bindParam(':manager', $manager_id);
+      $queryPerson->bindParam(':id', $id);
+      $queryPerson->execute();
 
-            // Update email
-            $queryUser = $bdd->prepare("UPDATE user 
+      // Update email
+      $queryUser = $bdd->prepare("UPDATE user 
                                         SET email = :email 
                                         WHERE id = :id");
-            $queryUser->bindParam(':email', $email);
-            $queryUser->bindParam(':id', $id);
-            $queryUser->execute();
+      $queryUser->bindParam(':email', $email);
+      $queryUser->bindParam(':id', $id);
+      $queryUser->execute();
 
-            // mot de passe
-            if (!empty($newPassword) && $newPassword === $confirmPassword) {
-                $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-                $queryPassword = $bdd->prepare("UPDATE user 
+      // mot de passe
+      if (!empty($newPassword) && $newPassword === $confirmPassword) {
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        $queryPassword = $bdd->prepare("UPDATE user 
                                                 SET password = :password 
                                                 WHERE id = :id");
-                $queryPassword->bindParam(':password', $hashedPassword);
-                $queryPassword->bindParam(':id', $id);
-                $queryPassword->execute();
-            }
+        $queryPassword->bindParam(':password', $hashedPassword);
+        $queryPassword->bindParam(':id', $id);
+        $queryPassword->execute();
+      }
 
-            $bdd->commit();
-            header("Location: monEquipe2.php");
-            exit;
-        } catch (Exception $e) {
-            $bdd->rollBack();
-            echo "Erreur lors de la mise à jour : " . $e->getMessage();
-        }
-    } elseif (isset($_POST['delete'])) {
-        try {
-            $bdd->beginTransaction();
 
-            $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
-            $queryDeleteUser->bindParam(':id', $id);
-            $queryDeleteUser->execute();
 
-            $bdd->commit();
-            header("Location: monEquipe2.php");
-            exit;
-        } catch (Exception $e) {
-            $bdd->rollBack();
-            echo "Erreur lors de la suppression : " . $e->getMessage();
-        }
+      $bdd->commit();
+      header("Location: monEquipe2.php");
+      exit;
+    } catch (Exception $e) {
+      $bdd->rollBack();
+      echo "Erreur lors de la mise à jour : " . $e->getMessage();
     }
+  } elseif (isset($_POST['delete'])) {
+    try {
+      $bdd->beginTransaction();
+
+      $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
+      $queryDeleteUser->bindParam(':id', $id);
+      $queryDeleteUser->execute();
+
+      $bdd->commit();
+      header("Location: monEquipe2.php");
+      exit;
+    } catch (Exception $e) {
+      $bdd->rollBack();
+      echo "Erreur lors de la suppression : " . $e->getMessage();
+    }
+  }
 }
+
+var_dump($manager);
 ?>
 
 <link rel="stylesheet" href="../../style.css" />
@@ -110,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include "../../includes/navBar/navBar2.php"; ?>
   <div class="containerUserDetail page">
     <section class="userDetailSection">
-      <h2><?php echo htmlspecialchars($manager["Nom"]) . " " . htmlspecialchars($manager["Prénom"]) ?></h2>
+      <h2><?php echo htmlspecialchars($manager["Prénom"]) . " " . htmlspecialchars($manager["Nom"]) ?></h2>
       <div class="profilRow">
         <label class="switchWrapper">
           <input type="checkbox" id="profilActif" />
@@ -121,16 +127,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <form class="userEditForm" method="POST">
         <label for="userEmail">Adresse email - champ obligatoire</label>
-        <input type="email" id="userEmail" name="userEmail" value="<?php echo htmlspecialchars($manager["Email"]) ?>" required />
+        <input type="email" id="userEmail" name="userEmail" value="<?php echo afficheValeur('Email', $manager) ?>" required />
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="userLastName">Nom de famille - champ obligatoire</label>
-            <input type="text" id="userLastName" name="userLastName" value="<?php echo htmlspecialchars($manager["Nom"]) ?>" required />
+            <input type="text" id="userLastName" name="userLastName" value="<?php echo afficheValeur('Nom', $manager) ?>" required />
           </div>
           <div class="fieldGroup">
             <label for="userFirstName">Prénom - champ obligatoire</label>
-            <input type="text" id="userFirstName" name="userFirstName" value="<?php echo htmlspecialchars($manager["Prénom"]) ?>" required />
+            <input type="text" id="userFirstName" name="userFirstName" value="<?php echo afficheValeur('Prénom', $manager) ?>" required />
           </div>
         </div>
 
@@ -177,4 +183,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 </body>
+
 </html>

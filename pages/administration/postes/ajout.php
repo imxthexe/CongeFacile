@@ -3,12 +3,23 @@ session_start();
 $titre = 'Historique des demandes en attente';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
+include '../../../includes/functions.php';
 
 $data = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
+
+    $recupPostes = $bdd->prepare('SELECT name FROM department');
+    $recupPostes->execute();
+    $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($Postes as $Poste) {
+        if ($Poste['name'] == $data['poste']) {
+            $errors['poste'] = 'Ce poste existe déja';
+        }
+    }
 
     if (empty($data['poste'])) {
         $errors['poste'] = 'Veuillez renseigner un nouveau type de congé';
@@ -36,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form class="editajoutForm" method="POST">
                 <label for="nomajoute">Nom du poste</label>
-                <input type="text" id="Poste" name="poste" placeholder="Développeur..." />
+                <input type="text" id="Poste" name="poste" placeholder="Développeur..." value="<?php echo afficheValeur('poste', $data) ?>" />
+                <?php echo afficheErreur('poste', $errors); ?>
 
                 <div class="actionButtons">
                     <button type="submit" class="updateBtn">Ajouter</button>

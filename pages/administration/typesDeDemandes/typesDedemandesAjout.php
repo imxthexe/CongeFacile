@@ -8,11 +8,22 @@ include '../../../includes/functions.php';
 $data = [];
 $errors = [];
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
+    $recupTypeDemandes = $bdd->prepare('SELECT name FROM request_type');
+    $recupTypeDemandes->execute();
+    $types = $recupTypeDemandes->fetchAll(PDO::FETCH_ASSOC);
+
     if (empty($data['type'])) {
-        $errors['type'] == 'Veuillez renseigner un nouveau type de congé';
+        $errors['type'] = 'Veuillez renseigner un nouveau type de congé';
+    }
+
+    foreach ($types as $type) {
+        if ($type['name'] == $data['type']) {
+            $errors['type'] = "Ce type de demande existe déjà ";
+        }
     }
 
     if (empty($errors)) {
@@ -37,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="nomType">Nom du type</label>
                 <input type="text" name="type" placeholder="Congé ..." value="<?php echo afficheValeur('type', $data); ?>" required>
                 <?php echo afficheErreur('type', $errors);  ?>
+
                 <div class="actionButtons">
                     <button type="submit" class="updateBtn">Ajouter</button>
                 </div>
