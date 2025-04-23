@@ -275,12 +275,12 @@ header img {
     font-size: 16px;
 }
 
-/* From Uiverse.io by vinodjangid07 */ 
+/* From Uiverse.io by vinodjangid07 */
 #checkbox {
     display: none;
-  }
-  
-  .toggle {
+}
+
+.toggle {
     position: relative;
     width: 40px;
     height: 40px;
@@ -291,57 +291,58 @@ header img {
     justify-content: center;
     gap: 10px;
     transition-duration: .5s;
-  }
-  
-  .bars {
+}
+
+.bars {
     width: 100%;
     height: 4px;
     background-color: #fff;
     border-radius: 4px;
-  }
-  
-  #bar2 {
+}
+
+#bar2 {
     transition-duration: .8s;
-  }
-  
-  #bar1,#bar3 {
+}
+
+#bar1,
+#bar3 {
     width: 70%;
-  }
-  
-  #checkbox:checked + .toggle .bars {
+}
+
+#checkbox:checked+.toggle .bars {
     position: absolute;
     transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar2 {
+}
+
+#checkbox:checked+.toggle #bar2 {
     transform: scaleX(0);
     transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar1 {
+}
+
+#checkbox:checked+.toggle #bar1 {
     width: 100%;
     transform: rotate(45deg);
     transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle #bar3 {
+}
+
+#checkbox:checked+.toggle #bar3 {
     width: 100%;
     transform: rotate(-45deg);
     transition-duration: .5s;
-  }
-  
-  #checkbox:checked + .toggle {
+}
+
+#checkbox:checked+.toggle {
     transition-duration: .5s;
     transform: rotate(180deg);
-  }
+}
 
 @media screen and (max-width: 1050px) {
 
     .toggle {
         right: 60px;
-        top:40px;
+        top: 40px;
         position: fixed;
-        display:flex;
+        display: flex;
         z-index: 123456789;
     }
 
@@ -471,7 +472,7 @@ input[type=email] {
 
 input[type=password] {
     background-size: 24px;
-    background-position: 10px 10px;
+    background-position: 300px 10px;
     background-repeat: no-repeat;
     background-image: url('images/coup-doeil.png');
     padding-left: 60px;

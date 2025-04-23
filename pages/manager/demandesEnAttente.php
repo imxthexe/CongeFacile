@@ -20,6 +20,14 @@ $recupRequetesCollab = $bdd->prepare("SELECT
 
 $recupRequetesCollab->execute();
 $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
+
+
+$collabs = [];
+foreach ($requetes as $requete) {
+    $collabs = $requete['collaborator_first_name'] . ' ' . $requete['collaborator_last_name'];
+}
+
+
 ?>
 
 
@@ -44,10 +52,16 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
                         <th></th>
                     </tr>
                     <tr class="filtersRow">
-                        <th><input type="text" /></th>
+                        <th><input type="search" /></th>
                         <th><input type="date" /></th>
-                        <th><input type="text" /></th>
-                        <th><input type="date" /></th>
+                        <th>
+                            <select name="collaborateur" id="">
+                                <?php foreach ($collabs as $collab) { ?>
+                                    <option value=""><?php echo $collab; ?></option>
+                                <?php } ?>
+                            </select>
+                        </th>
+                        <th><input type="search" /></th>
                         <th><input type="date" /></th>
                         <th><input type="number" /></th>
                         <th></th>
@@ -63,7 +77,7 @@ $requetes = $recupRequetesCollab->fetchAll(pdo::FETCH_ASSOC);
                             echo "<td data-label='Nb jours'>"  . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";
                             echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
                             echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
-                            echo "<td data-label='Date de fin'>" . 'Ca arrrive' . "</td>";
+                            echo "<td data-label='Nb de jours'>" . 'Ca arrrive' . "</td>";
                             echo "<td><button class='detailsButton'>Détails</button></td>";
                             echo "</tr>";
                         }
