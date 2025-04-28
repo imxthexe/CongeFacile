@@ -10,9 +10,10 @@ $id = $_SESSION['utilisateur']['id'];
 $query = $bdd->prepare("
     SELECT 
         p.last_name AS Nom,
-        p.first_name AS Prénom,
+        p.first_name AS Prenom,
         u.email AS Email,
-        d.name AS Département,
+        u.password AS password,
+        d.name AS Departement,
         d.id AS department_id,
         pos.id AS position_id,
         pos.name AS Position,
@@ -25,8 +26,25 @@ $query = $bdd->prepare("
 ");
 $query->bindParam(':id', $id);
 $query->execute();
-$manager = $query->fetch(PDO::FETCH_ASSOC);
-var_dump($manager);
+$infos = $query->fetch(PDO::FETCH_ASSOC);
+
+$errors = [];
+$data = [];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $data = $_POST;
+  $password = password_hash($infos['password'], PASSWORD_DEFAULT);
+
+
+
+  if ($data['currentPassword'] != $password) {
+    $errors['currentPassword'] = "votree mot de passe actuel ne correspond pas";
+  }
+
+  if (empty($data['currentPassword'])) {
+    $errors['currentPassword'] = "Vueillez entrez votre mot de passe actuel";
+  }
+}
 ?>
 <link rel="stylesheet" href="../../style.css" />
 
@@ -43,7 +61,7 @@ var_dump($manager);
           type="email"
           id="emailAddress"
           name="emailAddress"
-          value="salesse@mentalworks.fr"
+          value="<?php echo $infos['Email'] ?>"
           required readonly />
         <div class="inlineFields">
           <div class="fieldGroup">
@@ -52,7 +70,7 @@ var_dump($manager);
               type="text"
               id="lastName"
               name="lastName"
-              value="Salesse"
+              value="<?php echo $infos['Nom'] ?>"
               required readonly>
           </div>
           <div class="fieldGroup">
@@ -61,7 +79,7 @@ var_dump($manager);
               type="text"
               id="firstName"
               name="firstName"
-              value="Frédéric"
+              value="<?php echo $infos['Prenom'] ?>"
               required readonly />
           </div>
         </div>
@@ -69,12 +87,10 @@ var_dump($manager);
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="directionService">Direction/Service - champ obligatoire</label>
-            <select id="directionService" name="directionService" required>
-              <option value="BU Symfony" selected>BU Symfony</option>
-              <option value="BU Wordpress">BU Wordpress</option>
-              <option value="BU Applications mobiles">BU Applications mobiles</option>
-              <option value="BU Marketing">BU Marketing</option>
-            </select>
+            <input
+              type="text"
+              value="<?php echo $infos['Departement'] ?>"
+              required readonly />
           </div>
           <div class="fieldGroup">
             <label for="poste">Poste - champ obligatoire</label>
@@ -87,20 +103,11 @@ var_dump($manager);
           </div>
         </div>
 
-        <label for="manager">Manager</label>
-        <input
-          type="text"
-          id="manager"
-          name="manager"
-          value="Frédéric Salesse"
-          readonly />
-
         <h2>Réinitialiser mon mot de passe</h2>
 
         <label for="currentPassword">Mot de passe actuel</label>
         <input
           type="password"
-          id="currentPassword"
           name="currentPassword" />
 
         <div class="inlineFields">
@@ -108,19 +115,17 @@ var_dump($manager);
             <label for="newPassword">Nouveau mot de passe</label>
             <input
               type="password"
-              id="newPassword"
               name="newPassword" />
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <input
               type="password"
-              id="confirmPassword"
               name="confirmPassword" />
           </div>
         </div>
 
-        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe">
       </form>
     </section>
   </div>
