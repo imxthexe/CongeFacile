@@ -5,6 +5,46 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
+$id = $_SESSION['utilisateur']['id'];
+
+$query = $bdd->prepare("
+    SELECT 
+        p.last_name AS Nom,
+        p.first_name AS Prenom,
+        u.email AS Email,
+        u.password AS password,
+        d.name AS Departement,
+        d.id AS department_id,
+        pos.id AS position_id,
+        pos.name AS Position,
+        p.manager_id AS manager_id
+        FROM user u
+        JOIN person p ON u.person_id = p.id
+        JOIN department d ON p.department_id = d.id
+        JOIN positions pos ON p.position_id = pos.id
+        WHERE u.id = :id
+");
+$query->bindParam(':id', $id);
+$query->execute();
+$infos = $query->fetch(PDO::FETCH_ASSOC);
+
+$errors = [];
+$data = [];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $data = $_POST;
+  $password = password_hash($infos['password'], PASSWORD_DEFAULT);
+
+
+
+  if ($data['currentPassword'] != $password) {
+    $errors['currentPassword'] = "votree mot de passe actuel ne correspond pas";
+  }
+
+  if (empty($data['currentPassword'])) {
+    $errors['currentPassword'] = "Vueillez entrez votre mot de passe actuel";
+  }
+}
 ?>
 <link rel="stylesheet" href="../../style.css" />
 
@@ -21,9 +61,8 @@ include '../../includes/verifSecuriteManager.php';
           type="email"
           id="emailAddress"
           name="emailAddress"
-          value="salesse@mentalworks.fr"
-          required />
-
+          value="<?php echo $infos['Email'] ?>"
+          required readonly />
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="lastName">Nom de famille - champ obligatoire</label>
@@ -31,8 +70,8 @@ include '../../includes/verifSecuriteManager.php';
               type="text"
               id="lastName"
               name="lastName"
-              value="Salesse"
-              required />
+              value="<?php echo $infos['Nom'] ?>"
+              required readonly>
           </div>
           <div class="fieldGroup">
             <label for="firstName">Prénom - champ obligatoire</label>
@@ -40,20 +79,18 @@ include '../../includes/verifSecuriteManager.php';
               type="text"
               id="firstName"
               name="firstName"
-              value="Frédéric"
-              required />
+              value="<?php echo $infos['Prenom'] ?>"
+              required readonly />
           </div>
         </div>
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="directionService">Direction/Service - champ obligatoire</label>
-            <select id="directionService" name="directionService" required>
-              <option value="BU Symfony" selected>BU Symfony</option>
-              <option value="BU Wordpress">BU Wordpress</option>
-              <option value="BU Applications mobiles">BU Applications mobiles</option>
-              <option value="BU Marketing">BU Marketing</option>
-            </select>
+            <input
+              type="text"
+              value="<?php echo $infos['Departement'] ?>"
+              required readonly />
           </div>
           <div class="fieldGroup">
             <label for="poste">Poste - champ obligatoire</label>
@@ -66,23 +103,15 @@ include '../../includes/verifSecuriteManager.php';
           </div>
         </div>
 
-        <label for="manager">Manager</label>
-        <input
-          type="text"
-          id="manager"
-          name="manager"
-          value="Frédéric Salesse"
-          readonly />
-
         <h2>Réinitialiser mon mot de passe</h2>
 
         <label for="currentPassword">Mot de passe actuel</label>
         <input
           type="password"
           id="currentPassword"
-          name="currentPassword" 
-          class="password"/>
-          <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+          name="currentPassword"
+          class="password" />
+        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
 
         <div class="inlineFields">
           <div class="fieldGroup">
@@ -90,41 +119,41 @@ include '../../includes/verifSecuriteManager.php';
             <input
               type="password"
               id="newPassword"
-              name="newPassword" 
-              class="password"/>
-              <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+              name="newPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <input
               type="password"
               id="confirmPassword"
-              name="confirmPassword" 
-              class="password"/>
-              <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+              name="confirmPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
           </div>
         </div>
 
-        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe">
       </form>
     </section>
   </div>
 </div>
 
 <script>
-    // Mdp Icons
-    const togglePassword = document.getElementById("togglePassword");
-    const passwordInput = document.getElementById("password");
+  // Mdp Icons
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
 
-    togglePassword.addEventListener("click", function() {
-        const type =
-            passwordInput.getAttribute("type") === "password" ? "text" : "password";
-        passwordInput.setAttribute("type", type);
+  togglePassword.addEventListener("click", function() {
+    const type =
+      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
 
-        // Change l'icône
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-    });
+    // Change l'icône
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+  });
 </script>
 
 
