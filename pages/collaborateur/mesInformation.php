@@ -7,7 +7,6 @@ include '../../includes/functions.php';
 include '../../includes/verifSecuriteCollaborateur.php';
 
 $id = $_SESSION['utilisateur']['id'];
-
 $query = $bdd->prepare("
     SELECT 
         p.last_name AS Nom,
@@ -25,10 +24,16 @@ $query = $bdd->prepare("
         JOIN positions pos ON p.position_id = pos.id
         WHERE u.id = :id
 ");
+
 $query->bindParam(':id', $id);
 $query->execute();
 $infos = $query->fetch(PDO::FETCH_ASSOC);
+$idManager = $infos['manager_id'];
 
+$recupManager = $bdd->prepare("SELECT last_name, first_name FROM person WHERE id = :id");
+$recupManager->bindParam(':id', $idManager);
+$recupManager->execute();
+$NometPrenomManager = $recupManager->fetch(PDO::FETCH_ASSOC);
 $errors = [];
 $data = [];
 
@@ -75,49 +80,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateMdp->execute();
   }
 }
+
 ?>
 
 <link rel="stylesheet" href="../../style.css">
 
 
-
 <div class="flex">
   <?php include "../../includes/navBar/navBar1.php"; ?>
-  <div class="page">
+  <div class="containerMesInfos page">
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
       <form class="mesInfosForm" method="POST">
+        <label for="emailAddress">Adresse email - champ obligatoire</label>
+        <input
+          type="email"
+          id="emailAddress"
+          name="emailAddress"
+          value="<?php echo $infos['Email'] ?>"
+          required readonly />
 
         <div class="inlineFields">
           <div class="fieldGroup">
-            <label for="lastName">Nom de famille</label>
-            <input type="text" id="lastName" name="lastName" value="Martins" />
+            <label for="lastName">Nom de famille - champ obligatoire</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value="<?= $infos['Nom'] ?>"
+              required readonly />
           </div>
           <div class="fieldGroup">
-            <label for="firstName">Prénom</label>
-            <input type="text" id="firstName" name="firstName" value="Jeff" />
+            <label for="firstName">Prénom - champ obligatoire</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value="<?= $infos['Prenom'] ?>"
+              required readonly />
           </div>
         </div>
 
-
-        <label for="emailAddress">Adresse email</label>
-        <input type="email" id="emailAddress" name="emailAddress" value="j.martins@mentalworks.fr" />
-
-
         <div class="inlineFields">
           <div class="fieldGroup">
-            <label for="directionService">Direction/Service</label>
-            <select id="directionService" name="directionService">
-              <option value="BU Symfony" selected>BU Symfony</option>
-              <option value="BU Marketing">BU Marketing</option>
-              <option value="BU Applications mobiles">BU Applications mobiles</option>
-              <option value="BU Wordpress">BU Wordpress</option>
-            </select>
+            <label for="directionService">Direction/Service - champ obligatoire</label>
+
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value="<?= $infos['Departement'] ?>"
+              required readonly />
           </div>
           <div class="fieldGroup">
-            <label for="poste">Poste</label>
-            <select id="poste" name="poste">
-              <option value="Directeur technique" selected>Directeur technique</option>
+            <label for="poste">Poste - champ obligatoire</label>
+            <select id="poste" name="poste" required>
+              <option value="Directeur technique">Directeur technique</option>
               <option value="Lead Développeur">Lead Développeur</option>
               <option value="Développeur Web">Développeur Web</option>
               <option value="Graphiste">Graphiste</option>
@@ -126,58 +144,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <label for="manager">Manager</label>
-        <input type="text" id="manager" name="manager" value="Frédéric Salesse" readonly />
+        <input type="text" name="Manager" readonly aria-readonly="" value="<?= $NometPrenomManager['first_name'] . ' ' . $NometPrenomManager['last_name'] ?>">
+
 
         <h2>Réinitialiser mon mot de passe</h2>
 
-        <label for="currentPassword">Mot de passe actuel</label>
-        <input
-          type="password"
-          id="currentPassword"
-          name="currentPassword"
-          class="password" value="<?php echo afficheValeur('currentPassword', $data); ?>" />
-        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
-        <?php echo afficheErreur('currentPassword', $errors); ?>
+        <label for=" currentPassword">Mot de passe actuel</label>
+        <div class="password-wrapper">
+          <input type="password" id="currentPassword" name="currentPassword" />
+          <i class="fa-regular fa-eye toggle-password" data-target="currentPassword"></i>
+        </div>
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              class="password" />
-            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
-            <?php echo afficheErreur('newPassword', $errors); ?>
+            <div class="password-wrapper">
+              <input type="password" id="newPassword" name="newPassword" />
+              <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
+            </div>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              class="password" />
-            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
-            <?php echo afficheErreur('confirmPassword', $errors); ?>
+            <div class="password-wrapper">
+              <input type="password" id="confirmPassword" name="confirmPassword" />
+              <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
+            </div>
           </div>
         </div>
 
-        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe">
+        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
       </form>
     </section>
   </div>
 </div>
-</body>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.mesInfosForm');
+  const toggleIcons = document.querySelectorAll('.toggle-password');
 
-    form.addEventListener('submit', function(e) {
-      const confirmReset = confirm("Êtes-vous sûr de vouloir réinitialiser votre mot de passe ?");
-      if (!confirmReset) {
-        e.preventDefault(); // Stop l'envoi du formulaire si la personne annule
-      }
+  toggleIcons.forEach(icon => {
+    icon.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      const passwordInput = document.getElementById(targetId);
+
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
     });
   });
 </script>
