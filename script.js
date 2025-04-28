@@ -21,3 +21,22 @@ if (!sessionStorage.getItem('messageShown')) {
     // Si déjà affiché dans cette session, cacher immédiatement l'élément
     messageSucces.style.display = 'none';
 }
+
+
+
+
+
+
+
+// Mdp Icons
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
+
+togglePassword.addEventListener('click', function () {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Change l'icône
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+});
