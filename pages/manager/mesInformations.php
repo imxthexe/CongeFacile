@@ -5,57 +5,8 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
-$id = $_SESSION['utilisateur']['id'];
-
-$query = $bdd->prepare("
-    SELECT 
-        p.last_name AS Nom,
-        p.first_name AS Prenom,
-        u.email AS Email,
-        u.password AS password,
-        d.name AS Departement,
-        d.id AS department_id,
-        pos.id AS position_id,
-        pos.name AS Position,
-        p.manager_id AS manager_id
-        FROM user u
-        JOIN person p ON u.person_id = p.id
-        JOIN department d ON p.department_id = d.id
-        JOIN positions pos ON p.position_id = pos.id
-        WHERE u.id = :id
-");
-$query->bindParam(':id', $id);
-$query->execute();
-$infos = $query->fetch(PDO::FETCH_ASSOC);
-
-$errors = [];
-$data = [];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $data = $_POST;
-  $data['currentPassword'] = trim($data['currentPassword']);
-  $data['newPassword'] = trim($data['newPassword']);
-  $data['confirmPassword'] = trim($data['confirmPassword']);
-
-  $data['currentPassword'] = htmlspecialchars($data['currentPassword']);
-  $data['newPassword'] = htmlspecialchars($data['newPassword']);
-  $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
-
-  $password = password_hash($infos['password'], PASSWORD_DEFAULT);
-
-
-
-  if ($data['currentPassword'] != $password) {
-    $errors['currentPassword'] = "votre mot de passe actuel ne correspond pas";
-  }
-
-  if (empty($data['currentPassword'])) {
-    $errors['currentPassword'] = "Veuillez entrez votre mot de passe actuel";
-  }
-}
 ?>
 <link rel="stylesheet" href="../../style.css" />
-
 
 
 <div class="flex">
@@ -64,104 +15,110 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
       <form class="mesInfosForm">
-        <label for="emailAddress">Adresse email - champ obligatoire</label>
-        <input
-          type="email"
-          id="emailAddress"
-          name="emailAddress"
-          value="<?php echo $infos['Email'] ?>"
-          required readonly />
-        <div class="inlineFields">
-          <div class="fieldGroup">
+    <label for="emailAddress">Adresse email - champ obligatoire</label>
+    <input
+        type="email"
+        id="emailAddress"
+        name="emailAddress"
+        value="salesse@mentalworks.fr"
+        required />
+
+    <div class="inlineFields">
+        <div class="fieldGroup">
             <label for="lastName">Nom de famille - champ obligatoire</label>
             <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value="<?php echo $infos['Nom'] ?>"
-              required readonly>
-          </div>
-          <div class="fieldGroup">
+                type="text"
+                id="lastName"
+                name="lastName"
+                value="Salesse"
+                required />
+        </div>
+        <div class="fieldGroup">
             <label for="firstName">Prénom - champ obligatoire</label>
             <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value="<?php echo $infos['Prenom'] ?>"
-              required readonly />
-          </div>
+                type="text"
+                id="firstName"
+                name="firstName"
+                value="Frédéric"
+                required />
         </div>
+    </div>
 
-        <div class="inlineFields">
-          <div class="fieldGroup">
+    <div class="inlineFields">
+        <div class="fieldGroup">
             <label for="directionService">Direction/Service - champ obligatoire</label>
-            <input
-              type="text"
-              value="<?php echo $infos['Departement'] ?>"
-              required readonly />
-          </div>
-          <div class="fieldGroup">
+            <select id="directionService" name="directionService" required>
+                <option value="BU Symfony" selected>BU Symfony</option>
+                <option value="BU Wordpress">BU Wordpress</option>
+                <option value="BU Applications mobiles">BU Applications mobiles</option>
+                <option value="BU Marketing">BU Marketing</option>
+            </select>
+        </div>
+        <div class="fieldGroup">
             <label for="poste">Poste - champ obligatoire</label>
             <select id="poste" name="poste" required>
-              <option value="Directeur technique">Directeur technique</option>
-              <option value="Lead Développeur">Lead Développeur</option>
-              <option value="Développeur Web">Développeur Web</option>
-              <option value="Graphiste">Graphiste</option>
+                <option value="Directeur technique">Directeur technique</option>
+                <option value="Lead Développeur">Lead Développeur</option>
+                <option value="Développeur Web">Développeur Web</option>
+                <option value="Graphiste">Graphiste</option>
             </select>
-          </div>
         </div>
+    </div>
 
-        <h2>Réinitialiser mon mot de passe</h2>
+    <label for="manager">Manager</label>
+    <input
+        type="text"
+        id="manager"
+        name="manager"
+        value="Frédéric Salesse"
+        readonly />
 
-        <label for="currentPassword">Mot de passe actuel</label>
-        <input
-          type="password"
-          id="currentPassword"
-          name="currentPassword"
-          class="password" />
-        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+    <h2>Réinitialiser mon mot de passe</h2>
 
-        <div class="inlineFields">
-          <div class="fieldGroup">
+    <label for="currentPassword">Mot de passe actuel</label>
+    <div class="password-wrapper">
+        <input type="password" id="currentPassword" name="currentPassword" />
+        <i class="fa-regular fa-eye toggle-password" data-target="currentPassword"></i>
+    </div>
+
+    <div class="inlineFields">
+        <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              class="password" />
-            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
-          </div>
-          <div class="fieldGroup">
-            <label for="confirmPassword">Confirmation de mot de passe</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              class="password" />
-            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
-          </div>
+            <div class="password-wrapper">
+                <input type="password" id="newPassword" name="newPassword" />
+                <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
+            </div>
         </div>
+        <div class="fieldGroup">
+            <label for="confirmPassword">Confirmation de mot de passe</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmPassword" name="confirmPassword" />
+                <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
+            </div>
+        </div>
+    </div>
 
-        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe">
-      </form>
+    <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+</form>
     </section>
   </div>
 </div>
 
 <script>
-  // Mdp Icons
-  const togglePassword = document.getElementById("togglePassword");
-  const passwordInput = document.getElementById("password");
+const toggleIcons = document.querySelectorAll('.toggle-password');
 
-  togglePassword.addEventListener("click", function() {
-    const type =
-      passwordInput.getAttribute("type") === "password" ? "text" : "password";
-    passwordInput.setAttribute("type", type);
+toggleIcons.forEach(icon => {
+    icon.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const passwordInput = document.getElementById(targetId);
 
-    // Change l'icône
-    this.classList.toggle("fa-eye");
-    this.classList.toggle("fa-eye-slash");
-  });
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+});
 </script>
 
 
