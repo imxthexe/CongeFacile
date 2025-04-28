@@ -469,14 +469,19 @@ input[type="password"] {
 }
 
 input[type="submit"] {
-  background-color: var(--color_btn);
-  color: white;
-  width: fit-content;
-  padding: 10px !important;
-  height: 50px;
-  border-radius: 6px;
-  margin: 0px 0 22px 0;
+    background-color: var(--color_btn);
+    color: white;
+    width: fit-content;
+    padding: 10px !important;
+    height: 50px;
+    border-radius: 6px;
+    margin: 0px 0 22px 0;
 }
+
+input[type="text"] {
+    padding-left: 40px;
+}
+
 
 /*FIN PageConnexion*/
 
@@ -908,7 +913,8 @@ input[type="submit"] {
 }
 
 .page .mesInfosForm input[type="email"],
-.page .mesInfosForm input[type="password"] {
+.page .mesInfosForm input[type="password"],
+.page .mesInfosForm input[type="text"] {
   padding-left: 40px;
 }
 
