@@ -459,6 +459,17 @@ textarea:focus {
     width: 215px;
 }
 
+.inputConnexion {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    left: 18.5%;
+    transform: translateY(-50%);
+}
+
 
 input[type=email] {
 

@@ -69,3 +69,14 @@ togglePassword.addEventListener('click', function () {
 
 </body>
 </html>
+
+
+
+
+<!-- 
+
+Accueil
+Infocmation
+
+
+-->
