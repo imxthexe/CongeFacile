@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Nouvelle demande';
+$titre = 'AJouter un type de demande';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 include '../../../includes/functions.php';

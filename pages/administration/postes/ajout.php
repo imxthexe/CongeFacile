@@ -8,6 +8,8 @@ include '../../../includes/functions.php';
 $data = [];
 $errors = [];
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
@@ -15,14 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $recupPostes->execute();
     $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($Postes as $Poste) {
-        if ($Poste['name'] == $data['poste']) {
-            $errors['poste'] = 'Ce poste existe déja';
-        }
-    }
+
 
     if (empty($data['poste'])) {
         $errors['poste'] = 'Veuillez renseigner un nouveau type de congé';
+    }
+
+    foreach ($Postes as $Poste) {
+        if ($data['poste'] == $Poste) {
+            $errors['poste'] = "Ce poste existe déja dans la base de données";
+        }
     }
 
     if (empty($errors)) {

@@ -114,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="labelConnexion">Mot de passe</div>
                 <div class="inputConnexion">
                     <input type="password" name="password" id="password">
+                    <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
                     <?php echo afficheErreur('password', $errors); ?>
                 </div>
 
@@ -132,3 +133,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include '../../includes/footer.php'
 ?>
+
+<script>
+    // Mdp Icons
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", function() {
+        const type =
+            passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+
+        // Change l'icône
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+</script>
