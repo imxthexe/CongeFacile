@@ -108,20 +108,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="currentPassword">Mot de passe actuel</label>
         <input
           type="password"
-          name="currentPassword" />
+          id="currentPassword"
+          name="currentPassword"
+          class="password" />
+        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
             <input
               type="password"
-              name="newPassword" />
+              id="newPassword"
+              name="newPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <input
               type="password"
-              name="confirmPassword" />
+              id="confirmPassword"
+              name="confirmPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
           </div>
         </div>
 
@@ -130,6 +139,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </section>
   </div>
 </div>
+
+<script>
+  // Mdp Icons
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+
+  togglePassword.addEventListener("click", function() {
+    const type =
+      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    // Change l'icône
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+  });
+</script>
+
+
 </body>
 
 </html>
