@@ -1,11 +1,80 @@
 <?php
 session_start();
-$titre = 'Historique des demandes';
+$titre = 'Mes informations';
 include '../../includes/database.php';
-include '../../includes/functions.php';
 include '../../includes/header2.php';
+include '../../includes/functions.php';
 include '../../includes/verifSecuriteCollaborateur.php';
 
+$id = $_SESSION['utilisateur']['id'];
+
+$query = $bdd->prepare("
+    SELECT 
+        p.last_name AS Nom,
+        p.first_name AS Prenom,
+        u.email AS Email,
+        u.password AS password,
+        d.name AS Departement,
+        d.id AS department_id,
+        pos.id AS position_id,
+        pos.name AS Position,
+        p.manager_id AS manager_id
+        FROM user u
+        JOIN person p ON u.person_id = p.id
+        JOIN department d ON p.department_id = d.id
+        JOIN positions pos ON p.position_id = pos.id
+        WHERE u.id = :id
+");
+$query->bindParam(':id', $id);
+$query->execute();
+$infos = $query->fetch(PDO::FETCH_ASSOC);
+
+$errors = [];
+$data = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $data = $_POST;
+  $data['currentPassword'] = trim($data['currentPassword']);
+  $data['newPassword'] = trim($data['newPassword']);
+  $data['confirmPassword'] = trim($data['confirmPassword']);
+
+  $data['currentPassword'] = htmlspecialchars($data['currentPassword']);
+  $data['newPassword'] = htmlspecialchars($data['newPassword']);
+  $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
+
+  if (!password_verify($data['currentPassword'], $infos['password'])) {
+    $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
+  }
+
+  if (empty($data['currentPassword'])) {
+    $errors['currentPassword'] = "Veuillez entrez votre mot de passe actuel";
+  }
+
+  if (empty($data['newPassword'])) {
+    $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe";
+  }
+
+  if ($data['newPassword'] !== $data['confirmPassword']) {
+    $errors['newPassword'] = "Les deux mots de passe ne correspondent pas.";
+  }
+
+  if (empty($data['confirmPassword'])) {
+    $errors['confirmPassword'] = "Rentrez votre nouveau mot de passe";
+  }
+
+  if ($data['newPassword'] == $data['currentPassword']) {
+    $errors['newPassword'] = "Vous devez changer votre mot de passe pour le réinitialiser";
+  }
+
+  if (empty($errors)) {
+    $id = $_SESSION['utilisateur']['id'];
+    $password = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+    $updateMdp = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
+    $updateMdp->bindParam(':password', $password);
+    $updateMdp->bindParam(':id', $id);
+    $updateMdp->execute();
+  }
+}
 ?>
 
 <link rel="stylesheet" href="../../style.css">

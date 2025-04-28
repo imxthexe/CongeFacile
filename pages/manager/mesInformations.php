@@ -3,6 +3,7 @@ session_start();
 $titre = 'Mes informations';
 include '../../includes/database.php';
 include '../../includes/header2.php';
+include '../../includes/functions.php';
 include '../../includes/verifSecuriteManager.php';
 
 $id = $_SESSION['utilisateur']['id'];
@@ -31,7 +32,7 @@ $infos = $query->fetch(PDO::FETCH_ASSOC);
 $errors = [];
 $data = [];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
   $data['currentPassword'] = trim($data['currentPassword']);
   $data['newPassword'] = trim($data['newPassword']);
@@ -41,16 +42,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $data['newPassword'] = htmlspecialchars($data['newPassword']);
   $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
 
-  $password = password_hash($infos['password'], PASSWORD_DEFAULT);
-
-
-
-  if ($data['currentPassword'] != $password) {
-    $errors['currentPassword'] = "votre mot de passe actuel ne correspond pas";
+  if (!password_verify($data['currentPassword'], $infos['password'])) {
+    $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
   }
 
   if (empty($data['currentPassword'])) {
     $errors['currentPassword'] = "Veuillez entrez votre mot de passe actuel";
+  }
+
+  if (empty($data['newPassword'])) {
+    $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe";
+  }
+
+  if ($data['newPassword'] !== $data['confirmPassword']) {
+    $errors['newPassword'] = "Les deux mots de passe ne correspondent pas.";
+  }
+
+  if (empty($data['confirmPassword'])) {
+    $errors['confirmPassword'] = "Rentrez votre nouveau mot de passe";
+  }
+
+  if ($data['newPassword'] == $data['currentPassword']) {
+    $errors['newPassword'] = "Vous devez changer votre mot de passe pour le réinitialiser";
+  }
+
+  if (empty($errors)) {
+    $id = $_SESSION['utilisateur']['id'];
+    $password = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+    $updateMdp = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
+    $updateMdp->bindParam(':password', $password);
+    $updateMdp->bindParam(':id', $id);
+    $updateMdp->execute();
   }
 }
 ?>
@@ -63,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="containerMesInfos page">
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
-      <form class="mesInfosForm">
+      <form class="mesInfosForm" method="POST">
         <label for="emailAddress">Adresse email - champ obligatoire</label>
         <input
           type="email"
@@ -118,8 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           type="password"
           id="currentPassword"
           name="currentPassword"
-          class="password" />
+          class="password" value="<?php echo afficheValeur('currentPassword', $data); ?>" />
         <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+        <?php echo afficheErreur('currentPassword', $errors); ?>
 
         <div class="inlineFields">
           <div class="fieldGroup">
@@ -130,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               name="newPassword"
               class="password" />
             <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+            <?php echo afficheErreur('newPassword', $errors); ?>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
@@ -139,6 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               name="confirmPassword"
               class="password" />
             <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+            <?php echo afficheErreur('confirmPassword', $errors); ?>
           </div>
         </div>
 
