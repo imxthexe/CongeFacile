@@ -119,20 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="fieldGroup">
             <label for="directionService">Direction/Service - champ obligatoire</label>
 
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value="<?= $infos['Departement'] ?>"
-              required readonly />
+            <select id="poste" name="poste" required>
+              <option value="Directeur technique" selected><?= $infos['Departement'] ?></option>
+            </select>
           </div>
           <div class="fieldGroup">
             <label for="poste">Poste - champ obligatoire</label>
             <select id="poste" name="poste" required>
-              <option value="Directeur technique">Directeur technique</option>
-              <option value="Lead Développeur">Lead Développeur</option>
-              <option value="Développeur Web">Développeur Web</option>
-              <option value="Graphiste">Graphiste</option>
+              <option value="Directeur technique" selected><?= $infos['Position'] ?></option>
             </select>
           </div>
         </div>

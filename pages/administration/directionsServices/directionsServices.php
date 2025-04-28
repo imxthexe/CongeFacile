@@ -4,6 +4,10 @@ $titre = 'Historique des demandes en attente';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 
+$recupPostes = $bdd->prepare("SELECT id, name FROM department");
+$recupPostes->execute();
+$Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <link rel="stylesheet" href="../../../style.css">
@@ -34,27 +38,21 @@ include '../../../includes/header3.php';
                         <th></th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr>
-                        <td data-label="Nom de la direction ou du service">BU Symfony</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom de la direction ou du service">BU Wordpress</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom de la direction ou du service">BU Applications mobiles</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom de la direction ou du service">BU Marketing</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Nom de la direction ou du service">Autre</td>
-                        <td><button class="detailsButton">Détails</button></td>
-                    </tr>
+                    <?php
+                    if (!empty($Postes)) {
+                        foreach ($Postes as $Poste) {
+                            $id = $Poste['id'];
+                            echo "<tr>";
+                            echo "<td data-label='Nom du poste'>" . htmlspecialchars($Poste['name']) . "</td>";
+                            echo "<td><button class='detailsButton'><a  style='color:black;' href='modifications.php?id=$id'>Détails</a></button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>Aucun Poste trouvé.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </section>

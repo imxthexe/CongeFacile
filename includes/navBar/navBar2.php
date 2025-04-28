@@ -55,7 +55,7 @@
                         </ul>
                     </details>
                     <a href="../../deconnexion.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">
-                        <li>Deconnexion</li>
+                        <li>Déconnexion</li>
                     </a>
                 </ul>
             </nav>

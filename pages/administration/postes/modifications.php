@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <script>
     function confirmDelete(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce type de demande ? Cette action est irréversible.")) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce poste ? Cette action est irréversible.")) {
             window.location.href = "supprimerPoste.php?id=" + id;
         }
     }
