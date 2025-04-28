@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="page">
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
-      <form class="mesInfosForm">
+      <form class="mesInfosForm" method="POST">
 
         <div class="inlineFields">
           <div class="fieldGroup">
@@ -129,21 +129,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" id="manager" name="manager" value="Frédéric Salesse" readonly />
 
         <h2>Réinitialiser mon mot de passe</h2>
+
+        <label for="currentPassword">Mot de passe actuel</label>
+        <input
+          type="password"
+          id="currentPassword"
+          name="currentPassword"
+          class="password" value="<?php echo afficheValeur('currentPassword', $data); ?>" />
+        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+        <?php echo afficheErreur('currentPassword', $errors); ?>
+
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
-            <input type="password" id="newPassword" name="newPassword" />
+            <input
+              type="password"
+              id="newPassword"
+              name="newPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+            <?php echo afficheErreur('newPassword', $errors); ?>
           </div>
           <div class="fieldGroup">
-            <label for="confirmPassword">Confirmation mot de passe</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" />
+            <label for="confirmPassword">Confirmation de mot de passe</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="password" />
+            <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+            <?php echo afficheErreur('confirmPassword', $errors); ?>
           </div>
         </div>
-        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+
+        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe">
       </form>
     </section>
   </div>
 </div>
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.mesInfosForm');
+
+    form.addEventListener('submit', function(e) {
+      const confirmReset = confirm("Êtes-vous sûr de vouloir réinitialiser votre mot de passe ?");
+      if (!confirmReset) {
+        e.preventDefault(); // Stop l'envoi du formulaire si la personne annule
+      }
+    });
+  });
+</script>
 
 </html>

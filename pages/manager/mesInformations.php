@@ -28,7 +28,6 @@ $query = $bdd->prepare("
 $query->bindParam(':id', $id);
 $query->execute();
 $infos = $query->fetch(PDO::FETCH_ASSOC);
-
 $errors = [];
 $data = [];
 
