@@ -33,16 +33,24 @@ $data = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $data = $_POST;
+  $data['currentPassword'] = trim($data['currentPassword']);
+  $data['newPassword'] = trim($data['newPassword']);
+  $data['confirmPassword'] = trim($data['confirmPassword']);
+
+  $data['currentPassword'] = htmlspecialchars($data['currentPassword']);
+  $data['newPassword'] = htmlspecialchars($data['newPassword']);
+  $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
+
   $password = password_hash($infos['password'], PASSWORD_DEFAULT);
 
 
 
   if ($data['currentPassword'] != $password) {
-    $errors['currentPassword'] = "votree mot de passe actuel ne correspond pas";
+    $errors['currentPassword'] = "votre mot de passe actuel ne correspond pas";
   }
 
   if (empty($data['currentPassword'])) {
-    $errors['currentPassword'] = "Vueillez entrez votre mot de passe actuel";
+    $errors['currentPassword'] = "Veuillez entrez votre mot de passe actuel";
   }
 }
 ?>
