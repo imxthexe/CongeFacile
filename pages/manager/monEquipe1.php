@@ -56,7 +56,7 @@ endforeach;
         <section class="monEquipeSection">
             <div class="headerRow">
                 <h2>Mon équipe</h2>
-                <button class="addCollaboratorButton">Ajouter un collaborateur</button>
+                <button class="addCollaboratorButton"><a href="ajoutcollab.php">Ajouter un collaborateur</a></button>
             </div>
             <table class="monEquipeTable">
                 <thead>

@@ -5,6 +5,28 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
+$id = $_SESSION['utilisateur']['id'];
+
+$query = $bdd->prepare("
+    SELECT 
+        p.last_name AS Nom,
+        p.first_name AS Prénom,
+        u.email AS Email,
+        d.name AS Département,
+        d.id AS department_id,
+        pos.id AS position_id,
+        pos.name AS Position,
+        p.manager_id AS manager_id
+        FROM user u
+        JOIN person p ON u.person_id = p.id
+        JOIN department d ON p.department_id = d.id
+        JOIN positions pos ON p.position_id = pos.id
+        WHERE u.id = :id
+");
+$query->bindParam(':id', $id);
+$query->execute();
+$manager = $query->fetch(PDO::FETCH_ASSOC);
+var_dump($manager);
 ?>
 <link rel="stylesheet" href="../../style.css" />
 
@@ -22,8 +44,7 @@ include '../../includes/verifSecuriteManager.php';
           id="emailAddress"
           name="emailAddress"
           value="salesse@mentalworks.fr"
-          required />
-
+          required readonly />
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="lastName">Nom de famille - champ obligatoire</label>
@@ -32,7 +53,7 @@ include '../../includes/verifSecuriteManager.php';
               id="lastName"
               name="lastName"
               value="Salesse"
-              required />
+              required readonly>
           </div>
           <div class="fieldGroup">
             <label for="firstName">Prénom - champ obligatoire</label>
@@ -41,7 +62,7 @@ include '../../includes/verifSecuriteManager.php';
               id="firstName"
               name="firstName"
               value="Frédéric"
-              required />
+              required readonly />
           </div>
         </div>
 
