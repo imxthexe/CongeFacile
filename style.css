@@ -424,15 +424,7 @@ textarea:focus {
   margin-bottom: 15px;
 }
 
-.inputConnexion input {
-  border: #dfe4ea solid 1px;
-  margin-bottom: 30px;
-  align-items: center;
-  width: 350px;
-  height: 46px;
-  border-radius: 6px;
-  display: flex;
-}
+
 
 .inputConnexionSubmit {
   width: 215px;
@@ -440,12 +432,23 @@ textarea:focus {
 
 .inputConnexion {
   position: relative;
+  width: 350px;
 }
+
+.inputConnexion input {
+    border: #dfe4ea solid 1px;
+    margin-bottom: 30px;
+    align-items: center;
+    width: 350px;
+    height: 46px;
+    border-radius: 6px;
+    display: flex;
+  }
 
 .toggle-password {
   position: absolute;
   top: 50%;
-  left: 18.5%;
+  left: 90%;
   transform: translateY(-50%);
 }
 
