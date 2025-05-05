@@ -23,6 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $RequeteRecupDepartment_ID->execute();
   $RecupDepartment_ID = $RequeteRecupDepartment_ID->fetch(PDO::FETCH_ASSOC);
 
+  // Check if user exists and has a department_id
+  if (!$RecupDepartment_ID || $RecupDepartment_ID['department_id'] === null) {
+    $errors['department'] = 'Erreur: Vous n\'êtes pas associé à un département. Veuillez contacter votre administrateur.';
+  }
+
   $data['dateDebut'] = trim($data['dateDebut']);
   $data['dateFin'] = trim($data['dateFin']);
   $data['nbJours'] = trim($data['nbJours']);
@@ -63,23 +68,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $date = date("Y-m-d H:i:s");
   $collaborateurId = $_SESSION['utilisateur']['id'];
   $request_typeID = $idRequest_type['id'];
-  $department_id = $RecupDepartment_ID['department_id'];
 
   if (empty($errors)) {
-    $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
-    (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
-    VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
-    $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
-    $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
-    $requeteNouvelleDemande->bindParam(':department_id', $department_id);
-    $requeteNouvelleDemande->bindParam(':created_at', $date);
-    $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
-    $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
-    $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
-    $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
-    $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
-    $requeteNouvelleDemande->execute();
-    header("Location: historiqueDesDemandes.php");
+    // Only proceed with insert if we have a valid department_id
+    if (isset($RecupDepartment_ID['department_id'])) {
+      $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
+      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
+      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
+      $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
+      $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
+      $requeteNouvelleDemande->bindParam(':department_id', $RecupDepartment_ID['department_id']);
+      $requeteNouvelleDemande->bindParam(':created_at', $date);
+      $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
+      $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
+      $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+      $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
+      $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
+      $requeteNouvelleDemande->execute();
+      header("Location: historiqueDesDemandes.php");
+    }
   }
 
   $requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
