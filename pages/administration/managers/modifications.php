@@ -2,16 +2,16 @@
 session_start();
 $titre = 'Informations Manager';
 include '../../../includes/database.php';
-include '../../../includes/header2.php';
+include "../../../includes/header3.php";
 include '../../../includes/functions.php';
 include '../../../includes/verifSecuriteManager.php';
 
-
-$RecupInfosManagers = $bdd->prepare("SELECT 
+$id = $_SESSION['utilisateur']['id'];
+$RecupInfosManager = $bdd->prepare("SELECT 
     u.email,
     u.password,
-    p.last_name,
-    p.first_name,
+    p.last_name AS nom,
+    p.first_name AS prenom,
     d.name AS department
 FROM 
     user u
@@ -20,15 +20,54 @@ JOIN
 JOIN 
     department d ON p.department_id = d.id
 WHERE 
-    u.role = 'manager';");
+    u.role = 'manager' AND u.id = :id");
 
-$RecupInfosManagers->execute();
-$InfosManagers = $RecupInfosManagers->fetchAll(PDO::FETCH_ASSOC);
+$RecupInfosManager->bindParam(':id', $id);
+$RecupInfosManager->execute();
+$infosManagers = $RecupInfosManager->fetch(PDO::FETCH_ASSOC);
+
+
+$errors = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = $_POST;
+
+    $data['newPassword'] = trim($data['newPassword']);
+    $data['confirmPassword'] = trim($data['confirmPassword']);
+
+
+    $data['newPassword'] = htmlspecialchars($data['newPassword']);
+    $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
+
+
+
+    if (empty($data['newPassword'])) {
+        $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe";
+    }
+
+    if ($data['newPassword'] !== $data['confirmPassword']) {
+        $errors['newPassword'] = "Les deux mots de passe ne correspondent pas.";
+    }
+
+    if (empty($data['confirmPassword'])) {
+        $errors['confirmPassword'] = "Rentrez votre nouveau mot de passe";
+    }
+
+
+
+    if (empty($errors)) {
+        $id = $_SESSION['utilisateur']['id'];
+        $password = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+        $updateMdp = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
+        $updateMdp->bindParam(':password', $password);
+        $updateMdp->bindParam(':id', $id);
+        $updateMdp->execute();
+    }
+}
+
 ?>
 
 <link rel="stylesheet" href="../../../style.css">
 <div class="flex">
-    <?php include "../../../includes/header3.php"; ?>
     <?php include "../../../includes/navBar/navBar3.php"; ?>
     <div class="containerMesInfos page">
         <section class="mesInfosSection">
@@ -39,7 +78,7 @@ $InfosManagers = $RecupInfosManagers->fetchAll(PDO::FETCH_ASSOC);
                     type="email"
                     id="emailAddress"
                     name="emailAddress"
-                    value="<?php echo $infos['Email'] ?>"
+                    value="<?php echo $infosManagers['email'] ?>"
                     required readonly />
 
                 <div class="inlineFields">
@@ -47,18 +86,16 @@ $InfosManagers = $RecupInfosManagers->fetchAll(PDO::FETCH_ASSOC);
                         <label for="lastName">Nom de famille - champ obligatoire</label>
                         <input
                             type="text"
-                            id="lastName"
-                            name="lastName"
-                            value="<?= $infos['Nom'] ?>"
+
+                            value="<?= $infosManagers['nom'] ?>"
                             required readonly />
                     </div>
                     <div class="fieldGroup">
                         <label for="firstName">Prénom - champ obligatoire</label>
                         <input
                             type="text"
-                            id="firstName"
-                            name="firstName"
-                            value="<?= $infos['Prenom'] ?>"
+
+                            value="<?= $infosManagers['prenom'] ?>"
                             required readonly />
                     </div>
                 </div>
@@ -67,23 +104,23 @@ $InfosManagers = $RecupInfosManagers->fetchAll(PDO::FETCH_ASSOC);
                     <div class="fieldGroup">
                         <label for="directionService">Direction/Service - champ obligatoire</label>
 
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            value="<?= $infos['Departement'] ?>"
-                            required readonly />
+                        <select name="department" id="department">
+                            <option value="<?= $infosManagers['department'] ?>">
+                                <?= $infosManagers['department'] ?>
+                            </option>
+                        </select>
                     </div>
 
                 </div>
 
 
-                <div class="inlineFields">
+                <div class=" inlineFields">
                     <div class="fieldGroup">
                         <label for="newPassword">Nouveau mot de passe</label>
                         <div class="password-wrapper">
                             <input type="password" id="newPassword" name="newPassword" />
                             <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
+                            <?php echo afficheErreur('newPassword', $errors); ?>
                         </div>
                     </div>
                     <div class="fieldGroup">
@@ -91,11 +128,12 @@ $InfosManagers = $RecupInfosManagers->fetchAll(PDO::FETCH_ASSOC);
                         <div class="password-wrapper">
                             <input type="password" id="confirmPassword" name="confirmPassword" />
                             <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
+                            <?php echo afficheErreur('confirmPassword', $errors); ?>
                         </div>
                     </div>
                 </div>
 
-                <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+                <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe"></button>
             </form>
         </section>
     </div>

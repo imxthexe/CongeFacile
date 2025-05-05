@@ -158,6 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="password-wrapper">
               <input type="password" id="newPassword" name="newPassword" />
               <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
+              <?php afficheErreur('newPassword', $errors); ?>
             </div>
           </div>
           <div class="fieldGroup">
@@ -165,11 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="password-wrapper">
               <input type="password" id="confirmPassword" name="confirmPassword" />
               <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
+              <?php afficheErreur('confirmPassword', $errors); ?>
             </div>
           </div>
         </div>
 
-        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+        <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe"></button>
       </form>
     </section>
   </div>
