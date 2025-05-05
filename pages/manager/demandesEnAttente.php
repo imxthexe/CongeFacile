@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Nouvelle demande';
+$titre = 'Demandes en attente';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSession.php';

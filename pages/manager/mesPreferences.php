@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Mes informations';
+$titre = 'Mes préférences';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';

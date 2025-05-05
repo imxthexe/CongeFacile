@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$titre = 'Mes informations';
+$titre = 'Mon equipe';
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
