@@ -254,6 +254,7 @@ header img {
 .navBar .profile .img img {
   border-radius: 40px;
   margin-right: 12px;
+  width: 80px;
 }
 
 .navBar .profile .name {

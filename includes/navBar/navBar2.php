@@ -62,7 +62,7 @@
         </div>
         <div class="profile">
             <div class="img">
-                <img src="https://placehold.co/60x60" alt="profile">
+                <img src="../../images/Capture d'écran 2025-05-05 100406.png" alt="profile">
             </div>
             <div>
                 <p class="name"><?php echo $_SESSION['utilisateur']['prenom'] . ' ' . $_SESSION['utilisateur']['nom'] ?></p>
