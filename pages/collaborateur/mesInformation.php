@@ -134,11 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
           <div class="fieldGroup">
             <label for="poste">Poste - champ obligatoire</label>
-            <select id="poste" name="poste" required>
-              <option value="Directeur technique">Directeur technique</option>
-              <option value="Lead Développeur">Lead Développeur</option>
-              <option value="Développeur Web">Développeur Web</option>
-              <option value="Graphiste">Graphiste</option>
+            <select id="poste" name="poste">
+              <option><?= $infos['Position'] ?></option>
             </select>
           </div>
         </div>

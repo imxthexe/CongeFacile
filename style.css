@@ -268,7 +268,6 @@ header img {
   font-size: 16px;
 }
 
-/* From Uiverse.io by vinodjangid07 */
 #checkbox {
   display: none;
 }
@@ -470,23 +469,31 @@ input[type="password"] {
 }
 
 input[type="submit"] {
-    background-color: var(--color_btn);
-    color: white;
-    width: fit-content;
-    padding: 10px !important;
-    height: 50px;
-    border-radius: 6px;
-    margin: 0px 0 22px 0;
+  background-color: var(--color_btn);
+  color: white;
+  width: fit-content;
+  padding: 10px !important;
+  height: 50px;
+  border-radius: 6px;
+  margin: 0px 0 22px 0;
 }
 
 input[type="text"] {
-    padding-left: 40px;
+  padding-left: 40px;
 }
 
 
 /*FIN PageConnexion*/
 
 /* MOT DE PASSE Oublié  */
+
+form.FormMDPOublié {
+  padding-top: 20px;
+}
+
+.FormMDPOublié input {
+  margin-top: 20px;
+}
 
 /*FIN MDP OUBLIE*/
 
@@ -914,9 +921,19 @@ input[type="text"] {
 }
 
 .page .mesInfosForm input[type="email"],
-.page .mesInfosForm input[type="password"],
+.page .mesInfosForm input[type="password"] {
+  padding-left: 50px;
+}
+
+.page .mesInfosForm input[type="email"],
 .page .mesInfosForm input[type="text"] {
-  padding-left: 40px;
+  background-color: rgba(243, 244, 246, 1);
+  cursor: not-allowed;
+}
+
+.page .mesInfosForm select {
+  background-color: rgba(243, 244, 246, 1);
+  cursor: not-allowed;
 }
 
 .page .inlineFields {
