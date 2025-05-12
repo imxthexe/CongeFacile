@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 05 mai 2025 à 09:31
+-- Généré le : lun. 12 mai 2025 à 09:35
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -149,9 +149,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `enabled`, `created_at`, `role`, `person_id`) VALUES
-(6, 'salesse@gmail.com', '$2y$10$Bzqo2lN/RZPhE76KHTvQE.Ut36qi/i8Cp3p.cvPvGDNs5G3N6l316', 1, '2025-04-28 15:17:46', 'manager', 1),
-(7, 'martins@gmail.com', '$2y$10$QmfsoCDDnnp8JOtj3LTMY.Bh2GPXeCOzZCVCZXGp03nh/5w6w2vrS', 1, '2025-04-28 15:18:23', 'collaborateur', 2),
-(8, 'Dupas@gmail.com', '$2y$10$RYt.U4GnynK9rYDkdgBhFO0ZR.K3csU78mYJFUsmoMVf5i1dcH/FG', 1, '2025-04-28 15:19:15', 'collaborateur', 3);
+(1, 'salesse@gmail.com', '$2y$10$Bzqo2lN/RZPhE76KHTvQE.Ut36qi/i8Cp3p.cvPvGDNs5G3N6l316', 1, '2025-04-28 15:17:46', 'manager', 1),
+(2, 'martins@gmail.com', '$2y$10$QmfsoCDDnnp8JOtj3LTMY.Bh2GPXeCOzZCVCZXGp03nh/5w6w2vrS', 1, '2025-04-28 15:18:23', 'collaborateur', 2),
+(3, 'Dupas@gmail.com', '$2y$10$RYt.U4GnynK9rYDkdgBhFO0ZR.K3csU78mYJFUsmoMVf5i1dcH/FG', 1, '2025-04-28 15:19:15', 'collaborateur', 3);
 
 --
 -- Index pour les tables déchargées
@@ -231,7 +231,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT pour la table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `request_type`
@@ -243,7 +243,7 @@ ALTER TABLE `request_type`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées

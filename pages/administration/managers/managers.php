@@ -40,7 +40,7 @@ $Managers = $recupManagergers->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="headerRow">
                     <h2>Managers</h2>
-                    <button class="addManagerButton">Ajouter un manager</button>
+                    <a href="ajout.php" class="addManagerButton">Ajouter un manager</a>
                 </div>
 
                 <table class="managersTable">

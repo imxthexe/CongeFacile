@@ -61,17 +61,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateMdp->bindParam(':password', $password);
         $updateMdp->bindParam(':id', $id);
         $updateMdp->execute();
+        $_SESSION['success_message'] = 'Votre mot de passe a été modifié avec succès.';
+        header('Location: modifications.php');
+        exit();
     }
 }
 
 ?>
 
 <link rel="stylesheet" href="../../../style.css">
+
+<style>
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+</style>
 <div class="flex">
     <?php include "../../../includes/navBar/navBar3.php"; ?>
     <div class="containerMesInfos page">
         <section class="mesInfosSection">
             <h2>Mes informations</h2>
+            <?php if (isset($_SESSION['success_message'])): ?>
+                <div class="success-message">
+                    <?php echo $_SESSION['success_message']; ?>
+                </div>
+                <?php unset($_SESSION['success_message']); ?>
+            <?php endif; ?>
             <form class="mesInfosForm" method="POST">
                 <label for="emailAddress">Adresse email - champ obligatoire</label>
                 <input
