@@ -111,7 +111,11 @@ $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
                                 echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
                                 echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['nb_jours']) . "</td>";
                                 echo "<td data-label='Statut'>" . htmlspecialchars($requete['status']) . "</td>";
+
+                                echo "<td><a href='../../pages/collaborateur/detailsDemande.php' class='detailsButton'>Détails</a></td>";
+
                                 echo "<td><button class='detailsButton'><a  style='color:black;' href='detailsDemande.php?id=$id'>Détails</a></button></td>";
+
                                 echo "</tr>";
                             }
                         } else {

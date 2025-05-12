@@ -5,7 +5,6 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
-// ─── 1. Récupérer l’ID de votre personne (manager)
 $managerUserId = $_SESSION['utilisateur']['id'];
 $stmtMgr = $bdd->prepare("
     SELECT person_id 
@@ -15,7 +14,6 @@ $stmtMgr = $bdd->prepare("
 $stmtMgr->execute(['uid' => $managerUserId]);
 $managerPersonId = (int) $stmtMgr->fetchColumn();
 
-// ─── 2. Charger les collaborateurs dont manager_id = vous
 $querry = $bdd->prepare("
     SELECT 
         p.id                AS ID,
