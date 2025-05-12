@@ -1,6 +1,7 @@
 <?php
 session_start();
 $titre = 'Mes informations';
+
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/functions.php';
@@ -10,177 +11,201 @@ $id = $_SESSION['utilisateur']['id'];
 
 $query = $bdd->prepare("
     SELECT 
-        p.last_name AS Nom,
-        p.first_name AS Prenom,
-        u.email AS Email,
-        u.password AS password,
-        d.name AS Departement,
-        d.id AS department_id,
-        pos.id AS position_id,
-        pos.name AS Position,
-        p.manager_id AS manager_id
-        FROM user u
-        JOIN person p ON u.person_id = p.id
-        JOIN department d ON p.department_id = d.id
-        JOIN positions pos ON p.position_id = pos.id
-        WHERE u.id = :id
+        p.last_name     AS Nom,
+        p.first_name    AS Prenom,
+        u.email         AS Email,
+        u.password      AS password,
+        d.name          AS Departement,
+        d.id            AS department_id,
+        pos.id          AS position_id,
+        pos.name        AS Position,
+        p.manager_id    AS manager_id
+    FROM user u
+    JOIN person p ON u.person_id = p.id
+    JOIN department d ON p.department_id = d.id
+    JOIN positions pos ON p.position_id = pos.id
+    WHERE u.id = :id
 ");
-$query->bindParam(':id', $id);
+$query->bindParam(':id', $id, PDO::PARAM_INT);
 $query->execute();
-$infos = $query->fetch(PDO::FETCH_ASSOC);
-$errors = [];
-$data = [];
+$infos   = $query->fetch(PDO::FETCH_ASSOC);
+$errors  = [];
+$data    = [];
+$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $data = $_POST;
-  $data['currentPassword'] = trim($data['currentPassword']);
-  $data['newPassword'] = trim($data['newPassword']);
-  $data['confirmPassword'] = trim($data['confirmPassword']);
+    // Récupération et nettoyage
+    $data['currentPassword'] = htmlspecialchars(trim($_POST['currentPassword'] ?? ''));
+    $data['newPassword']     = htmlspecialchars(trim($_POST['newPassword']     ?? ''));
+    $data['confirmPassword'] = htmlspecialchars(trim($_POST['confirmPassword'] ?? ''));
 
-  $data['currentPassword'] = htmlspecialchars($data['currentPassword']);
-  $data['newPassword'] = htmlspecialchars($data['newPassword']);
-  $data['confirmPassword'] = htmlspecialchars($data['confirmPassword']);
+    // Validations
+    if (empty($data['currentPassword'])) {
+        $errors['currentPassword'] = "Veuillez entrer votre mot de passe actuel.";
+    } elseif (!password_verify($data['currentPassword'], $infos['password'])) {
+        $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
+    }
 
-  if (!password_verify($data['currentPassword'], $infos['password'])) {
-    $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
-  }
+    if (empty($data['newPassword'])) {
+        $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe.";
+    } elseif ($data['newPassword'] === $data['currentPassword']) {
+        $errors['newPassword'] = "Le nouveau mot de passe doit être différent de l'actuel.";
+    }
 
-  if (empty($data['currentPassword'])) {
-    $errors['currentPassword'] = "Veuillez entrez votre mot de passe actuel";
-  }
+    if (empty($data['confirmPassword'])) {
+        $errors['confirmPassword'] = "Veuillez confirmer votre nouveau mot de passe.";
+    } elseif ($data['newPassword'] !== $data['confirmPassword']) {
+        $errors['confirmPassword'] = "Les deux mots de passe ne correspondent pas.";
+    }
 
-  if (empty($data['newPassword'])) {
-    $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe";
-  }
-
-  if ($data['newPassword'] !== $data['confirmPassword']) {
-    $errors['newPassword'] = "Les deux mots de passe ne correspondent pas.";
-  }
-
-  if (empty($data['confirmPassword'])) {
-    $errors['confirmPassword'] = "Rentrez votre nouveau mot de passe";
-  }
-
-  if ($data['newPassword'] == $data['currentPassword']) {
-    $errors['newPassword'] = "Vous devez changer votre mot de passe pour le réinitialiser";
-  }
-
-  if (empty($errors)) {
-    $id = $_SESSION['utilisateur']['id'];
-    $password = password_hash($data['newPassword'], PASSWORD_DEFAULT);
-    $updateMdp = $bdd->prepare("UPDATE user SET password = :password WHERE id = :id");
-    $updateMdp->bindParam(':password', $password);
-    $updateMdp->bindParam(':id', $id);
-    $updateMdp->execute();
-  }
+    // Si tout est OK, mise à jour
+    if (empty($errors)) {
+        $newHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+        $updateMdp = $bdd->prepare("
+            UPDATE user 
+            SET password = :password 
+            WHERE id = :id
+        ");
+        $updateMdp->execute([
+            ':password' => $newHash,
+            ':id'       => $id
+        ]);
+        $success = '✅ Mot de passe réinitialisé avec succès.';
+        // On peut vider les champs du formulaire
+        $data = [];
+    }
 }
 ?>
 
-
 <link rel="stylesheet" href="../../style.css" />
-
 
 <div class="flex">
   <?php include "../../includes/navBar/navBar2.php"; ?>
   <div class="containerMesInfos page">
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
+
+      <!-- Message de succès -->
+      <?php if ($success): ?>
+        <div style="
+          background: #e6ffed;
+          border-left: 4px solid #28a745;
+          padding: 10px;
+          margin-bottom: 1em;
+          color: #155724;
+        ">
+          <?= $success ?>
+        </div>
+      <?php endif; ?>
+
       <form class="mesInfosForm" method="POST">
-        <label for="emailAddress">Adresse email - champ obligatoire</label>
-        <input
-          type="email"
-          id="emailAddress"
-          name="emailAddress"
-          value="<?php echo $infos['Email'] ?>"
-          required readonly />
+        <!-- Email (readonly) -->
+        <label for="emailAddress">Adresse email</label>
+        <input type="email"
+               id="emailAddress"
+               name="emailAddress"
+               value="<?= htmlspecialchars($infos['Email']) ?>"
+               required
+               readonly />
 
         <div class="inlineFields">
           <div class="fieldGroup">
-            <label for="lastName">Nom de famille - champ obligatoire</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value="<?= $infos['Nom'] ?>"
-              required readonly />
+            <label for="lastName">Nom de famille</label>
+            <input type="text"
+                   id="lastName"
+                   name="lastName"
+                   value="<?= htmlspecialchars($infos['Nom']) ?>"
+                   required
+                   readonly />
           </div>
           <div class="fieldGroup">
-            <label for="firstName">Prénom - champ obligatoire</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value="<?= $infos['Prenom'] ?>"
-              required readonly />
+            <label for="firstName">Prénom</label>
+            <input type="text"
+                   id="firstName"
+                   name="firstName"
+                   value="<?= htmlspecialchars($infos['Prenom']) ?>"
+                   required
+                   readonly />
           </div>
         </div>
 
         <div class="inlineFields">
           <div class="fieldGroup">
-            <label for="directionService">Direction/Service - champ obligatoire</label>
-
-            <select id="poste" name="poste" required>
-              <option value="Directeur technique" selected><?= $infos['Departement'] ?></option>
+            <label for="department">Direction/Service</label>
+            <select id="department" name="department" disabled>
+              <option selected><?= htmlspecialchars($infos['Departement']) ?></option>
             </select>
           </div>
           <div class="fieldGroup">
-            <label for="poste">Poste - champ obligatoire</label>
-            <select id="poste" name="poste" required>
-              <option value="Directeur technique" selected><?= $infos['Position'] ?></option>
+            <label for="position">Poste</label>
+            <select id="position" name="position" disabled>
+              <option selected><?= htmlspecialchars($infos['Position']) ?></option>
             </select>
           </div>
         </div>
-
 
         <h2>Réinitialiser mon mot de passe</h2>
 
         <label for="currentPassword">Mot de passe actuel</label>
         <div class="password-wrapper">
-          <input type="password" id="currentPassword" name="currentPassword" />
-          <i class="fa-regular fa-eye toggle-password" data-target="currentPassword"></i>
+          <input type="password"
+                 id="currentPassword"
+                 name="currentPassword"
+                 value="<?= $data['currentPassword'] ?? '' ?>" />
+          <i class="fa-regular fa-eye toggle-password"
+             data-target="currentPassword"></i>
         </div>
+        <?php if (isset($errors['currentPassword'])): ?>
+          <p style="color:red;"><?= $errors['currentPassword'] ?></p>
+        <?php endif; ?>
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
             <div class="password-wrapper">
-              <input type="password" id="newPassword" name="newPassword" />
-              <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
+              <input type="password"
+                     id="newPassword"
+                     name="newPassword"
+                     value="<?= $data['newPassword'] ?? '' ?>" />
+              <i class="fa-regular fa-eye toggle-password"
+                 data-target="newPassword"></i>
             </div>
+            <?php if (isset($errors['newPassword'])): ?>
+              <p style="color:red;"><?= $errors['newPassword'] ?></p>
+            <?php endif; ?>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <div class="password-wrapper">
-              <input type="password" id="confirmPassword" name="confirmPassword" />
-              <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
+              <input type="password"
+                     id="confirmPassword"
+                     name="confirmPassword"
+                     value="<?= $data['confirmPassword'] ?? '' ?>" />
+              <i class="fa-regular fa-eye toggle-password"
+                 data-target="confirmPassword"></i>
             </div>
+            <?php if (isset($errors['confirmPassword'])): ?>
+              <p style="color:red;"><?= $errors['confirmPassword'] ?></p>
+            <?php endif; ?>
           </div>
         </div>
 
-        <button type="button" class="resetBtn">Réinitialiser le mot de passe</button>
+        <button type="submit" class="resetBtn">Réinitialiser le mot de passe</button>
       </form>
     </section>
   </div>
 </div>
 
 <script>
-  const toggleIcons = document.querySelectorAll('.toggle-password');
-
-  toggleIcons.forEach(icon => {
+  document.querySelectorAll('.toggle-password').forEach(icon => {
     icon.addEventListener('click', function() {
-      const targetId = this.getAttribute('data-target');
-      const passwordInput = document.getElementById(targetId);
-
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-
+      const target = document.getElementById(this.dataset.target);
+      const type   = target.type === 'password' ? 'text' : 'password';
+      target.type = type;
       this.classList.toggle('fa-eye');
       this.classList.toggle('fa-eye-slash');
     });
   });
 </script>
-
-
 </body>
-
 </html>
