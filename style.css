@@ -2501,10 +2501,7 @@ form.FormMDPOublié {
 
 /*MANAGERS ADMIN*/
 
-.containerManagers {
-  flex: 1;
-  padding: 150px 0 0 50px;
-}
+
 
 .containerManagers .managersSection {
   padding: 20px;

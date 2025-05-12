@@ -54,7 +54,7 @@
                             </a>
                         </ul>
                     </details>
-                    <a href="../../deconnexion.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">
+                    <a href="../../../deconnexion.php" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">
                         <li>Déconnexion</li>
                     </a>
                 </ul>
@@ -62,7 +62,7 @@
         </div>
         <div class="profile">
             <div class="img">
-                <img src="../../images/Capture d'écran 2025-05-05 100406.png" alt="profile">
+                <img src="../../../images/Capture d'écran 2025-05-05 100406.png" alt="profile">
             </div>
             <div>
                 <p class="name"><?php echo $_SESSION['utilisateur']['prenom'] . ' ' . $_SESSION['utilisateur']['nom'] ?></p>
