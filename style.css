@@ -1113,6 +1113,78 @@ form.FormMDPOublié {
 
 /* FIN PAGE MES PREF COLLAB*/
 
+/* DETAILS DEMANDES COLLAB */
+
+
+
+.page .maDemandeSection {
+  padding: 20px;
+  width: 75%;
+}
+
+.page .maDemandeSection h2 {
+  font-size: 2.6rem;
+  color: var(--color_title);
+  margin-bottom: 20px;
+}
+
+.page .maDemandeSection p {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.page .maDemandeSection .activeP {
+  color: #1565C0;
+}
+
+.page .maDemandeSection .parameter {
+  padding: 10px 0;
+}
+
+.page .maDemandeSection .comment {
+  margin: 20px 0;
+}
+
+.page .maDemandeSection textarea {
+  resize: none;
+  height: 200px;
+  width: 800px;
+}
+
+.page .maDemandeSection .statutValide {
+  display: inline-block;
+  background-color: rgba(46, 204, 112, 0.25);
+  color: green;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-left: 20px;
+}
+
+.page .maDemandeSection .backButton {
+  margin-top: 20px;
+  background-color: var(--border);
+  color: #333;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 300px;
+}
+
+.page .maDemandeSection .backButton:hover {
+  background-color: #bbb;
+}
+
+@media screen and (max-width: 1080px) {
+  .page {
+    padding: 80px 20px 0 20px;
+  }
+}
+
+
+/* FIN DETAILS DEMANDES */
+
 /*  CSS HISTORIQUE DES DEMANDES  DE CHAQUE COLLAB */
 
 .containerHistoriqueUser .historiqueUserSection {

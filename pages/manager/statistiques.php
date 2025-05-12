@@ -28,7 +28,7 @@ foreach ($rows as $row) {
 
     // Statistiques par type de congé
     $typeStats[$type] = ($typeStats[$type] ?? 0) + 1;
-    
+
     // Statistiques par mois
     $acceptStats[$mois]['total'] += 1;
     if ($statut == 1) {  // 1 = Acceptée
@@ -48,14 +48,15 @@ $monthlyTotal = json_encode(array_column($acceptStats, 'total'));
 $titre = 'Statistiques';
 include '../../includes/header2.php';
 ?>
-<body>
-    
 
-<html>
-    <div class='flex'>
-        <div class="flexleft">
-             <?php include "../../includes/navBar/navBar2.php"; ?>
-        </div>
+<body>
+
+
+    <html>
+    <div class="flex">
+
+        <?php include "../../includes/navBar/navBar2.php"; ?>
+
         <div class="">
             <div class="page">
                 <h1>Statistiques</h1>
@@ -68,52 +69,52 @@ include '../../includes/header2.php';
         </div>
     </div>
 
-<script>
-  const typesData = <?= json_encode($typeStats) ?>;
-  const acceptData = <?= json_encode($acceptStats) ?>;
-
-  
-  const ctx1 = document.getElementById('chartTypesDemandes').getContext('2d');
-  new Chart(ctx1, {
-      type: 'doughnut',
-      data: {
-          labels: Object.keys(typesData),
-          datasets: [{
-              data: Object.values(typesData),
-              backgroundColor: ['#4285F4', '#FBBC05', '#34A853', '#EA4335', '#FF9900']
-          }]
-      }
-  });
+    <script>
+        const typesData = <?= json_encode($typeStats) ?>;
+        const acceptData = <?= json_encode($acceptStats) ?>;
 
 
-  const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-  const taux = Object.values(acceptData).map(val =>
-      val.total > 0 ? (val.accepted / val.total * 100).toFixed(2) : 0
-  );
+        const ctx1 = document.getElementById('chartTypesDemandes').getContext('2d');
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(typesData),
+                datasets: [{
+                    data: Object.values(typesData),
+                    backgroundColor: ['#4285F4', '#FBBC05', '#34A853', '#EA4335', '#FF9900']
+                }]
+            }
+        });
 
-  const ctx2 = document.getElementById('chartTauxAcceptation').getContext('2d');
-  new Chart(ctx2, {
-      type: 'line',
-      data: {
-          labels: mois,
-          datasets: [{
-              label: '% acceptées',
-              data: taux,
-              borderColor: '#004c6c',
-              tension: 0.4,
-              fill: false
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true,
-                  max: 100
-              }
-          }
-      }
-  });
-</script>
+
+        const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+        const taux = Object.values(acceptData).map(val =>
+            val.total > 0 ? (val.accepted / val.total * 100).toFixed(2) : 0
+        );
+
+        const ctx2 = document.getElementById('chartTauxAcceptation').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: mois,
+                datasets: [{
+                    label: '% acceptées',
+                    data: taux,
+                    borderColor: '#004c6c',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
 
 
 
@@ -121,4 +122,3 @@ include '../../includes/header2.php';
 
 
 </body>
-
