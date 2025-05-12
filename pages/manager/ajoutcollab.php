@@ -1,62 +1,160 @@
 <?php
 session_start();
-$titre = 'Historique des demandes en attente';
+$titre = 'Ajouter un collaborateur';
+
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/functions.php';
 
-$data = [];
+$data   = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
-    $recupPostes = $bdd->prepare('SELECT name FROM department');
-    $recupPostes->execute();
-    $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($Postes as $Poste) {
-        if ($Poste['name'] == $data['poste']) {
-            $errors['poste'] = 'Ce poste existe déja';
-        }
+    if (empty($data['userLastName']))      $errors['userLastName']   = 'Nom requis';
+    if (empty($data['userFirstName']))     $errors['userFirstName']  = 'Prénom requis';
+    if (empty($data['userEmail']))         $errors['userEmail']      = 'Email requis';
+    if (empty($data['password']))          $errors['password']       = 'Mot de passe requis';
+    if ($data['password'] !== $data['confirmPassword']) {
+        $errors['confirmPassword'] = 'Les mots de passe ne correspondent pas';
     }
 
-    if (empty($data['poste'])) {
-        $errors['poste'] = 'Veuillez renseigner un nouveau type de congé';
+
+    $checkEmail = $bdd->prepare("SELECT id FROM user WHERE email = :email");
+    $checkEmail->execute(['email' => $data['userEmail']]);
+    if ($checkEmail->fetch()) {
+        $errors['userEmail'] = 'Email déjà utilisé';
     }
+
 
     if (empty($errors)) {
-        $nouveauType = $bdd->prepare('INSERT INTO department VALUES (0,:poste)');
-        $nouveauType->bindParam(':poste', $data['poste']);
-        $nouveauType->execute();
-        header('Location:postes.php');
+        try {
+            $bdd->beginTransaction();
+
+            $stmtPerson = $bdd->prepare("
+                INSERT INTO person 
+                  (last_name, first_name, department_id, position_id, manager_id)
+                VALUES 
+                  (:last_name, :first_name, :department_id, :position_id, :manager_id)
+            ");
+            $stmtPerson->execute([
+                'last_name'     => $data['userLastName'],
+                'first_name'    => $data['userFirstName'],
+                'department_id' => $data['userDepartment'],
+                'position_id'   => $data['userPosition'],
+                'manager_id'    => $data['userManager']
+            ]);
+            $person_id = $bdd->lastInsertId();
+
+
+            $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+            $stmtUser = $bdd->prepare("
+                INSERT INTO user 
+                  (person_id, email, password)
+                VALUES 
+                  (:person_id, :email, :password)
+            ");
+            $stmtUser->execute([
+                'person_id' => $person_id,
+                'email'     => $data['userEmail'],
+                'password'  => $hashedPassword
+            ]);
+
+            $bdd->commit();
+
+
+            header('Location: monEquipe1.php');
+            exit;
+
+        } catch (Exception $e) {
+            $bdd->rollBack();
+            echo '<p style="color:red;">Erreur : ' . htmlspecialchars($e->getMessage()) . '</p>';
+        }
     }
 }
-
 ?>
 
-<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../style.css" />
 
 <div class="flex">
-    <?php include "../../includes/navBar/navBar3.php"; ?>
+  <?php include "../../includes/navBar/navBar3.php"; ?>
+  <div class="containerUserDetail page">
+    <section class="userDetailSection">
+      <h2>Ajouter un collaborateur</h2>
 
-    <div class="containerajout page">
-        <section class="ajout">
+      <form class="userEditForm" method="POST">
 
-            <h1>Ajouter un nouveau collaborateur</h1>
+        <label for="userEmail">Adresse email <span style="color:red;">*</span></label>
+        <input type="email" id="userEmail" name="userEmail"
+               value="<?= afficheValeur('userEmail', $data) ?>" required />
+        <?= afficheErreur('userEmail', $errors) ?>
 
-            <form class="editajoutForm" method="POST">
-                <label for="nomajoute">Nom du collaborateur</label>
-                <input type="text" id="Poste" name="poste" placeholder="Développeur..." value="<?php echo afficheValeur('poste', $data) ?>" />
-                <?php echo afficheErreur('poste', $errors); ?>
+        <div class="inlineFields">
 
-                <div class="actionButtons">
-                    <button type="submit" class="updateBtn">Ajouter</button>
-                </div>
-            </form>
-        </section>
-    </div>
+          <div class="fieldGroup">
+            <label for="userLastName">Nom <span style="color:red;">*</span></label>
+            <input type="text" id="userLastName" name="userLastName"
+                   value="<?= afficheValeur('userLastName', $data) ?>" required />
+            <?= afficheErreur('userLastName', $errors) ?>
+          </div>
+
+          <div class="fieldGroup">
+            <label for="userFirstName">Prénom <span style="color:red;">*</span></label>
+            <input type="text" id="userFirstName" name="userFirstName"
+                   value="<?= afficheValeur('userFirstName', $data) ?>" required />
+            <?= afficheErreur('userFirstName', $errors) ?>
+          </div>
+        </div>
+
+        <div class="inlineFields">
+
+          <div class="fieldGroup">
+            <label for="userPosition">Poste</label>
+            <select id="userPosition" name="userPosition">
+              <option value="1" <?= (isset($data['userPosition'])&&$data['userPosition']==1)?'selected':'' ?>>Marketing</option>
+              <option value="2" <?= (isset($data['userPosition'])&&$data['userPosition']==2)?'selected':'' ?>>Dév. Web</option>
+            </select>
+          </div>
+
+          <div class="fieldGroup">
+            <label for="userDepartment">Département</label>
+            <select id="userDepartment" name="userDepartment">
+              <option value="1" <?= (isset($data['userDepartment'])&&$data['userDepartment']==1)?'selected':'' ?>>BU Symfony</option>
+              <option value="2" <?= (isset($data['userDepartment'])&&$data['userDepartment']==2)?'selected':'' ?>>BU Wordpress</option>
+            </select>
+          </div>
+        </div>
+
+
+        <label for="userManager">Manager</label>
+        <select id="userManager" name="userManager">
+          <option value="1" <?= (isset($data['userManager'])&&$data['userManager']==1)?'selected':'' ?>>Frédéric Salesse</option>
+          <option value="2" <?= (isset($data['userManager'])&&$data['userManager']==2)?'selected':'' ?>>Olivier Salesse</option>
+        </select>
+
+        <div class="inlineFields">
+
+          <div class="fieldGroup">
+            <label for="password">Mot de passe <span style="color:red;">*</span></label>
+            <input type="password" id="password" name="password" required />
+            <?= afficheErreur('password', $errors) ?>
+          </div>
+
+          <div class="fieldGroup">
+            <label for="confirmPassword">Confirmation <span style="color:red;">*</span></label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+            <?= afficheErreur('confirmPassword', $errors) ?>
+          </div>
+        </div>
+
+        <div class="btnContainer">
+          <button type="submit" class="updateBtn">Créer le collaborateur</button>
+        </div>
+      </form>
+    </section>
+  </div>
 </div>
 </body>
-
 </html>
