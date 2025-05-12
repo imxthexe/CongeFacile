@@ -26,6 +26,8 @@ $recupInfosDemande->bindParam(":id", $id);
 $recupInfosDemande->execute();
 $infos = $recupInfosDemande->fetch(PDO::FETCH_ASSOC);
 var_dump($infos);
+
+$infos['start_at'];
 ?>
 
 <link rel="stylesheet" href="../../style.css">
