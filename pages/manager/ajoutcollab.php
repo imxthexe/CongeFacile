@@ -12,7 +12,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
-    // 1. Validations
+
     if (empty($data['userLastName']))      $errors['userLastName']   = 'Nom requis';
     if (empty($data['userFirstName']))     $errors['userFirstName']  = 'Prénom requis';
     if (empty($data['userEmail']))         $errors['userEmail']      = 'Email requis';
@@ -21,19 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['confirmPassword'] = 'Les mots de passe ne correspondent pas';
     }
 
-    // 2. Vérif unicité email
+
     $checkEmail = $bdd->prepare("SELECT id FROM user WHERE email = :email");
     $checkEmail->execute(['email' => $data['userEmail']]);
     if ($checkEmail->fetch()) {
         $errors['userEmail'] = 'Email déjà utilisé';
     }
 
-    // 3. Insertion si pas d’erreur
+
     if (empty($errors)) {
         try {
             $bdd->beginTransaction();
 
-            // 3.1 Insert person
             $stmtPerson = $bdd->prepare("
                 INSERT INTO person 
                   (last_name, first_name, department_id, position_id, manager_id)
@@ -49,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
             $person_id = $bdd->lastInsertId();
 
-            // 3.2 Insert user
+
             $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
             $stmtUser = $bdd->prepare("
                 INSERT INTO user 
@@ -65,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $bdd->commit();
 
-            // 4. Redirection vers monEquipe1.php (au lieu de monEquipe2.php)
+
             header('Location: monEquipe1.php');
             exit;
 
@@ -86,21 +85,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Ajouter un collaborateur</h2>
 
       <form class="userEditForm" method="POST">
-        <!-- Email -->
+
         <label for="userEmail">Adresse email <span style="color:red;">*</span></label>
         <input type="email" id="userEmail" name="userEmail"
                value="<?= afficheValeur('userEmail', $data) ?>" required />
         <?= afficheErreur('userEmail', $errors) ?>
 
         <div class="inlineFields">
-          <!-- Nom -->
+
           <div class="fieldGroup">
             <label for="userLastName">Nom <span style="color:red;">*</span></label>
             <input type="text" id="userLastName" name="userLastName"
                    value="<?= afficheValeur('userLastName', $data) ?>" required />
             <?= afficheErreur('userLastName', $errors) ?>
           </div>
-          <!-- Prénom -->
+
           <div class="fieldGroup">
             <label for="userFirstName">Prénom <span style="color:red;">*</span></label>
             <input type="text" id="userFirstName" name="userFirstName"
@@ -110,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="inlineFields">
-          <!-- Poste -->
+
           <div class="fieldGroup">
             <label for="userPosition">Poste</label>
             <select id="userPosition" name="userPosition">
@@ -118,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <option value="2" <?= (isset($data['userPosition'])&&$data['userPosition']==2)?'selected':'' ?>>Dév. Web</option>
             </select>
           </div>
-          <!-- Département -->
+
           <div class="fieldGroup">
             <label for="userDepartment">Département</label>
             <select id="userDepartment" name="userDepartment">
@@ -128,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
-        <!-- Manager -->
+
         <label for="userManager">Manager</label>
         <select id="userManager" name="userManager">
           <option value="1" <?= (isset($data['userManager'])&&$data['userManager']==1)?'selected':'' ?>>Frédéric Salesse</option>
@@ -136,13 +135,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
 
         <div class="inlineFields">
-          <!-- Mot de passe -->
+
           <div class="fieldGroup">
             <label for="password">Mot de passe <span style="color:red;">*</span></label>
             <input type="password" id="password" name="password" required />
             <?= afficheErreur('password', $errors) ?>
           </div>
-          <!-- Confirmation -->
+
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation <span style="color:red;">*</span></label>
             <input type="password" id="confirmPassword" name="confirmPassword" required />
