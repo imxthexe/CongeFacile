@@ -4,7 +4,6 @@ session_start();
 include '../../includes/verifSession.php';
 include '../../includes/verifSecuriteCollaborateur.php';
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,11 +40,9 @@ include '../../includes/verifSecuriteCollaborateur.php';
                 </div>
 
 
-
+                <h2>Etapes</h2>
 
                 <div class="steps">
-
-                    <h2>Etapes</h2>
 
                     <div class="progressContainer">
 
