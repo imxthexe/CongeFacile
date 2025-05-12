@@ -2,7 +2,6 @@
 session_start();
 $titre = 'Mes informations';
 include '../../includes/database.php';
-include '../../includes/header2.php';
 include '../../includes/functions.php';
 include '../../includes/verifSecuriteCollaborateur.php';
 
@@ -84,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <link rel="stylesheet" href="../../style.css">
-
+<?php include '../../includes/header2.php'; ?>
 
 <div class="flex">
   <?php include "../../includes/navBar/navBar1.php"; ?>
