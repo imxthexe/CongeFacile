@@ -588,10 +588,10 @@ form.FormMDPOublié {
   }
 
   .accueil .progressContainer {
-        display: grid;
-        position: relative;
-        flex: 1;
-        margin: auto;
+    display: grid;
+    position: relative;
+    flex: 1;
+    margin: auto;
   }
 
   .accueil .stepCircle {
@@ -674,6 +674,7 @@ form.FormMDPOublié {
     margin: 0 auto;
     justify-content: center;
   }
+
   .accueil .progressContainer {
     display: block;
     align-items: center;
@@ -1174,6 +1175,29 @@ form.FormMDPOublié {
 
 .page .maDemandeSection .backButton:hover {
   background-color: #bbb;
+}
+
+.statutValide {
+  background-color: #28a745;
+  /* vert */
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.statutRefuse {
+  background-color: #dc3545;
+  /* rouge */
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.statutEnCours {
+  background-color: #6c757d;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 1080px) {

@@ -25,9 +25,32 @@ WHERE
 $recupInfosDemande->bindParam(":id", $id);
 $recupInfosDemande->execute();
 $infos = $recupInfosDemande->fetch(PDO::FETCH_ASSOC);
-var_dump($infos);
 
-$infos['start_at'];
+
+$date1 = new DateTime($infos['start_at']);
+$date1 = $date1->format('d');
+
+$date2 = new DateTime($infos['end_at']);
+$date2 = $date2->format('d');
+
+if ($infos["answer"] == null) {
+    $infos["answer_comment"] == "votre manager laissera un message lorsque il aura répondu à votre requète";
+}
+
+$nb_jours = $date2 - $date1;
+
+
+if ($infos['answer'] === null) {
+    $infos['answer'] = "en cours";
+    $statutClass = "statutEnCours";
+} else if ($infos['answer'] == 0) {
+    $infos['answer'] = "refusé";
+    $statutClass = "statutRefuse";
+} else {
+    $infos["answer"] = "validé";
+    $statutClass = "statutValide";
+}
+
 ?>
 
 <link rel="stylesheet" href="../../style.css">
@@ -46,15 +69,19 @@ $infos['start_at'];
             <div class="parameter">
                 <p>Demande du <?= $infos["created_at"] ?></p>
                 <p>Période : <?= $infos['start_at'] . ' au ' . $infos['end_at'] ?></p>
-                <p>Nombre de jours : 3 jours</p>
+                <p>Nombre de jours : <?= $nb_jours ?></p>
             </div>
 
 
-            <p>Statut de la demande : <span class="statutValide">Validé</span></p>
+            <p>Statut de la demande : <span class="<?= $statutClass ?>"><?= $infos['answer'] ?></span></p>
 
             <p class="comment">Commentaire du manager :</p>
 
-            <textarea placeholder="Bon temps de vacances à Mayrouge et surtout, n'oublie pas la carte postale !!!"></textarea>
+            <textarea placeholder="<?php if (($infos["answer"] == 1 || $infos["answer"] == 0)) {
+                                        echo $infos["answer_comment"];
+                                    } else {
+                                        echo "Votre manager laissera un message lors de la réponse à votre requète !";
+                                    } ?>"></textarea>
             <button class="backButton"><a style="color: black;" href="historiqueDesDemandes.php">Retourner à la liste de mes demandes</a></button>
         </section>
     </div>
