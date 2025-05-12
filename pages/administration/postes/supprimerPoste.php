@@ -6,4 +6,7 @@ $id = $_GET['id'];
 $SuppressionTypeDemande = $bdd->prepare('DELETE FROM department WHERE id=:id');
 $SuppressionTypeDemande->bindParam(':id', $id);
 $SuppressionTypeDemande->execute();
-header('Location: postes.php');
+session_start();
+$_SESSION['success_message'] = 'Le département a été supprimé avec succès.';
+header('Location: ../directionsServices/directionsServices.php');
+exit();

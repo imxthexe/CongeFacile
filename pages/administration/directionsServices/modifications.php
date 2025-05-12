@@ -32,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ModifNomPoste->bindValue(':nom', $data['poste']);
         $ModifNomPoste->bindValue(':id', $id);
         $ModifNomPoste->execute();
+        $_SESSION['success_message'] = 'Le département a été mis à jour avec succès.';
         header('Location: directionsServices.php');
+        exit();
     }
 }
 
@@ -63,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
     function confirmDelete(id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer ce département ? Cette action est irréversible.")) {
-            window.location.href = "supprimerPoste.php?id=" + id;
+            window.location.href = "../postes/supprimerPoste.php?id=" + id;
         }
     }
 </script>
