@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="../../style.css" />
 
 <div class="flex">
-  <?php include "../../includes/navBar/navBar3.php"; ?>
+  <?php include "../../includes/navBar/navBar2.php"; ?>
   <div class="containerUserDetail page">
     <section class="userDetailSection">
       <h2>Ajouter un collaborateur</h2>
