@@ -2,7 +2,7 @@
 session_start();
 
 include '../../includes/verifSession.php';
-include '../../includes/verifSecuriteCollaborateur.php';
+include '../../includes/verifSecuriteManager.php';
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ include '../../includes/verifSecuriteCollaborateur.php';
     <?php include "../../includes/header2.php" ?>
 
     <div class="flex">
-        <?php include "../../includes/navBar/navBar1.php" ?>
+        <?php include "../../includes/navBar/navBar2.php" ?>
 
         <div class="page">
 
@@ -38,6 +38,7 @@ include '../../includes/verifSecuriteCollaborateur.php';
                     <p>CongéFacile est votre nouvel outil dédié à la gestion des congés au sein de l’entreprise.</p>
                     <p>Plus besoin d’échanges interminables ou de formulaires papier : en quelques clics, vous pouvez gérer vos absences en toute transparence et simplicité.</p>
                 </div>
+
 
 
                 <h2>Etapes</h2>

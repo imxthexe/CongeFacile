@@ -1,110 +1,131 @@
 <?php
 session_start();
-$titre = 'Mes informations';
+$titre = 'Détails du collaborateur';
+
 include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 include '../../includes/functions.php';
 
-$id = $_GET['id'];
-
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if ($id <= 0) {
+    header('Location: monEquipe1.php');
+    exit;
+}
 
 $query = $bdd->prepare("
     SELECT 
-        p.last_name AS Nom,
-        p.first_name AS Prénom,
-        u.email AS Email,
-        d.name AS Département,
-        d.id AS department_id,
-        pos.id AS position_id,
-        pos.name AS Position,
-        p.manager_id AS manager_id
-        FROM user u
-        JOIN person p ON u.person_id = p.id
-        JOIN department d ON p.department_id = d.id
-        JOIN positions pos ON p.position_id = pos.id
-        WHERE u.id = :id
+      p.id             AS person_id,
+      p.last_name      AS Nom,
+      p.first_name     AS Prénom,
+      u.email          AS Email,
+      d.name           AS Département,
+      d.id             AS department_id,
+      pos.id           AS position_id,
+      pos.name         AS Position,
+      p.manager_id     AS manager_id
+    FROM user u
+    JOIN person p ON u.person_id = p.id
+    JOIN department d ON p.department_id = d.id
+    JOIN positions pos ON p.position_id = pos.id
+    WHERE u.id = :id
 ");
-$query->bindParam(':id', $id);
-$query->execute();
-$manager = $query->fetch(PDO::FETCH_ASSOC);
+$query->execute(['id' => $id]);
+$collab = $query->fetch(PDO::FETCH_ASSOC);
 
+if (!$collab) {
+    echo '<p style="background:#fdd; padding:10px; border-left:4px solid #f00;">
+            ⚠ Collaborateur introuvable !
+          </p>';
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['update'])) {
-    $nom = $_POST['userLastName'];
-    $prenom = $_POST['userFirstName'];
-    $email = $_POST['userEmail'];
-    $department_id = $_POST['userDepartment'];
-    $position_id = $_POST['userPosition'];
-    $manager_id = $_POST['userManager'];
-    $newPassword = $_POST['newPassword'];
-    $confirmPassword = $_POST['confirmPassword'];
 
-    try {
-      $bdd->beginTransaction(); // fonction php qui permet de démarer une transaction et voir si tout va bien
+    // 4.1) Suppression du collaborateur
+    if (isset($_POST['delete'])) {
+        try {
+            $bdd->beginTransaction();
 
-      // update person
-      $queryPerson = $bdd->prepare("UPDATE person 
-                    SET last_name = :nom, 
-                    first_name = :prenom, 
-                    department_id = :department, 
-                    position_id = :position, 
-                    manager_id = :manager 
-                    WHERE id = (SELECT person_id FROM user WHERE id = :id)
+            $delUser = $bdd->prepare("DELETE FROM user WHERE id = :uid");
+            $delUser->execute(['uid' => $id]);
+
+            $bdd->commit();
+            header('Location: monEquipe1.php');
+            exit;
+
+        } catch (Exception $e) {
+            $bdd->rollBack();
+            echo '<p style="background:#fdd; padding:10px; border-left:4px solid #f00;">
+                    Erreur lors de la suppression : ' . htmlspecialchars($e->getMessage()) . '
+                  </p>';
+        }
+    }
+
+    if (isset($_POST['update'])) {
+        $nom         = trim($_POST['userLastName']);
+        $prenom      = trim($_POST['userFirstName']);
+        $email       = trim($_POST['userEmail']);
+        $dept_id     = intval($_POST['userDepartment']);
+        $pos_id      = intval($_POST['userPosition']);
+        $mgr_id      = $collab['manager_id']
+        $newPwd      = $_POST['newPassword']     ?? '';
+        $confirmPwd  = $_POST['confirmPassword'] ?? '';
+
+        try {
+            $bdd->beginTransaction();
+
+            $updP = $bdd->prepare("
+                UPDATE person
+                SET last_name     = :nom,
+                    first_name    = :prenom,
+                    department_id = :dept,
+                    position_id   = :pos,
+                    manager_id    = :mgr
+                WHERE id = :pid
             ");
-      $queryPerson->bindParam(':nom', $nom);
-      $queryPerson->bindParam(':prenom', $prenom);
-      $queryPerson->bindParam(':department', $department_id);
-      $queryPerson->bindParam(':position', $position_id);
-      $queryPerson->bindParam(':manager', $manager_id);
-      $queryPerson->bindParam(':id', $id);
-      $queryPerson->execute();
+            $updP->execute([
+                'nom'   => $nom,
+                'prenom'=> $prenom,
+                'dept'  => $dept_id,
+                'pos'   => $pos_id,
+                'mgr'   => $mgr_id,
+                'pid'   => $collab['person_id']
+            ]);
 
-      // Update email
-      $queryUser = $bdd->prepare("UPDATE user 
-                                        SET email = :email 
-                                        WHERE id = :id");
-      $queryUser->bindParam(':email', $email);
-      $queryUser->bindParam(':id', $id);
-      $queryUser->execute();
+            $updU = $bdd->prepare("
+                UPDATE user
+                SET email = :email
+                WHERE id = :uid
+            ");
+            $updU->execute([
+                'email' => $email,
+                'uid'   => $id
+            ]);
 
-      // mot de passe
-      if (!empty($newPassword) && $newPassword === $confirmPassword) {
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $queryPassword = $bdd->prepare("UPDATE user 
-                                                SET password = :password 
-                                                WHERE id = :id");
-        $queryPassword->bindParam(':password', $hashedPassword);
-        $queryPassword->bindParam(':id', $id);
-        $queryPassword->execute();
-      }
+            if ($newPwd !== '' && $newPwd === $confirmPwd) {
+                $updPwd = $bdd->prepare("
+                    UPDATE user
+                    SET password = :pwd
+                    WHERE id = :uid
+                ");
+                $updPwd->execute([
+                    'pwd' => password_hash($newPwd, PASSWORD_BCRYPT),
+                    'uid' => $id
+                ]);
+            }
 
+            $bdd->commit();
+            header('Location: monEquipe1.php');
+            exit;
 
-
-      $bdd->commit();
-      header("Location: monEquipe2.php");
-      exit;
-    } catch (Exception $e) {
-      $bdd->rollBack();
-      echo "Erreur lors de la mise à jour : " . $e->getMessage();
+        } catch (Exception $e) {
+            $bdd->rollBack();
+            echo '<p style="background:#fdd; padding:10px; border-left:4px solid #f00;">
+                    Erreur lors de la mise à jour : ' . htmlspecialchars($e->getMessage()) . '
+                  </p>';
+        }
     }
-  } elseif (isset($_POST['delete'])) {
-    try {
-      $bdd->beginTransaction();
-
-      $queryDeleteUser = $bdd->prepare("DELETE FROM user WHERE id = :id");
-      $queryDeleteUser->bindParam(':id', $id);
-      $queryDeleteUser->execute();
-
-      $bdd->commit();
-      header("Location: monEquipe2.php");
-      exit;
-    } catch (Exception $e) {
-      $bdd->rollBack();
-      echo "Erreur lors de la suppression : " . $e->getMessage();
-    }
-  }
 }
 ?>
 
@@ -114,72 +135,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include "../../includes/navBar/navBar2.php"; ?>
   <div class="containerUserDetail page">
     <section class="userDetailSection">
-      <h2><?php echo htmlspecialchars($manager["Prénom"]) . " " . htmlspecialchars($manager["Nom"]) ?></h2>
-      <div class="profilRow">
-        <label class="switchWrapper">
-          <input type="checkbox" id="profilActif" />
-          <span class="slider"></span>
-        </label>
-        <p>Profil actif depuis le 05/03/2024</p>
-      </div>
+      <h2>
+        <?= htmlspecialchars($collab['Prénom']) ?>
+        <?= htmlspecialchars($collab['Nom']) ?>
+      </h2>
 
       <form class="userEditForm" method="POST">
-        <label for="userEmail">Adresse email - champ obligatoire</label>
-        <input type="email" id="userEmail" name="userEmail" value="<?php echo afficheValeur('Email', $manager) ?>" required />
+
+        <label for="userEmail">Adresse email <span style="color:red;">*</span></label>
+        <input type="email" id="userEmail" name="userEmail"
+               value="<?= afficheValeur('Email', $collab) ?>" required />
 
         <div class="inlineFields">
+
           <div class="fieldGroup">
-            <label for="userLastName">Nom de famille - champ obligatoire</label>
-            <input type="text" id="userLastName" name="userLastName" value="<?php echo afficheValeur('Nom', $manager) ?>" required />
+            <label for="userLastName">Nom <span style="color:red;">*</span></label>
+            <input type="text" id="userLastName" name="userLastName"
+                   value="<?= afficheValeur('Nom', $collab) ?>" required />
           </div>
+
           <div class="fieldGroup">
-            <label for="userFirstName">Prénom - champ obligatoire</label>
-            <input type="text" id="userFirstName" name="userFirstName" value="<?php echo afficheValeur('Prénom', $manager) ?>" required />
+            <label for="userFirstName">Prénom <span style="color:red;">*</span></label>
+            <input type="text" id="userFirstName" name="userFirstName"
+                   value="<?= afficheValeur('Prénom', $collab) ?>" required />
           </div>
         </div>
 
         <div class="inlineFields">
+
           <div class="fieldGroup">
-            <label for="userPosition">Poste - champ obligatoire</label>
+            <label for="userPosition">Poste <span style="color:red;">*</span></label>
             <select id="userPosition" name="userPosition" required>
-              <option value="1" <?php echo ($manager["position_id"] == 1) ? 'selected' : ''; ?>>Marketing</option>
-              <option value="2" <?php echo ($manager["position_id"] == 2) ? 'selected' : ''; ?>>Développement Web</option>
+              <option value="1" <?= $collab['position_id']==1?'selected':'' ?>>Marketing</option>
+              <option value="2" <?= $collab['position_id']==2?'selected':'' ?>>Dév. Web</option>
             </select>
           </div>
+
           <div class="fieldGroup">
-            <label for="userDepartment">Département - champ obligatoire</label>
+            <label for="userDepartment">Département <span style="color:red;">*</span></label>
             <select id="userDepartment" name="userDepartment" required>
-              <option value="1" <?php echo ($manager["department_id"] == 1) ? 'selected' : ''; ?>>BU Symfony</option>
-              <option value="2" <?php echo ($manager["department_id"] == 2) ? 'selected' : ''; ?>>BU Wordpress</option>
+              <option value="1" <?= $collab['department_id']==1?'selected':'' ?>>BU Symfony</option>
+              <option value="2" <?= $collab['department_id']==2?'selected':'' ?>>BU Wordpress</option>
             </select>
           </div>
         </div>
 
-        <label for="userManager">Manager</label>
-        <select id="userManager" name="userManager">
-          <option value="1" <?php echo ($manager["manager_id"] == 1) ? 'selected' : ''; ?>>Frédéric Salesse</option>
-          <option value="2" <?php echo ($manager["manager_id"] == 2) ? 'selected' : ''; ?>>Olivier Salesse</option>
-        </select>
+
+        <input type="hidden" name="userManager" value="<?= htmlspecialchars($collab['manager_id']) ?>" />
 
         <div class="inlineFields">
+
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
             <input type="password" id="newPassword" name="newPassword" />
           </div>
+
           <div class="fieldGroup">
-            <label for="confirmPassword">Confirmation de mot de passe</label>
+            <label for="confirmPassword">Confirmation</label>
             <input type="password" id="confirmPassword" name="confirmPassword" />
           </div>
         </div>
 
         <div class="btnContainer">
-          <button type="submit" name="delete" class="deleteBtn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">Supprimer</button>
           <button type="submit" name="update" class="updateBtn">Mettre à jour</button>
+          <button type="submit" name="delete" class="deleteBtn"
+                  onclick="return confirm('Supprimer ce collaborateur ? Cette action est irréversible.')">
+            Supprimer
+          </button>
         </div>
       </form>
     </section>
   </div>
 </div>
 </body>
-
 </html>

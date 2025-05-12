@@ -110,7 +110,7 @@ input:hover {
 
 .page {
   flex: 1;
-  padding: 150px 0 0 350px;
+  padding: 150px 40px 0 350px;
 }
 
 .flex {
@@ -354,7 +354,7 @@ header img {
 
   .page {
     flex: 1;
-    padding: 150px 0 0 40px;
+    padding: 150px 40px 0 40px;
   }
 }
 
@@ -514,7 +514,7 @@ form.FormMDPOublié {
 }
 
 .accueil .steps {
-  margin: 75px 0;
+  margin: 20px 0 75px 0;
 }
 
 .accueil .progressContainer {
@@ -588,21 +588,18 @@ form.FormMDPOublié {
   }
 
   .accueil .progressContainer {
-    display: block;
-    align-items: center;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 70%;
-    position: relative;
-    margin: 30px 0;
+        display: grid;
+        position: relative;
+        flex: 1;
+        margin: auto;
   }
 
   .accueil .stepCircle {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     position: relative;
-    width: fit-content;
+    width: max-content;
   }
 
   .accueil .circle {
@@ -627,18 +624,19 @@ form.FormMDPOublié {
   }
 
   .accueil .label {
-    margin-top: 10px;
+    margin-top: 0px;
+    padding-left: 10px;
     font-size: 1em;
     color: #333;
   }
 
   .accueil .line {
-    height: 75%;
+    height: 200px;
     background-color: #1f4a66;
     flex-grow: 1;
     position: absolute;
     top: 25px;
-    left: 27px;
+    left: 24px;
     right: 0;
     z-index: 0;
     width: 2px;
@@ -652,7 +650,7 @@ form.FormMDPOublié {
 
   .accueil .steps .CardsContainer {
     display: block;
-    justify-content: space-around;
+    flex: 1;
   }
 
   .accueil .steps .CardsContainer .stepsCards {
@@ -668,6 +666,38 @@ form.FormMDPOublié {
     padding: 5px;
   }
 }
+
+
+@media (max-width: 620px) {
+  .accueil .steps {
+    display: grid;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .accueil .progressContainer {
+    display: block;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 35%;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .accueil .line {
+    height: 75%;
+    background-color: #1f4a66;
+    flex-grow: 1;
+    position: absolute;
+    top: 25px;
+    left: 24px;
+    right: 0;
+    z-index: 0;
+    width: 2px;
+    margin: 0;
+  }
+}
+
 
 .accueil .steps .CardsContainer .stepsCards {
   background-color: #004c6c0d;
