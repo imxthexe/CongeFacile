@@ -108,6 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .inlineFields {
         margin-top: 50px;
     }
+
+    #managerNewPassword, #managerConfirmPassword {
+        justify-content: center;
+    }
 </style>
 
 
@@ -172,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     type="password"
                                     id="managerNewPassword"
                                     name="managerNewPassword" />
-                                <span class="toggle-password">
+                                <span class="toggle-password" id="toggleNewPassword">
                                     <i class="fa fa-eye"></i>
                                 </span>
                             </div>
@@ -185,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     type="password"
                                     id="managerConfirmPassword"
                                     name="managerConfirmPassword" />
-                                <span class="toggle-password">
+                                <span class="toggle-password" id="toggleConfirmPassword">
                                     <i class="fa fa-eye"></i>
                                 </span>
                             </div>
@@ -200,6 +204,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </section>
         </div>
     </div>
+    <script>
+        // Toggle password visibility for new password
+        const toggleNewPassword = document.getElementById("toggleNewPassword");
+        const newPasswordInput = document.getElementById("managerNewPassword");
+        
+        toggleNewPassword.addEventListener("click", function () {
+            const type = newPasswordInput.getAttribute("type") === "password" ? "text" : "password";
+            newPasswordInput.setAttribute("type", type);
+            
+            // Change l'icône
+            this.querySelector("i").classList.toggle("fa-eye");
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+        
+        // Toggle password visibility for confirm password
+        const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+        const confirmPasswordInput = document.getElementById("managerConfirmPassword");
+        
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type = confirmPasswordInput.getAttribute("type") === "password" ? "text" : "password";
+            confirmPasswordInput.setAttribute("type", type);
+            
+            // Change l'icône
+            this.querySelector("i").classList.toggle("fa-eye");
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+    </script>
 </body>
 
 </html>
