@@ -11,7 +11,7 @@
         <div class="link">
             <nav>
                 <ul>
-                    <a href="#">
+                    <a href="../../pages/commun/accueilmanager.php">
                         <li>Accueil</li>
                     </a>
                     <a href="../../pages/manager/demandesEnAttente.php">
