@@ -10,70 +10,91 @@ $data   = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = $_POST;
+  $data = $_POST;
 
 
-    if (empty($data['userLastName']))      $errors['userLastName']   = 'Nom requis';
-    if (empty($data['userFirstName']))     $errors['userFirstName']  = 'Prénom requis';
-    if (empty($data['userEmail']))         $errors['userEmail']      = 'Email requis';
-    if (empty($data['password']))          $errors['password']       = 'Mot de passe requis';
-    if ($data['password'] !== $data['confirmPassword']) {
-        $errors['confirmPassword'] = 'Les mots de passe ne correspondent pas';
-    }
+  if (empty($data['userLastName']))      $errors['userLastName']   = 'Nom requis';
+  if (empty($data['userFirstName']))     $errors['userFirstName']  = 'Prénom requis';
+  if (empty($data['userEmail']))         $errors['userEmail']      = 'Email requis';
+  if (empty($data['password']))          $errors['password']       = 'Mot de passe requis';
+  if ($data['password'] !== $data['confirmPassword']) {
+    $errors['confirmPassword'] = 'Les mots de passe ne correspondent pas';
+  }
+
+  if (empty($data['UserEmail'])) {
+    $errors['UserEmail'] = 'Veuillez renseigner votre email';
+  } elseif (filter_var($data['UserEmail'], FILTER_VALIDATE_EMAIL) === false) {
+    $errors['UserEmail'] = 'Votre email est incorrect';
+  }
+  $checkEmail = $bdd->prepare("SELECT id FROM user WHERE email = :email");
+  $checkEmail->execute(['email' => $data['userEmail']]);
+  if ($checkEmail->fetch()) {
+    $errors['userEmail'] = 'Email déjà utilisé';
+  }
 
 
-    $checkEmail = $bdd->prepare("SELECT id FROM user WHERE email = :email");
-    $checkEmail->execute(['email' => $data['userEmail']]);
-    if ($checkEmail->fetch()) {
-        $errors['userEmail'] = 'Email déjà utilisé';
-    }
+  if (empty($errors)) {
+    try {
+      $bdd->beginTransaction();
 
-
-    if (empty($errors)) {
-        try {
-            $bdd->beginTransaction();
-
-            $stmtPerson = $bdd->prepare("
+      $stmtPerson = $bdd->prepare("
                 INSERT INTO person 
                   (last_name, first_name, department_id, position_id, manager_id)
                 VALUES 
                   (:last_name, :first_name, :department_id, :position_id, :manager_id)
             ");
-            $stmtPerson->execute([
-                'last_name'     => $data['userLastName'],
-                'first_name'    => $data['userFirstName'],
-                'department_id' => $data['userDepartment'],
-                'position_id'   => $data['userPosition'],
-                'manager_id'    => $data['userManager']
-            ]);
-            $person_id = $bdd->lastInsertId();
+      $stmtPerson->execute([
+        'last_name'     => $data['userLastName'],
+        'first_name'    => $data['userFirstName'],
+        'department_id' => $data['userDepartment'],
+        'position_id'   => $data['userPosition'],
+        'manager_id'    => $data['userManager']
+      ]);
+      $person_id = $bdd->lastInsertId();
 
 
-            $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
-            $stmtUser = $bdd->prepare("
+      $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+      $stmtUser = $bdd->prepare("
                 INSERT INTO user 
                   (person_id, email, password)
                 VALUES 
                   (:person_id, :email, :password)
             ");
-            $stmtUser->execute([
-                'person_id' => $person_id,
-                'email'     => $data['userEmail'],
-                'password'  => $hashedPassword
-            ]);
+      $stmtUser->execute([
+        'person_id' => $person_id,
+        'email'     => $data['userEmail'],
+        'password'  => $hashedPassword
+      ]);
 
-            $bdd->commit();
+      $bdd->commit();
 
 
-            header('Location: monEquipe1.php');
-            exit;
-
-        } catch (Exception $e) {
-            $bdd->rollBack();
-            echo '<p style="color:red;">Erreur : ' . htmlspecialchars($e->getMessage()) . '</p>';
-        }
+      header('Location: monEquipe1.php');
+      exit;
+    } catch (Exception $e) {
+      $bdd->rollBack();
+      echo '<p style="color:red;">Erreur : ' . htmlspecialchars($e->getMessage()) . '</p>';
     }
+  }
 }
+
+$recupPostes = $bdd->prepare("SELECT name from positions");
+$recupPostes->execute();
+$postes = $recupPostes->fetchAll(pdo::FETCH_ASSOC);
+
+$requete = $bdd->prepare("
+    SELECT d.name AS department_name
+    FROM person p
+    JOIN department d ON p.department_id = d.id
+    WHERE p.id = :id
+");
+
+$requete->bindParam(':id', $_SESSION['utilisateur']['id']);
+$requete->execute();
+
+$department = $requete->fetch(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <link rel="stylesheet" href="../../style.css" />
@@ -88,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for="userEmail">Adresse email <span style="color:red;">*</span></label>
         <input type="email" id="userEmail" name="userEmail"
-               value="<?= afficheValeur('userEmail', $data) ?>" required />
+          value="<?= afficheValeur('userEmail', $data) ?>" required />
         <?= afficheErreur('userEmail', $errors) ?>
 
         <div class="inlineFields">
@@ -96,14 +117,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="fieldGroup">
             <label for="userLastName">Nom <span style="color:red;">*</span></label>
             <input type="text" id="userLastName" name="userLastName"
-                   value="<?= afficheValeur('userLastName', $data) ?>" required />
+              value="<?= afficheValeur('userLastName', $data) ?>" required />
             <?= afficheErreur('userLastName', $errors) ?>
           </div>
 
           <div class="fieldGroup">
             <label for="userFirstName">Prénom <span style="color:red;">*</span></label>
             <input type="text" id="userFirstName" name="userFirstName"
-                   value="<?= afficheValeur('userFirstName', $data) ?>" required />
+              value="<?= afficheValeur('userFirstName', $data) ?>" required />
             <?= afficheErreur('userFirstName', $errors) ?>
           </div>
         </div>
@@ -111,28 +132,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="inlineFields">
 
           <div class="fieldGroup">
-            <label for="userPosition">Poste</label>
+            <label for="userPosition">Poste <span style="color:red;">*</span></label>
             <select id="userPosition" name="userPosition">
-              <option value="1" <?= (isset($data['userPosition'])&&$data['userPosition']==1)?'selected':'' ?>>Marketing</option>
-              <option value="2" <?= (isset($data['userPosition'])&&$data['userPosition']==2)?'selected':'' ?>>Dév. Web</option>
+              <?php foreach ($postes as $poste) { ?>
+                <option value="<?= $poste["name"] ?>">
+                  <?= $poste["name"] ?>
+                </option>
+              <?php } ?>
             </select>
           </div>
 
           <div class="fieldGroup">
             <label for="userDepartment">Département</label>
-            <select id="userDepartment" name="userDepartment">
-              <option value="1" <?= (isset($data['userDepartment'])&&$data['userDepartment']==1)?'selected':'' ?>>BU Symfony</option>
-              <option value="2" <?= (isset($data['userDepartment'])&&$data['userDepartment']==2)?'selected':'' ?>>BU Wordpress</option>
-            </select>
+            <input type="text" style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" value="<?= $department["department_name"]; ?>">
           </div>
         </div>
 
 
         <label for="userManager">Manager</label>
-        <select id="userManager" name="userManager">
-          <option value="1" <?= (isset($data['userManager'])&&$data['userManager']==1)?'selected':'' ?>>Frédéric Salesse</option>
-          <option value="2" <?= (isset($data['userManager'])&&$data['userManager']==2)?'selected':'' ?>>Olivier Salesse</option>
-        </select>
+        <input style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" type="text" value="<?= $_SESSION["utilisateur"]["prenom"] . " " . $_SESSION["utilisateur"]["nom"]; ?>">
 
         <div class="inlineFields">
 
@@ -157,4 +175,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 </body>
+
 </html>

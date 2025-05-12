@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $recupPerson_id->execute();
                 $id = $recupPerson_id->fetch(PDO::FETCH_ASSOC);
 
+
                 $RecupNomEtPrenom = $bdd->prepare("SELECT last_name, first_name FROM person WHERE id = :id");
                 $RecupNomEtPrenom->bindParam(':id', $id['person_id']);
                 $RecupNomEtPrenom->execute();
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'email' => $utilisateur['email'],
                     'role' => $utilisateur['role'],
                     'nom' => $Nom,
-                    'prenom' => $Prenom
+                    'prenom' => $Prenom,
                 ];
 
 
@@ -149,6 +150,3 @@ include '../../includes/footer.php'
         this.classList.toggle("fa-eye-slash");
     });
 </script>
-
-
-

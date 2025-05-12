@@ -54,13 +54,7 @@ foreach ($requetes as $requete) {
                     <tr class="filtersRow">
                         <th><input type="search" /></th>
                         <th><input type="date" /></th>
-                        <th>
-                            <select name="collaborateur" id="">
-                                <?php foreach ($collabs as $collab) { ?>
-                                    <option value=""><?php echo $collab; ?></option>
-                                <?php } ?>
-                            </select>
-                        </th>
+                        <th><input type="search" /></th>
                         <th><input type="search" /></th>
                         <th><input type="date" /></th>
                         <th><input type="number" /></th>
