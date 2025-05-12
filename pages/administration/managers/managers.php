@@ -21,7 +21,12 @@ $Managers = $recupManagergers->fetchAll(PDO::FETCH_ASSOC);
 
 <link rel="stylesheet" href="../../../style.css">
 
-
+<style>
+    .containerManagers {
+        padding: 150px 0 0 350px; 
+        /* Style modifié dans le css ne fonctionne d'où la balise style */
+    }
+</style>
 
 <body>
     <?php include "../../../includes/header3.php"; ?>
