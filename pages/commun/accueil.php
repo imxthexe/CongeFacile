@@ -3,6 +3,8 @@ session_start();
 
 include '../../includes/verifSession.php';
 include '../../includes/verifSecuriteCollaborateur.php';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
