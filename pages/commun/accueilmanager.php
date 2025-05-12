@@ -24,7 +24,7 @@ include '../../includes/verifSecuriteManager.php';
     <?php include "../../includes/header2.php" ?>
 
     <div class="flex">
-        <?php include "../../includes/navBar/navBar1.php" ?>
+        <?php include "../../includes/navBar/navBar2.php" ?>
 
         <div class="page">
 
@@ -41,10 +41,9 @@ include '../../includes/verifSecuriteManager.php';
 
 
 
+                <h2>Etapes</h2>
 
                 <div class="steps">
-
-                    <h2>Etapes</h2>
 
                     <div class="progressContainer">
 

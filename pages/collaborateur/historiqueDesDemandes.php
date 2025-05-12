@@ -65,6 +65,7 @@ $requeteRecupRequest_type = $bdd->prepare($sql);
 $requeteRecupRequest_type->execute($params);
 $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
 
+
 ?>
 
 <link rel="stylesheet" href="../../style.css">
@@ -102,6 +103,7 @@ $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
                         <?php
                         if (!empty($requetes)) {
                             foreach ($requetes as $requete) {
+                                $id = $requete["id"];
                                 echo "<tr>";
                                 echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                                 echo "<td data-label='Demandé le'>" . htmlspecialchars(substr($requete['request_date'], 0, 10)) . "</td>";
@@ -109,7 +111,7 @@ $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
                                 echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
                                 echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['nb_jours']) . "</td>";
                                 echo "<td data-label='Statut'>" . htmlspecialchars($requete['status']) . "</td>";
-                                echo "<td><button class='detailsButton'>Détails</button></td>";
+                                echo "<td><button class='detailsButton'><a  style='color:black;' href='detailsDemande.php?id=$id'>Détails</a></button></td>";
                                 echo "</tr>";
                             }
                         } else {
