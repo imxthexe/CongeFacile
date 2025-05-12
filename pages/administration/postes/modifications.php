@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Details Type De Demande';
+$titre = 'Modifier un poste';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 include '../../../includes/functions.php';

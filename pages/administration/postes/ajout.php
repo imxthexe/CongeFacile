@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Historique des demandes en attente';
+$titre = 'Ajouter un poste';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 include '../../../includes/functions.php';

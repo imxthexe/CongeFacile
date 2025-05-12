@@ -100,7 +100,7 @@ $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
                             <th><input type="date" name="date_fin" value="<?= htmlspecialchars($dateFinFiltre) ?>" /></th>
                             <th><input type="number" name="nb_jours" value="<?= htmlspecialchars($nbJoursFiltre) ?>" /></th>
                             <th><input type="text" name="statut" value="<?= htmlspecialchars($statutFiltre) ?>" /></th>
-                            <th><button type="submit">Filtrer</button></th>
+                            <th style="padding: 0 10px 0 0 ;"><button type="submit">Filtrer</button></th>
                         </tr>
                     </thead>
                     <tbody>

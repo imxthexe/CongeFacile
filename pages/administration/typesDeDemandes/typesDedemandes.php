@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titre = 'Historique des demandes en attente';
+$titre = 'Types de demandes';
 include '../../../includes/database.php';
 include '../../../includes/header3.php';
 
