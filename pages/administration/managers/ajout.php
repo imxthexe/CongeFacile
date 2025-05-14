@@ -116,6 +116,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .inlineFields {
         margin-top: 50px;
     }
+
+    #managerNewPassword, #managerConfirmPassword {
+        justify-content: center;
+    }
 </style>
 
 
@@ -151,6 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             required />
                         <?php echo afficheErreur('managerLastName', $errors); ?>
                     </div>
+<<<<<<< HEAD
                     <div class="fieldGroup">
                         <label for="managerFirstName">Prénom - champ obligatoire</label>
                         <input
@@ -162,6 +167,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     } ?>"
                             required />
                         <?php echo afficheErreur('managerFirstName', $errors); ?>
+=======
+
+                    <label for="managerDirection">Direction/Service - champ obligatoire</label>
+                    <select
+                        id="managerDirection"
+                        name="managerDirection"
+                        required>
+                        <option value="BU Symfony" selected>BU Symfony</option>
+                        <?php
+                        $recupDepartements = $bdd->prepare('SELECT id, name FROM department WHERE name != "BU Symfony" ORDER BY name');
+                        $recupDepartements->execute();
+                        while ($departement = $recupDepartements->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="' . htmlspecialchars($departement['name']) . '">' . htmlspecialchars($departement['name']) . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <?php echo afficheErreur('managerDirection', $errors); ?>
+
+                    <div class="inlineFields">
+                        <div class="fieldGroup">
+                            <label for="managerNewPassword">Nouveau mot de passe</label>
+                            <div class="password-container">
+                                <input
+                                    type="password"
+                                    id="managerNewPassword"
+                                    name="managerNewPassword" />
+                                <span class="toggle-password" id="toggleNewPassword">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </div>
+                            <?php echo afficheErreur('managerNewPassword', $errors); ?>
+                        </div>
+                        <div class="fieldGroup">
+                            <label for="managerConfirmPassword">Confirmation de mot de passe</label>
+                            <div class="password-container">
+                                <input
+                                    type="password"
+                                    id="managerConfirmPassword"
+                                    name="managerConfirmPassword" />
+                                <span class="toggle-password" id="toggleConfirmPassword">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </div>
+                            <?php echo afficheErreur('managerConfirmPassword', $errors); ?>
+                        </div>
+>>>>>>> f5bfa9942b727f260fc107960872abaf273da657
                     </div>
                 </div>
 
@@ -216,7 +267,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </section>
     </div>
+<<<<<<< HEAD
 </div>
+=======
+    <script>
+        // Toggle password visibility for new password
+        const toggleNewPassword = document.getElementById("toggleNewPassword");
+        const newPasswordInput = document.getElementById("managerNewPassword");
+        
+        toggleNewPassword.addEventListener("click", function () {
+            const type = newPasswordInput.getAttribute("type") === "password" ? "text" : "password";
+            newPasswordInput.setAttribute("type", type);
+            
+            // Change l'icône
+            this.querySelector("i").classList.toggle("fa-eye");
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+        
+        // Toggle password visibility for confirm password
+        const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+        const confirmPasswordInput = document.getElementById("managerConfirmPassword");
+        
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type = confirmPasswordInput.getAttribute("type") === "password" ? "text" : "password";
+            confirmPasswordInput.setAttribute("type", type);
+            
+            // Change l'icône
+            this.querySelector("i").classList.toggle("fa-eye");
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+    </script>
+>>>>>>> f5bfa9942b727f260fc107960872abaf273da657
 </body>
 
 </html>
