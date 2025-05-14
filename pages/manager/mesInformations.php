@@ -32,48 +32,49 @@ $infos   = $query->fetch(PDO::FETCH_ASSOC);
 $errors  = [];
 $data    = [];
 $success = '';
+$RegexMDP = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération et nettoyage
-    $data['currentPassword'] = htmlspecialchars(trim($_POST['currentPassword'] ?? ''));
-    $data['newPassword']     = htmlspecialchars(trim($_POST['newPassword']     ?? ''));
-    $data['confirmPassword'] = htmlspecialchars(trim($_POST['confirmPassword'] ?? ''));
 
-    // Validations
-    if (empty($data['currentPassword'])) {
-        $errors['currentPassword'] = "Veuillez entrer votre mot de passe actuel.";
-    } elseif (!password_verify($data['currentPassword'], $infos['password'])) {
-        $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
-    }
+  $data['currentPassword'] = htmlspecialchars(trim($_POST['currentPassword'] ?? ''));
+  $data['newPassword']     = htmlspecialchars(trim($_POST['newPassword']     ?? ''));
+  $data['confirmPassword'] = htmlspecialchars(trim($_POST['confirmPassword'] ?? ''));
 
-    if (empty($data['newPassword'])) {
-        $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe.";
-    } elseif ($data['newPassword'] === $data['currentPassword']) {
-        $errors['newPassword'] = "Le nouveau mot de passe doit être différent de l'actuel.";
-    }
 
-    if (empty($data['confirmPassword'])) {
-        $errors['confirmPassword'] = "Veuillez confirmer votre nouveau mot de passe.";
-    } elseif ($data['newPassword'] !== $data['confirmPassword']) {
-        $errors['confirmPassword'] = "Les deux mots de passe ne correspondent pas.";
-    }
+  if (empty($data['currentPassword'])) {
+    $errors['currentPassword'] = "Veuillez entrer votre mot de passe actuel.";
+  } elseif (!password_verify($data['currentPassword'], $infos['password'])) {
+    $errors['currentPassword'] = "Votre mot de passe actuel ne correspond pas.";
+  }
 
-    // Si tout est OK, mise à jour
-    if (empty($errors)) {
-        $newHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
-        $updateMdp = $bdd->prepare("
+  if (empty($data['newPassword'])) {
+    $errors['newPassword'] = "Veuillez rentrer votre nouveau mot de passe.";
+  } elseif ($data['newPassword'] === $data['currentPassword']) {
+    $errors['newPassword'] = "Le nouveau mot de passe doit être différent de l'actuel.";
+  } elseif (!preg_match($RegexMDP, $data['newPassword'])) {
+    $errors['newPassword'] = "Votre mot de passe doit contenir au minimum 8 caractères, 1 lettre majuscule, 1 chiffre et 1 caractère spécial";
+  }
+
+  if (empty($data['confirmPassword'])) {
+    $errors['confirmPassword'] = "Veuillez confirmer votre nouveau mot de passe.";
+  } elseif ($data['newPassword'] !== $data['confirmPassword']) {
+    $errors['confirmPassword'] = "Les deux mots de passe ne correspondent pas.";
+  }
+
+  if (empty($errors)) {
+    $newHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+    $updateMdp = $bdd->prepare("
             UPDATE user 
             SET password = :password 
             WHERE id = :id
         ");
-        $updateMdp->execute([
-            ':password' => $newHash,
-            ':id'       => $id
-        ]);
-        $success = '✅ Mot de passe réinitialisé avec succès.';
-        // On peut vider les champs du formulaire
-        $data = [];
-    }
+    $updateMdp->execute([
+      ':password' => $newHash,
+      ':id'       => $id
+    ]);
+    $success = '✅ Mot de passe réinitialisé avec succès.';
+    $data = [];
+  }
 }
 ?>
 
@@ -85,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="mesInfosSection">
       <h2>Mes informations</h2>
 
-      <!-- Message de succès -->
       <?php if ($success): ?>
         <div style="
           background: #e6ffed;
@@ -99,33 +99,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
 
       <form class="mesInfosForm" method="POST">
-        <!-- Email (readonly) -->
         <label for="emailAddress">Adresse email</label>
         <input type="email"
-               id="emailAddress"
-               name="emailAddress"
-               value="<?= htmlspecialchars($infos['Email']) ?>"
-               required
-               readonly />
+          id="emailAddress"
+          name="emailAddress"
+          value="<?= htmlspecialchars($infos['Email']) ?>"
+          required
+          readonly />
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="lastName">Nom de famille</label>
             <input type="text"
-                   id="lastName"
-                   name="lastName"
-                   value="<?= htmlspecialchars($infos['Nom']) ?>"
-                   required
-                   readonly />
+              id="lastName"
+              name="lastName"
+              value="<?= htmlspecialchars($infos['Nom']) ?>"
+              required
+              readonly />
           </div>
           <div class="fieldGroup">
             <label for="firstName">Prénom</label>
             <input type="text"
-                   id="firstName"
-                   name="firstName"
-                   value="<?= htmlspecialchars($infos['Prenom']) ?>"
-                   required
-                   readonly />
+              id="firstName"
+              name="firstName"
+              value="<?= htmlspecialchars($infos['Prenom']) ?>"
+              required
+              readonly />
           </div>
         </div>
 
@@ -149,11 +148,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="currentPassword">Mot de passe actuel</label>
         <div class="password-wrapper">
           <input type="password"
-                 id="currentPassword"
-                 name="currentPassword"
-                 value="<?= $data['currentPassword'] ?? '' ?>" />
+            id="currentPassword"
+            name="currentPassword"
+            value="<?= $data['currentPassword'] ?? '' ?>" />
           <i class="fa-regular fa-eye toggle-password"
-             data-target="currentPassword"></i>
+            data-target="currentPassword"></i>
         </div>
         <?php if (isset($errors['currentPassword'])): ?>
           <p style="color:red;"><?= $errors['currentPassword'] ?></p>
@@ -164,11 +163,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="newPassword">Nouveau mot de passe</label>
             <div class="password-wrapper">
               <input type="password"
-                     id="newPassword"
-                     name="newPassword"
-                     value="<?= $data['newPassword'] ?? '' ?>" />
+                id="newPassword"
+                name="newPassword"
+                value="<?= $data['newPassword'] ?? '' ?>" />
               <i class="fa-regular fa-eye toggle-password"
-                 data-target="newPassword"></i>
+                data-target="newPassword"></i>
             </div>
             <?php if (isset($errors['newPassword'])): ?>
               <p style="color:red;"><?= $errors['newPassword'] ?></p>
@@ -178,11 +177,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <div class="password-wrapper">
               <input type="password"
-                     id="confirmPassword"
-                     name="confirmPassword"
-                     value="<?= $data['confirmPassword'] ?? '' ?>" />
+                id="confirmPassword"
+                name="confirmPassword"
+                value="<?= $data['confirmPassword'] ?? '' ?>" />
               <i class="fa-regular fa-eye toggle-password"
-                 data-target="confirmPassword"></i>
+                data-target="confirmPassword"></i>
             </div>
             <?php if (isset($errors['confirmPassword'])): ?>
               <p style="color:red;"><?= $errors['confirmPassword'] ?></p>
@@ -200,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   document.querySelectorAll('.toggle-password').forEach(icon => {
     icon.addEventListener('click', function() {
       const target = document.getElementById(this.dataset.target);
-      const type   = target.type === 'password' ? 'text' : 'password';
+      const type = target.type === 'password' ? 'text' : 'password';
       target.type = type;
       this.classList.toggle('fa-eye');
       this.classList.toggle('fa-eye-slash');
@@ -208,4 +207,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   });
 </script>
 </body>
+
 </html>

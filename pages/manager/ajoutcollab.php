@@ -8,10 +8,11 @@ include '../../includes/functions.php';
 
 $data   = [];
 $errors = [];
+$id = $_SESSION['utilisateur']['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
-
+  $RegexMDP = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
 
   if (empty($data['userLastName']))      $errors['userLastName']   = 'Nom requis';
   if (empty($data['userFirstName']))     $errors['userFirstName']  = 'Prénom requis';
@@ -19,18 +20,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($data['password']))          $errors['password']       = 'Mot de passe requis';
   if ($data['password'] !== $data['confirmPassword']) {
     $errors['confirmPassword'] = 'Les mots de passe ne correspondent pas';
+  } elseif (!preg_match($RegexMDP, $data['password'])) {
+    $errors['password'] = "Votre mot de passe doit contenir au minimum 8 caractères, 1 lettre majuscule, 1 chiffre et 1 caractère spécial";
   }
 
-  if (empty($data['UserEmail'])) {
-    $errors['UserEmail'] = 'Veuillez renseigner votre email';
-  } elseif (filter_var($data['UserEmail'], FILTER_VALIDATE_EMAIL) === false) {
-    $errors['UserEmail'] = 'Votre email est incorrect';
+  if (empty($data['userEmail'])) {
+    $errors['userEmail'] = 'Veuillez renseigner votre email';
+  } elseif (filter_var($data['userEmail'], FILTER_VALIDATE_EMAIL) === false) {
+    $errors['userEmail'] = 'Votre email est incorrect';
   }
   $checkEmail = $bdd->prepare("SELECT id FROM user WHERE email = :email");
   $checkEmail->execute(['email' => $data['userEmail']]);
   if ($checkEmail->fetch()) {
     $errors['userEmail'] = 'Email déjà utilisé';
   }
+
+  $querryManager_id = $bdd->prepare("SELECT person_id from user where id = :id");
+  $querryManager_id->bindParam(':id', $id);
+  $querryManager_id->execute();
+  $manager_id = $querryManager_id->fetch(pdo::FETCH_ASSOC);
+
+  $querryPosition_id = $bdd->prepare("SELECT id from positions where name = :name ");
+  $querryPosition_id->bindParam(':name', $data["userPosition"]);
+  $querryPosition_id->execute();
+  $position_id = $querryPosition_id->fetch(pdo::FETCH_ASSOC);
+
+  $querryDepartment_id = $bdd->prepare("SELECT id from department where name = :name");
+  $querryDepartment_id->bindParam(':name', $data["userDepartment"]);
+  $querryDepartment_id->execute();
+  $Department_id = $querryDepartment_id->fetch(pdo::FETCH_ASSOC);
 
 
   if (empty($errors)) {
@@ -46,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmtPerson->execute([
         'last_name'     => $data['userLastName'],
         'first_name'    => $data['userFirstName'],
-        'department_id' => $data['userDepartment'],
-        'position_id'   => $data['userPosition'],
-        'manager_id'    => $data['userManager']
+        'manager_id'    => $manager_id['person_id'],
+        'department_id' => $Department_id['id'],
+        'position_id'   => $position_id['id']
       ]);
       $person_id = $bdd->lastInsertId();
 
@@ -93,7 +111,6 @@ $requete->bindParam(':id', $_SESSION['utilisateur']['id']);
 $requete->execute();
 
 $department = $requete->fetch(PDO::FETCH_ASSOC);
-
 
 ?>
 
@@ -144,13 +161,13 @@ $department = $requete->fetch(PDO::FETCH_ASSOC);
 
           <div class="fieldGroup">
             <label for="userDepartment">Département</label>
-            <input type="text" style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" value="<?= $department["department_name"]; ?>">
+            <input type="text" style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" value="<?= $department["department_name"];  ?>" name="userDepartment">
           </div>
         </div>
 
 
         <label for="userManager">Manager</label>
-        <input style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" type="text" value="<?= $_SESSION["utilisateur"]["prenom"] . " " . $_SESSION["utilisateur"]["nom"]; ?>">
+        <input name="userManager" style="background-color: rgba(243, 244, 246, 1); cursor: not-allowed;" type="text" value="<?= $_SESSION["utilisateur"]["prenom"] . " " . $_SESSION["utilisateur"]["nom"]; ?>">
 
         <div class="inlineFields">
 

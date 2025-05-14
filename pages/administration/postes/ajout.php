@@ -8,23 +8,22 @@ include '../../../includes/functions.php';
 $data = [];
 $errors = [];
 
-
+$recupPostes = $bdd->prepare('SELECT name FROM positions');
+$recupPostes->execute();
+$Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
-    $recupPostes = $bdd->prepare('SELECT name FROM department');
-    $recupPostes->execute();
-    $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
 
 
 
     if (empty($data['poste'])) {
-        $errors['poste'] = 'Veuillez renseigner un nouveau type de congé';
+        $errors['poste'] = 'Veuillez renseigner un nouveau poste';
     }
 
     foreach ($Postes as $Poste) {
-        if ($data['poste'] == $Poste) {
+        if ($data['poste'] == $Poste['name']) {
             $errors['poste'] = "Ce poste existe déja dans la base de données";
         }
     }

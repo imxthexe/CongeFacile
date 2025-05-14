@@ -25,7 +25,7 @@ WHERE
 $RecupInfosManager->bindParam(':id', $id);
 $RecupInfosManager->execute();
 $infosManagers = $RecupInfosManager->fetch(PDO::FETCH_ASSOC);
-
+var_dump($infosManagers);
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
