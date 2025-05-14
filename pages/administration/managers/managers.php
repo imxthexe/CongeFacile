@@ -5,7 +5,7 @@ include '../../../includes/database.php';
 include '../../../includes/header3.php';
 
 
-$recupManagergers = $bdd->prepare("SELECT 
+$recupManagers = $bdd->prepare("SELECT 
     d.name AS department_name,
     p.last_name,
     p.first_name,
@@ -13,9 +13,10 @@ $recupManagergers = $bdd->prepare("SELECT
 FROM user u
 JOIN person p ON u.person_id = p.id
 JOIN department d ON p.department_id = d.id
-WHERE u.role = 'manager';");
-$recupManagergers->execute();
-$Managers = $recupManagergers->fetchAll(PDO::FETCH_ASSOC);
+WHERE u.role = 'manager' AND email != :email");
+$recupManagers->bindParam(':email', $_SESSION["utilisateur"]["email"]);
+$recupManagers->execute();
+$Managers = $recupManagers->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -23,7 +24,7 @@ $Managers = $recupManagergers->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     .containerManagers {
-        padding: 150px 0 0 350px; 
+        padding: 150px 0 0 350px;
         /* Style modifié dans le css ne fonctionne d'où la balise style */
     }
 </style>
@@ -39,7 +40,7 @@ $Managers = $recupManagergers->fetchAll(PDO::FETCH_ASSOC);
             <section class="managersSection">
 
                 <div class="headerRow">
-                    <h2>Managers</h2>
+                    <h1>Managers</h1>
                     <a href="ajout.php" class="addManagerButton">Ajouter un manager</a>
                 </div>
 

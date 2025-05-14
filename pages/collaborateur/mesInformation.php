@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include "../../includes/navBar/navBar1.php"; ?>
   <div class="containerMesInfos page">
     <section class="mesInfosSection">
-      <h2>Mes informations</h2>
+      <h1>Mes informations</h1>
       <form class="mesInfosForm" method="POST">
         <label for="emailAddress">Adresse email - champ obligatoire</label>
         <input

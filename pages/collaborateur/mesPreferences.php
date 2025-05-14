@@ -14,7 +14,7 @@ include '../../includes/verifSecuriteCollaborateur.php';
   <?php include "../../includes/navBar/navBar1.php"; ?>
   <div class="page">
     <section class="preferencesSection">
-      <h2>Mes préférences</h2>
+      <h1>Mes préférences</h1>
 
       <div class="switchContainer">
         <label class="switchWrapper">

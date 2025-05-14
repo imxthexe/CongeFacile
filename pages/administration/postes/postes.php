@@ -30,7 +30,7 @@ $Postes = $recupNombrePostes->fetchAll(pdo::FETCH_ASSOC);
         <section class="postes">
 
             <div class="headerRow">
-                <h2>Postes</h2>
+                <h1>Postes</h1>
                 <button class="addPostButton"><a style="color: white; font-family:epilogue;" href="ajout.php">Ajouter un poste</a></button>
             </div>
 

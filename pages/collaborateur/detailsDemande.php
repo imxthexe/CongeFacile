@@ -60,7 +60,7 @@ if ($infos['answer'] === null) {
     <div class="page">
         <section class="maDemandeSection">
 
-            <h2>Ma demande de congé</h2>
+            <h1>Ma demande de congé</h1>
 
             <b>
                 <p class="activeP">type de demande: <?php echo $infos["request_type"] ?></p>

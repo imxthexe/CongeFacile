@@ -43,7 +43,7 @@ $collabs = $querry->fetchAll(PDO::FETCH_ASSOC);
     <section class="monEquipeSection">
 
       <div class="headerRow">
-        <h2>Mon équipe</h2>
+        <h1>Mon équipe</h1>
         <button class="addCollaboratorButton">
           <a href="ajoutcollab.php">Ajouter un collaborateur</a>
         </button>
@@ -60,11 +60,11 @@ $collabs = $querry->fetchAll(PDO::FETCH_ASSOC);
             <th></th>
           </tr>
           <tr class="filtersRow">
-            <th><input type="text"    placeholder="Filtrer…"/></th>
-            <th><input type="text"    placeholder="Filtrer…"/></th>
-            <th><input type="mail"    placeholder="Filtrer…"/></th>
-            <th><input type="text"    placeholder="Filtrer…"/></th>
-            <th><input type="number"  placeholder="Filtrer…"/></th>
+            <th><input type="text" placeholder="Filtrer…" /></th>
+            <th><input type="text" placeholder="Filtrer…" /></th>
+            <th><input type="mail" placeholder="Filtrer…" /></th>
+            <th><input type="text" placeholder="Filtrer…" /></th>
+            <th><input type="number" placeholder="Filtrer…" /></th>
             <th></th>
           </tr>
         </thead>
@@ -72,10 +72,10 @@ $collabs = $querry->fetchAll(PDO::FETCH_ASSOC);
           <?php if (!empty($collabs)): ?>
             <?php foreach ($collabs as $collab): ?>
               <tr>
-                <td data-label="Nom">       <?= htmlspecialchars($collab['Nom']) ?></td>
-                <td data-label="Prénom">    <?= htmlspecialchars($collab['Prénom']) ?></td>
-                <td data-label="Email">     <?= htmlspecialchars($collab['Email']) ?></td>
-                <td data-label="Poste">     <?= htmlspecialchars($collab['Poste']) ?></td>
+                <td data-label="Nom"> <?= htmlspecialchars($collab['Nom']) ?></td>
+                <td data-label="Prénom"> <?= htmlspecialchars($collab['Prénom']) ?></td>
+                <td data-label="Email"> <?= htmlspecialchars($collab['Email']) ?></td>
+                <td data-label="Poste"> <?= htmlspecialchars($collab['Poste']) ?></td>
                 <td data-label="Nb congés"> <?= htmlspecialchars($collab['Nb_congés']) ?></td>
                 <td>
                   <a href="monEquipe2.php?id=<?= $collab['ID'] ?>">
@@ -98,4 +98,5 @@ $collabs = $querry->fetchAll(PDO::FETCH_ASSOC);
   </div>
 </div>
 </body>
+
 </html>

@@ -20,7 +20,7 @@ $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
         <section class="administration">
 
             <div class="headerRow">
-                <h2>Directions/Services</h2>
+                <h1>Directions/Services</h1>
                 <a class="addPostButton" href="ajout.php">Ajouter une direction/service</a>
             </div>
 

@@ -6,7 +6,7 @@ include "../../../includes/header3.php";
 include '../../../includes/functions.php';
 include '../../../includes/verifSecuriteManager.php';
 
-$id = $_SESSION['utilisateur']['id'];
+$id = $_GET['id'];
 $RecupInfosManager = $bdd->prepare("SELECT 
     u.email,
     u.password,
@@ -25,7 +25,7 @@ WHERE
 $RecupInfosManager->bindParam(':id', $id);
 $RecupInfosManager->execute();
 $infosManagers = $RecupInfosManager->fetch(PDO::FETCH_ASSOC);
-var_dump($infosManagers);
+
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -134,46 +134,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
 
-                <div class=" inlineFields">
-                    <div class="fieldGroup">
-                        <label for="newPassword">Nouveau mot de passe</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="newPassword" name="newPassword" />
-                            <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
-                            <?php echo afficheErreur('newPassword', $errors); ?>
-                        </div>
-                    </div>
-                    <div class="fieldGroup">
-                        <label for="confirmPassword">Confirmation de mot de passe</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="confirmPassword" name="confirmPassword" />
-                            <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
-                            <?php echo afficheErreur('confirmPassword', $errors); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <input type="submit" class="resetBtn" value="Réinitialiser le mot de passe"></button>
+                <input type="submit" value="Il est impossible de modifier les informations d'un autre manager." readonly></button>
             </form>
         </section>
     </div>
 </div>
 
-<script>
-    const toggleIcons = document.querySelectorAll('.toggle-password');
 
-    toggleIcons.forEach(icon => {
-        icon.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
-
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-    });
-</script>
 
 </html>

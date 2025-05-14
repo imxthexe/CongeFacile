@@ -79,7 +79,7 @@ $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
     <div class="containerHistorique page">
         <section class="historiqueSection">
             <div class="headerRow">
-                <h2>Historique des demandes</h2>
+                <h1>Historique des demandes</h1>
             </div>
             <form method="get">
                 <table class="historiqueTable">

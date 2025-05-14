@@ -32,7 +32,7 @@ $requetes_types = $RecupNombreDeDemandes->fetchAll(pdo::FETCH_ASSOC);
         <section class="Demandes">
 
             <div class="headerRow">
-                <h2>Types de demandes</h2>
+                <h1>Types de demandes</h1>
                 <button class="addDemandeButton"><a style="color: white;" href="typesDedemandesAjout.php">Ajouter un type de demande</a></button>
             </div>
 

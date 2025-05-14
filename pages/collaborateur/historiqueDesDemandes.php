@@ -7,7 +7,7 @@ include '../../includes/verifSecuriteCollaborateur.php';
 
 $idCollab = $_SESSION['utilisateur']['id'];
 
-// Récupérer les filtres
+
 $typeFiltre = isset($_GET['type']) ? trim($_GET['type']) : '';
 $dateDemandeFiltre = isset($_GET['date_demande']) ? trim($_GET['date_demande']) : '';
 $dateDebutFiltre = isset($_GET['date_debut']) ? trim($_GET['date_debut']) : '';
@@ -15,7 +15,7 @@ $dateFinFiltre = isset($_GET['date_fin']) ? trim($_GET['date_fin']) : '';
 $nbJoursFiltre = isset($_GET['nb_jours']) ? trim($_GET['nb_jours']) : '';
 $statutFiltre = isset($_GET['statut']) ? trim($_GET['statut']) : '';
 
-// Construire la requête dynamique
+
 $sql = "SELECT 
     r.id,
     rt.name AS request_type,
@@ -60,7 +60,7 @@ if (!empty($statutFiltre)) {
     $params[':statut'] = '%' . $statutFiltre . '%';
 }
 
-// Préparation + exécution
+
 $requeteRecupRequest_type = $bdd->prepare($sql);
 $requeteRecupRequest_type->execute($params);
 $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
@@ -75,7 +75,7 @@ $requetes = $requeteRecupRequest_type->fetchAll(PDO::FETCH_ASSOC);
     <div class="containerHistoriqueUser page">
         <section class="historiqueUserSection">
             <div class="headerRow">
-                <h2>Historique de mes demandes</h2>
+                <h1>Historique de mes demandes</h1>
             </div>
             <form method="get">
                 <table class="mesDemandesTable">

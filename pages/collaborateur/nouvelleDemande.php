@@ -9,6 +9,9 @@ include '../../includes/verifSecuriteCollaborateur.php';
 
 $data = [];
 $errors = [];
+$requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
+$requeteRecupTypeDeConge->execute();
+$TypesConge = $requeteRecupTypeDeConge->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
@@ -83,10 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requeteNouvelleDemande->execute();
     header("Location: historiqueDesDemandes.php");
   }
-
-  $requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
-  $requeteRecupTypeDeConge->execute();
-  $TypeConge = $requeteRecupTypeDeConge->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /* il faut récuperer la liste des noms des type de requetes pour le select du formulaire et faire un for each*/
@@ -101,14 +100,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php include "../../includes/navBar/navBar1.php"; ?>
   <div class="ContainerNouvelleDemande page">
     <section class="nouvelleDemandeSection">
-      <h2>Effectuer une nouvelle demande</h2>
+      <h1>Effectuer une nouvelle demande</h1>
       <form class="nouvelleDemandeForm" method="POST">
         <label for="typeDemande">Type de demande</label>
-        <select id="typeDemande" name="typeDemande" required value="<?php echo afficheValeur('typeDemande', $data) ?>">
-          <option value="">Sélectionner un type</option>
-          <option value="Congé payé">Congé payé</option>
-          <option value="Congé sans solde">Congé sans solde</option>
-          <option value="Congé maladie">Congé maladie</option>
+        <select id="typeDemande" name="typeDemande">
+          <?php foreach ($TypesConge as $type) { ?>
+            <option value="<?= $type["name"] ?>">
+              <?= $type["name"] ?>
+            </option>
+          <?php } ?>
         </select>
         <?= afficheErreur('typeDemande', $errors) ?>
 
