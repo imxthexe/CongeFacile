@@ -3,10 +3,8 @@
 
 <?php
 session_start();
+include '../../includes/header2.php';
 include_once __DIR__ . '/../../includes/database.php'; // contient $bdd
-
-
-
 
 
 // Préparation des statistiques
@@ -46,21 +44,20 @@ $monthlyTotal = json_encode(array_column($acceptStats, 'total'));
 
 
 $titre = 'Statistiques';
-include '../../includes/header2.php';
+
 ?>
 
 <body>
 
 
-    <html>
     <div class="flex">
 
         <?php include "../../includes/navBar/navBar2.php"; ?>
 
-        <div class="">
-            <div class="page">
-                <h1>Statistiques</h1>
-                <h2>Types de demandes sur l’année</h2>
+        <div class="page">
+            <div class="statistiquesSection">
+                <h2>Statistiques</h2>
+                <p>Types de demandes sur l’année</p>
                 <canvas id="chartTypesDemandes" width="400" height="400"></canvas>
 
                 <h2>Pourcentage d’acceptation des demandes sur l’année</h2>
@@ -115,10 +112,6 @@ include '../../includes/header2.php';
             }
         });
     </script>
-
-
-
-    </html>
 
 
 </body>

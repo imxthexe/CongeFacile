@@ -141,6 +141,7 @@ header {
   background-color: var(--color_btn);
   color: var(--color_text);
   margin: -15px 25px;
+  height: 70px;
   border-radius: 15px;
 }
 
@@ -2752,3 +2753,12 @@ form.FormMDPOublié {
 }
 
 /*FIN MANAGERS ADMIN*/
+
+/* STATISTIQUES */
+
+.statistiquesSection {
+  padding: 20px;
+  width: 90%;
+}
+
+/* FIN STATISTIQUES */
