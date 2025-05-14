@@ -7,10 +7,10 @@ include '../../../includes/functions.php';
 
 $id = $_GET['id'];
 
-$recupRequest_name = $bdd->prepare('SELECT name FROM department WHERE id = :id');
-$recupRequest_name->bindParam(':id', $id);
-$recupRequest_name->execute();
-$name = $recupRequest_name->fetch(pdo::FETCH_ASSOC);
+$recupdepartment_name = $bdd->prepare('SELECT name FROM department WHERE id = :id');
+$recupdepartment_name->bindParam(':id', $id);
+$recupdepartment_name->execute();
+$name = $recupdepartment_name->fetch(pdo::FETCH_ASSOC);
 
 $data = [];
 $errors = [];
@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: postes.php');
     }
 }
+
 
 
 ?>

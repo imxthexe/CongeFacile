@@ -1201,11 +1201,6 @@ form.FormMDPOublié {
   border-radius: 4px;
 }
 
-@media screen and (max-width: 1080px) {
-  .page {
-    padding: 80px 20px 0 20px;
-  }
-}
 
 
 /* FIN DETAILS DEMANDES */
