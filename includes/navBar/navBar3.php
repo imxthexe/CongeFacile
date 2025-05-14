@@ -11,7 +11,7 @@
         <div class="link">
             <nav>
                 <ul>
-                    <a href="#">
+                    <a href="../../../pages/commun/accueilmanager.php">
                         <li>Accueil</li>
                     </a>
                     <a href="../../../pages/manager/demandesEnAttente.php">
@@ -35,7 +35,7 @@
                     <a href="../../../pages/manager/mesPreferences.php">
                         <li>Mes préférences</li>
                     </a>
-                    <details>
+                    <details open>
                         <summary>
                             <li>Administration <img src="../../../images/fleche-vers-le-bas.png" alt=""></li>
                         </summary>
