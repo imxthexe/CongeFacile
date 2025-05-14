@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-/* il faut récuperer la liste des noms des type de requetes pour le select du formulaire et faire un for each*/
+
 
 
 ?>
