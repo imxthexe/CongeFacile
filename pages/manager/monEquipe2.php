@@ -28,7 +28,7 @@ $query = $bdd->prepare("
     JOIN person p ON u.person_id = p.id
     JOIN department d ON p.department_id = d.id
     JOIN positions pos ON p.position_id = pos.id
-    WHERE u.id = :id
+    WHERE p.id = :id
 ");
 $query->execute(['id' => $id]);
 $collab = $query->fetch(PDO::FETCH_ASSOC);

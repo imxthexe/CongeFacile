@@ -55,7 +55,6 @@ $querry = $bdd->prepare($sql);
 $querry->execute($params);
 $collabs = $querry->fetchAll(PDO::FETCH_ASSOC);
 
-// Filtrage supplémentaire en PHP pour Nb_congés
 if (isset($_GET['nb_conges']) && $_GET['nb_conges'] !== '') {
   $collabs = array_filter($collabs, function ($c) {
     return $c['Nb_congés'] == $_GET['nb_conges'];
@@ -108,9 +107,7 @@ if (isset($_GET['nb_conges']) && $_GET['nb_conges'] !== '') {
               <td data-label="Poste"> <?= htmlspecialchars($collab['Poste']) ?></td>
               <td data-label="Nb congés"> <?= htmlspecialchars($collab['Nb_congés']) ?></td>
               <td>
-                <a href="monEquipe2.php?id=<?= $collab['ID'] ?>">
-                  <button class="detailsButton">Détails</button>
-                </a>
+                <button class="detailsButton"><a style="color: black;" href="monEquipe2.php?id=<?= $collab['ID'] ?>">Détails</a></button>
               </td>
             </tr>
           <?php endforeach; ?>
