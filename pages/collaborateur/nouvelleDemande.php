@@ -72,15 +72,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (empty($errors)) {
     $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
-      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
-      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
+      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, comment, answer_comment, answer, answer_at) 
+      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file,:comment, :answer_comment, NULL, :answer_at)");
     $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
     $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
     $requeteNouvelleDemande->bindParam(':department_id', $RecupDepartment_ID['department_id']);
     $requeteNouvelleDemande->bindParam(':created_at', $date);
     $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
     $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
-    $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+    if (!empty($data['receipt_file'])) {
+      $requeteNouvelleDemande->bindValue(':receipt_file', $data['receipt_file']);
+    } else {
+      $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+    }
+    if (!empty($data['commentaire'])) {
+      $requeteNouvelleDemande->bindValue(':comment', $data['commentaire']);
+    } else {
+      $requeteNouvelleDemande->bindValue(':comment', null, PDO::PARAM_NULL);
+    }
     $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
     $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
     $requeteNouvelleDemande->execute();

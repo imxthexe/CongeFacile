@@ -3,15 +3,17 @@
 
 <?php
 session_start();
+$titre = "Statistiques";
+include '../../includes/verifSecuriteManager.php';
 include '../../includes/header2.php';
-include_once __DIR__ . '/../../includes/database.php'; // contient $bdd
+include_once __DIR__ . '/../../includes/database.php';
 
 
-// Préparation des statistiques
+
 $typeStats = [];
 $acceptStats = array_fill(1, 12, ['accepted' => 0, 'total' => 0]);
 
-// RECUP LES STATS
+
 $query = "SELECT rt.name as request_type, r.answer as status, MONTH(r.created_at) as month 
            FROM request r
            JOIN request_type rt ON r.request_type_id = rt.id";
@@ -24,17 +26,17 @@ foreach ($rows as $row) {
     $mois = (int)$row['month'];
     $statut = $row['status'];
 
-    // Statistiques par type de congé
+
     $typeStats[$type] = ($typeStats[$type] ?? 0) + 1;
 
-    // Statistiques par mois
+
     $acceptStats[$mois]['total'] += 1;
-    if ($statut == 1) {  // 1 = Acceptée
+    if ($statut == 1) {
         $acceptStats[$mois]['accepted'] += 1;
     }
 }
 
-// Transformation des données pour Chart.js
+
 $typeLabels = json_encode(array_keys($typeStats));
 $typeData = json_encode(array_values($typeStats));
 $monthlyLabels = json_encode(array_keys($acceptStats));

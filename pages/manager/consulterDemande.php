@@ -1,148 +1,127 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
+session_start();
+$titre = 'Consulter une demande';
+include '../../includes/database.php';
+include '../../includes/verifSession.php';
+include '../../includes/verifSecuriteManager.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Détail de la demande</title>
-    <link rel="stylesheet" href="../../style.css">
-    <style>
-        .containerDemandeDetail {
-            flex: 1;
-            padding: 80px 0 0 50px;
+$id = $_GET['id'];
+
+$recupererInfos = $bdd->prepare("SELECT 
+    p.first_name,
+    p.last_name,
+    r.created_at AS date_demande,
+    r.start_at AS date_debut,
+    r.end_at AS date_fin,
+    rt.name AS type_conge,
+    r.comment AS commentaire
+FROM 
+    request r
+JOIN 
+    person p ON r.collaborator_id = p.id
+JOIN 
+    request_type rt ON r.request_type_id = rt.id
+WHERE 
+    r.id = :request_id;");
+
+$recupererInfos->bindParam(':request_id', $id);
+$recupererInfos->execute();
+$infosDemandes = $recupererInfos->fetch(pdo::FETCH_ASSOC);
+
+$date = new DateTime($infosDemandes['date_demande']);
+$dateFormat = $date->format('d/m/y');
+
+$datedebut = new DateTime($infosDemandes['date_debut']);
+$datedebut = $datedebut->format('d');
+
+$datefin = new DateTime($infosDemandes['date_fin']);
+$datefin = $datefin->format('d');
+
+$nb_jours = $datefin - $datedebut;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id_demande'] ?? null;
+    $action = $_POST['action'] ?? null;
+    if (isset($_POST['answer_comment'])) {
+        $answer_comment = $_POST['answer_comment'];
+    }
+
+    if ($id && in_array($action, ['valider', 'refuser'])) {
+        $answer = $action === 'valider' ? 1 : 0;
+        $answerAt = date("Y-m-d H:i:s");
+
+        $requete = $bdd->prepare("UPDATE request SET answer_comment = :answer_comment, answer = :answer, answer_at = :answer_at  WHERE id = :id");
+        $requete->bindParam(':answer', $answer, PDO::PARAM_INT);
+        if (!empty($answer_comment)) {
+            $requete->bindValue(':answer_comment', $answer_comment);
+        } else {
+            $requete->bindValue(':answer_comment', null, PDO::PARAM_NULL);
         }
+        $requete->bindParam(':answer_at', $answerAt);
+        $requete->bindParam(':id', $id, PDO::PARAM_INT);
+        $requete->execute();
 
-        .containerDemandeDetail .demandeDetailSection {
-            width: 75%;
-            padding: 20px;
-        }
+        header('Location:demandesEnAttente.php');
+    }
+}
+?>
 
-        .containerDemandeDetail .demandeDetailSection h2 {
-            color: var(--color_title);
-        }
+<link rel="stylesheet" href="../../style.css">
 
-        .containerDemandeDetail .demandeDetailSection p {
-            margin-bottom: 10px;
-        }
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('form-reponse');
+        form.addEventListener('submit', function(e) {
+            const button = e.submitter;
+            const action = button.value;
 
-        .containerDemandeDetail .demandeDetailSection .activeP {
-            color: #1565C0;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .parameter {
-            padding: 10px 0;
-        }
-
-        .containerDemandeDetail .demandeDetailSection h3 {
-            margin-top: 20px;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-            color: var(--color_title);
-        }
-
-        .containerDemandeDetail .demandeDetailSection .justifyButton {
-            background-color: var(--border);
-            color: #000;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            width: 250px;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .justifyButton:hover {
-            background-color: #1565C0;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .commentField1 {
-            width: 100%;
-            min-height: 180px;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-bottom: 20px;
-            resize: none;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .commentField2 {
-            width: 100%;
-            min-height: 80px;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-bottom: 20px;
-            resize: none;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .actionButtons {
-            display: flex;
-            gap: 10px;
-            width: 450px;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .refuseButton {
-            background-color: #e74c3c;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .refuseButton:hover {
-            background-color: #c0392b;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .validateButton {
-            background-color: #2ecc71;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-
-        .containerDemandeDetail .demandeDetailSection .validateButton:hover {
-            background-color: #27ae60;
-        }
-
-        @media screen and (max-width: 1080px) {
-            .containerDemandeDetail {
-                padding: 80px 20px 0 20px;
+            let message = '';
+            if (action === 'valider') {
+                message = "Êtes-vous sûr de vouloir valider cette demande ?";
+            } else if (action === 'refuser') {
+                message = "Êtes-vous sûr de vouloir refuser cette demande ?";
             }
-        }
-    </style>
-</head>
+
+            if (!confirm(message)) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 
 <body>
     <?php include "../../includes/header2.php"; ?>
     <div class="flex">
         <?php include "../../includes/navBar/navBar2.php"; ?>
-        <div class="containerDemandeDetail">
+        <div class="containerDemandeDetail page">
             <section class="demandeDetailSection">
-                <h2>Demande de Lucas Dupas</h2>
+                <h2>Demande de <?php echo $infosDemandes['first_name'] . ' ' . $infosDemandes['last_name'] ?></h2>
                 <b>
-                    <p class="activeP">Demande du 10/02/2024</p>
+                    <p class="activeP">Demande du <?= $dateFormat ?></p>
                 </b>
 
                 <div class="parameter">
-                    <p>Période: 08/01/2025 13h30 au 08/01/2025 18h00</p>
-                    <p>Type de demande: Congé payé</p>
-                    <p>Nombre de jours: 0.5</p>
+                    <p>Période: <?= $infosDemandes['date_debut'] . ' au ' . $infosDemandes['date_fin'] ?></p>
+                    <p>Type de demande: <?= $infosDemandes['type_conge'] ?></p>
+                    <p>Nombre de jours: <?= $nb_jours ?></p>
                 </div>
 
 
                 <p>Commentaire supplémentaire</p>
-                <textarea class="commentField1" placeholder="Bonjour, j’aimerais prendre un après-midi pour pouvoir passer mon permis moto."></textarea>
-                <button class="justifyButton">Télécharger le justificatif</button>
+                <textarea class="commentField1" readonly placeholder="<?= $infosDemandes["commentaire"] ?>"></textarea>
+                <button class=" justifyButton">Télécharger le justificatif</button>
                 <h3>Répondre à la demande</h3>
-                <p>Saisir un commentaire</p>
-                <textarea class="commentField2"></textarea>
-                <div class="actionButtons">
-                    <button class="refuseButton">Refuser la demande</button>
-                    <button class="validateButton">Valider la demande</button>
-                </div>
+                <form method="POST" id="form-reponse">
+                    <p>Saisir un commentaire</p>
+                    <input class="commentField2" name="answer_comment" type="text">
+
+                    <input type="hidden" name="id_demande" value="<?= htmlspecialchars($id) ?>">
+
+                    <div class="actionButtons">
+                        <button type="submit" name="action" value="refuser" class="refuseButton">Refuser la demande</button>
+                        <button type="submit" name="action" value="valider" class="validateButton">Valider la demande</button>
+                    </div>
+                </form>
             </section>
         </div>
     </div>

@@ -25,6 +25,7 @@ $sql = "SELECT
     DATEDIFF(r.end_at, r.start_at) + 1 AS nb_jours,
     CASE 
         WHEN r.answer IS NULL THEN 'En cours'
+        WHEN r.answer = 0 THEN 'Refusé'
         ELSE 'Validée'
     END AS status
 FROM request r
