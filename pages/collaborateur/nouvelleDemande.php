@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (empty($errors)) {
     $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
-      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, comment, answer_comment, answer, answer_at) 
+      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, period, receipt_file, comment, answer_comment, answer, answer_at) 
       VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file,:comment, :answer_comment, NULL, :answer_at)");
     $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
     $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requeteNouvelleDemande->bindParam(':created_at', $date);
     $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
     $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
+    $requeteNouvelleDemande->bindParam(':period', $data['nbJours']);
     if (!empty($data['receipt_file'])) {
       $requeteNouvelleDemande->bindValue(':receipt_file', $data['receipt_file']);
     } else {
@@ -124,18 +125,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="inlineFields block">
           <div class="fieldGroup">
             <label for="dateDebut">Date début</label>
-            <input type="date" id="dateDebut" name="dateDebut" required value="<?= afficheValeur('dateDebut', $data) ?>" />
+            <input type="datetime-local" id="dateDebut" name="dateDebut" required value="<?= afficheValeur('dateDebut', $data)  ?>" />
             <?= afficheErreur('dateDebut', $errors) ?>
           </div>
           <div class="fieldGroup">
             <label for="dateFin">Date de fin</label>
-            <input type="date" id="dateFin" name="dateFin" required value="<?= afficheValeur('dateFin', $data) ?>" />
+            <input type="datetime-local" id="dateFin" name="dateFin" required value="<?= afficheValeur('dateFin', $data) ?>" />
             <?= afficheErreur('dateFin', $errors) ?>
           </div>
         </div>
 
         <label for="nbJours">Nombre de jours demandés</label>
-        <input class="nbJours" type="number" id="nbJours" name="nbJours" required value="<?php afficheValeur('nbJours', $data) ?>" />
+        <input class="nbJours" type="number" id="nbJours" name="nbJours" required value="<?= afficheValeur('nbJours', $data) ?>" />
         <?php afficheErreur('nbJours', $errors) ?>
 
         <label for="justificatif">Justificatif si applicable</label>
@@ -173,6 +174,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     dateDebut.addEventListener("change", calculerNbJours);
     dateFin.addEventListener("change", calculerNbJours);
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const startDateInput = document.querySelector('input[name="dateDebut"]');
+    const endDateInput = document.querySelector('input[name="dateFin"]');
+    const daysInput = document.querySelector('input[name="nbJours"]');
+
+
+    const holidays = [
+      "2025-01-01",
+      "2025-04-21",
+      "2025-05-01",
+      "2025-05-08",
+      "2025-05-29",
+      "2025-06-09",
+      "2025-07-14",
+      "2025-08-15",
+      "2025-11-01",
+      "2025-11-11",
+      "2025-12-25"
+    ];
+
+    function calculateDays() {
+      const startDate = new Date(startDateInput.value);
+      const endDate = new Date(endDateInput.value);
+
+      if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
+        daysInput.value = 0;
+        return;
+      }
+
+      let count = 0;
+      let currentDate = new Date(startDate);
+
+      while (currentDate <= endDate) {
+        const dayOfWeek = currentDate.getDay();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+
+        if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+          count++;
+        }
+
+
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      daysInput.value = count;
+    }
+
+
+    startDateInput.addEventListener("change", calculateDays);
+    endDateInput.addEventListener("change", calculateDays);
+  });
+  Réduire
 </script>
 <?php
 include '../../includes/footer.php';

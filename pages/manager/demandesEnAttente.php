@@ -45,7 +45,8 @@ rt.name AS request_type,
 req.id,
 req.created_at,
 req.start_at,
-req.end_at
+req.end_at,
+req.period
 FROM request req
 JOIN request_type rt ON req.request_type_id = rt.id
 JOIN person col ON req.collaborator_id = col.id
@@ -57,11 +58,7 @@ $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-foreach ($requetes as &$req) {
-    $start = new DateTime($req['start_at']);
-    $end = new DateTime($req['end_at']);
-    $req['nb_jours'] = $start->diff($end)->days + 1;
-}
+
 ?>
 
 <div class="flex">
@@ -100,21 +97,13 @@ foreach ($requetes as &$req) {
                 if (!empty($requetes)) {
                     foreach ($requetes as $requete) {
                         $id = $requete['id'];
-                        if (
-                            isset($_GET['nb_jours']) &&
-                            $_GET['nb_jours'] !== '' &&
-                            $requete['nb_jours'] != $_GET['nb_jours']
-                        ) {
-                            continue;
-                        }
-
                         echo "<tr>";
                         echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                         echo "<td data-label='Demandé le'>" . htmlspecialchars($requete['created_at']) . "</td>";
                         echo "<td data-label='Collaborateur'>"  . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";
                         echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
                         echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
-                        echo "<td data-label='Nb de jours'>" . htmlspecialchars($requete['nb_jours']) . "</td>";
+                        echo "<td data-label='Nb de jours'>" . htmlspecialchars($requete['period']) . "</td>";
                         echo "<td><button class='detailsButton'><a  style='color:black;' href='consulterDemande.php?id=$id'>Détails</a></button></td>";
                         echo "</tr>";
                     }

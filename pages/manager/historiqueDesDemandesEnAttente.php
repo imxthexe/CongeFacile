@@ -21,7 +21,7 @@ $sql = "SELECT
     req.created_at,
     req.start_at,
     req.end_at,
-    DATEDIFF(req.end_at, req.start_at) + 1 AS nb_jours,
+    req.period,
     CASE 
         WHEN req.answer IS NULL THEN 'En cours'
         WHEN req.answer = 0 THEN 'Refusé'
@@ -52,10 +52,7 @@ if (!empty($dateFinFiltre)) {
     $sql .= " AND DATE(req.end_at) = :dateFin";
     $params[':dateFin'] = $dateFinFiltre;
 }
-if (!empty($nbJoursFiltre)) {
-    $sql .= " AND (DATEDIFF(req.end_at, req.start_at) + 1) = :nbJours";
-    $params[':nbJours'] = $nbJoursFiltre;
-}
+
 if (!empty($statutFiltre)) {
     $sql .= " AND (CASE 
         WHEN req.answer IS NULL THEN 'En cours'
@@ -112,7 +109,7 @@ $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
                                 echo "<td data-label='Collaborateur'>" . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";
                                 echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
                                 echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
-                                echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['nb_jours']) . "</td>";
+                                echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['period']) . "</td>";
                                 echo "<td data-label='Statut'>" . htmlspecialchars($requete['statut']) . "</td>";
                                 echo "<td><button class='detailsButton'><a  style='color:black;' href='detailsDemande.php?id=$id'>Détails</a></button></td>";
                                 echo "</tr>";

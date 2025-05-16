@@ -15,7 +15,7 @@
                         <li>Accueil</li>
                     </a>
                     <a href="../../pages/manager/demandesEnAttente.php">
-                        <li>Demande en attente</li>
+                        <li>Demandes en attente</li>
                     </a>
                     <a href="../../pages/manager/historiqueDesDemandesEnAttente.php">
                         <li>Historique des demandes</li>

@@ -58,7 +58,7 @@ $titre = 'Statistiques';
 
         <div class="page">
             <div class="statistiquesSection">
-                <h2>Statistiques</h2>
+                <h1>Statistiques</h1>
                 <p>Types de demandes sur l’année</p>
                 <canvas id="chartTypesDemandes" width="400" height="400"></canvas>
 
