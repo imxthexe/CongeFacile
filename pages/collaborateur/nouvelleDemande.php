@@ -7,11 +7,18 @@ include "../../includes/header2.php";
 include "../../includes/functions.php";
 include '../../includes/verifSecuriteCollaborateur.php';
 
+
+$id = $_SESSION["utilisateur"]['id'];
 $data = [];
 $errors = [];
 $requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
 $requeteRecupTypeDeConge->execute();
 $TypesConge = $requeteRecupTypeDeConge->fetchAll(PDO::FETCH_ASSOC);
+
+$recupRequetes = $bdd->prepare("SELECT r.start_at, r.end_at from request r where collaborator_id = :id");
+$recupRequetes->bindParam(':id', $id);
+$recupRequetes->execute();
+$Requetes = $recupRequetes->fetchALL(pdo::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
@@ -21,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $RequeteRecupRequest_typeID->execute();
   $idRequest_type = $RequeteRecupRequest_typeID->fetch(PDO::FETCH_ASSOC);
 
-  var_dump($_SESSION);
   $RequeteRecupDepartment_ID = $bdd->prepare('SELECT department_id FROM person where id=:id');
   $RequeteRecupDepartment_ID->bindParam(':id', $_SESSION['utilisateur']['id']);
   $RequeteRecupDepartment_ID->execute();
@@ -66,6 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['nbJours'] = 'Durée du congé incorrecte';
   }
 
+  $data['dateDebut'] = date('Y-m-d', strtotime($data['dateDebut']));
+  $data['dateFin'] = date('Y-m-d', strtotime($data['dateFin']));
+
+  foreach ($Requetes as $Requete) {
+    $start = $Requete['start_at'];
+    $end = $Requete['end_at'];
+
+    if (!($data['dateFin'] < $start || $data['dateDebut'] > $end)) {
+      $errors['dateDebut'] = "Vous avez déjà une demande de congé qui doit être/a été traité à cette période.";
+    }
+  }
+
   $date = date("Y-m-d H:i:s");
   $collaborateurId = $_SESSION['utilisateur']['id'];
   $request_typeID = $idRequest_type['id'];
@@ -73,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($errors)) {
     $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
       (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, period, receipt_file, comment, answer_comment, answer, answer_at) 
-      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file,:comment, :answer_comment, NULL, :answer_at)");
+      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at,:period, :receipt_file,:comment, :answer_comment, NULL, :answer_at)");
     $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
     $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
     $requeteNouvelleDemande->bindParam(':department_id', $RecupDepartment_ID['department_id']);
