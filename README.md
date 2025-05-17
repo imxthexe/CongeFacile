@@ -25,8 +25,86 @@ En tant que Manager, il est possible de :
     	- Accès à la page des statistiques des demandes
 
 
-En tant que collaborateur, il est possible de : 
 
-	- Accès 
+En tant que Collaborateur, il est possible de : 
+
+	- Accès à la possibilité d'effectuer une nouvelle demande
+ 	- Accès à l'historique de vos demandes
+  	- Accès au détail de vos demandes
+
+
+
+Pour démarrer le projet suivez ces étapes clés : 
+
+	- Avoir un serveur WEB d'installer sur votre PC, pour ce projet nous vous conseillons XAMPP
+ 	- Installer le dépot Github de CongeFacile en local, si ZIP, le déZIP.
+  	- Une fois déZIP, suivez ce chemin (l'adapter à votre pc) C:/ xampp -> htdocs, déposez CongeFacile dans ce dossier htdocs
+   	- Ouvrir votre application de serveur WEB (XAMPP)
+    	- Démarrer le serveur Apache et le serveur MYSQL
+     	- Dans votre navigateur, entrer localhost/(chemin d'accès à CongeFacile)/pages/commun/
+      	- Entrez vos logins pour accéder à CongeFacile
+       	- Vous êtes prêt à découvrir CongeFacile !
+
+
+
+ Ce projet a été réalisé en groupe de 4 par des élèves de BTS 1 au lycée Saint-Vincent à Senlis, nous avions une maquette donner par nos professeurs, un aspect professionnel a été mis en place au sein de ce projet, nous devions répondre à un cahier des charges donné par notre professeur qui s'averait ici être notre client
+
+
+ Les technologies utilisées sont :
+   Back : 
+  	- PHP
+
+  	
+   Front :
+   	- HTML 
+    	- CSS
+     	- JS
+  		
+
+
+Pour ce projet, nous nous sommes également aidé de l'IA, elle nous a été très utile dans toutes les fonctionnalitées où nous avions des doutes, elle a aussi été un gain de temps pour certains aspects, notamment le visuel, où elle a permis de faire avancer plus vite le projet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
 
