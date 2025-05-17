@@ -53,6 +53,7 @@ Pour démarrer le projet suivez ces étapes clés :
  Les technologies utilisées sont :
    Back : 
   	- PHP
+        - SQL
 
   	
    Front :
