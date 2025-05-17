@@ -23,7 +23,7 @@ En tant que Manager, il est possible de :
   	- Accès à l'historique des demandes
    	- Accès à la page "Mon équipe" qui permet d'ajouter/retirer des membres de votre équipe, de consulter leurs profils
     	- Accès à la page des statistiques des demandes
-
+        - Accés au domaine "Administration" afin de gérer les postes, types de demandes, managers et les services ! 
 
 
 En tant que Collaborateur, il est possible de : 
