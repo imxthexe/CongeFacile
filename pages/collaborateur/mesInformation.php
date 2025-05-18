@@ -35,6 +35,7 @@ $recupManager->execute();
 $NometPrenomManager = $recupManager->fetch(PDO::FETCH_ASSOC);
 $errors = [];
 $data = [];
+$RegexMDP = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
@@ -68,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($data['newPassword'] == $data['currentPassword']) {
     $errors['newPassword'] = "Vous devez changer votre mot de passe pour le réinitialiser";
+  } else if (!preg_match($RegexMDP, $data['newPassword'])) {
+    $errors['newPassword'] = "Votre mot de passe doit contenir au minimum 8 caractères, 1 lettre majuscule, 1 chiffre et 1 caractère spécial";
   }
 
   if (empty($errors)) {
@@ -147,25 +150,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for=" currentPassword">Mot de passe actuel</label>
         <div class="password-wrapper">
-          <input type="password" id="currentPassword" name="currentPassword" />
+          <input type="password" id="currentPassword" name="currentPassword" required />
           <i class="fa-regular fa-eye toggle-password" data-target="currentPassword"></i>
+          <?php echo afficheErreur('currentPassword', $errors); ?>
         </div>
 
         <div class="inlineFields">
           <div class="fieldGroup">
             <label for="newPassword">Nouveau mot de passe</label>
             <div class="password-wrapper">
-              <input type="password" id="newPassword" name="newPassword" />
+              <input type="password" id="newPassword" name="newPassword" required />
               <i class="fa-regular fa-eye toggle-password" data-target="newPassword"></i>
-              <?php afficheErreur('newPassword', $errors); ?>
+              <?= afficheErreur('newPassword', $errors); ?>
             </div>
           </div>
           <div class="fieldGroup">
             <label for="confirmPassword">Confirmation de mot de passe</label>
             <div class="password-wrapper">
-              <input type="password" id="confirmPassword" name="confirmPassword" />
+              <input type="password" id="confirmPassword" name="confirmPassword" required />
               <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
-              <?php afficheErreur('confirmPassword', $errors); ?>
+              <?= afficheErreur('confirmPassword', $errors); ?>
             </div>
           </div>
         </div>

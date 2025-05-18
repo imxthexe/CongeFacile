@@ -421,6 +421,112 @@ textarea:focus {
 
 /* FIN NOUVELLE DEMANDE */
 
+/*CONSULTER UNE DEMANDE*/
+
+
+.containerDemandeDetail .demandeDetailSection {
+  width: 75%;
+  padding: 20px;
+}
+
+.containerDemandeDetail .demandeDetailSection h2 {
+  color: var(--color_title);
+}
+
+.containerDemandeDetail .demandeDetailSection p {
+  margin-bottom: 10px;
+}
+
+.containerDemandeDetail .demandeDetailSection .activeP {
+  color: #1565C0;
+}
+
+.containerDemandeDetail .demandeDetailSection .parameter {
+  padding: 10px 0;
+}
+
+.containerDemandeDetail .demandeDetailSection h3 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: var(--color_title);
+}
+
+.containerDemandeDetail .demandeDetailSection .justifyButton {
+  background-color: var(--border);
+  color: #000;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  width: 250px;
+}
+
+.containerDemandeDetail .demandeDetailSection .justifyButton:hover {
+  background-color: #1565C0;
+}
+
+.containerDemandeDetail .demandeDetailSection .commentField1 {
+  width: 100%;
+  min-height: 180px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  resize: none;
+}
+
+.containerDemandeDetail .demandeDetailSection .commentField2 {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  resize: none;
+}
+
+.containerDemandeDetail .demandeDetailSection .actionButtons {
+  display: flex;
+  gap: 10px;
+  width: 450px;
+}
+
+.containerDemandeDetail .demandeDetailSection .refuseButton {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.containerDemandeDetail .demandeDetailSection .refuseButton:hover {
+  background-color: #c0392b;
+}
+
+.containerDemandeDetail .demandeDetailSection .validateButton {
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.containerDemandeDetail .demandeDetailSection .validateButton:hover {
+  background-color: #27ae60;
+}
+
+@media screen and (max-width: 1080px) {
+  .containerDemandeDetail {
+    padding: 80px 20px 0 20px;
+  }
+}
+
+/* FIN CONSULTER UNE DEMANDE*/
+
 /*PageConnexion*/
 
 .labelConnexion {
@@ -855,6 +961,7 @@ form.FormMDPOublié {
 .page .nouvelleDemandeForm input[type="file"],
 .page .nouvelleDemandeForm input[type="text"],
 .page .nouvelleDemandeForm input[type="number"],
+.page .nouvelleDemandeForm input[type="datetime-local"],
 .page .nouvelleDemandeForm textarea {
   width: 350px;
   height: 40px;
@@ -2160,6 +2267,10 @@ form.FormMDPOublié {
   margin-bottom: 50px;
 }
 
+.containerPost .postes .headerRow h1 {
+  padding-bottom: 0px;
+}
+
 .containerPost .postes .headerRow h2 {
   margin: 0;
   font-size: 1.6rem;
@@ -2292,6 +2403,10 @@ form.FormMDPOublié {
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+}
+
+.containerDemandes .headerRow h1 {
+  padding-bottom: 0;
 }
 
 .containerDemandes .headerRow h2 {
@@ -2637,6 +2752,10 @@ form.FormMDPOublié {
   margin-bottom: 50px;
 }
 
+.containerManagers .headerRow h1 {
+  padding-bottom: 0px;
+}
+
 .containerManagers .headerRow h2 {
   margin: 0;
   padding: 0;
@@ -2652,7 +2771,7 @@ form.FormMDPOublié {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 20px;
-  width: 150px;
+  width: fit-content !important;
 }
 
 .containerManagers .addManagerButton:hover {

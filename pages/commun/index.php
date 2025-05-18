@@ -61,12 +61,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Prenom = $NomEtPrenom['first_name'];
                 $Nom = $NomEtPrenom['last_name'];
 
+                $recupDepartement = $bdd->prepare("SELECT d.id AS department_id FROM person p JOIN department d ON p.department_id = d.id WHERE p.id = :id");
+                $recupDepartement->bindParam(':id', $id['person_id']);
+                $recupDepartement->execute();
+                $departement = $recupDepartement->fetch(PDO::FETCH_ASSOC);
+
+                $idDepartement = $departement['department_id'];
+
                 $_SESSION['utilisateur'] = [
                     'id' => $utilisateur['id'],
                     'email' => $utilisateur['email'],
                     'role' => $utilisateur['role'],
                     'nom' => $Nom,
                     'prenom' => $Prenom,
+                    'departement' => $idDepartement
                 ];
 
 

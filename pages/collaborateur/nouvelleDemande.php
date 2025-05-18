@@ -7,11 +7,18 @@ include "../../includes/header2.php";
 include "../../includes/functions.php";
 include '../../includes/verifSecuriteCollaborateur.php';
 
+
+$id = $_SESSION["utilisateur"]['id'];
 $data = [];
 $errors = [];
 $requeteRecupTypeDeConge = $bdd->prepare('SELECT name FROM request_type');
 $requeteRecupTypeDeConge->execute();
 $TypesConge = $requeteRecupTypeDeConge->fetchAll(PDO::FETCH_ASSOC);
+
+$recupRequetes = $bdd->prepare("SELECT r.start_at, r.end_at from request r where collaborator_id = :id");
+$recupRequetes->bindParam(':id', $id);
+$recupRequetes->execute();
+$Requetes = $recupRequetes->fetchALL(pdo::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = $_POST;
@@ -21,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $RequeteRecupRequest_typeID->execute();
   $idRequest_type = $RequeteRecupRequest_typeID->fetch(PDO::FETCH_ASSOC);
 
-  var_dump($_SESSION);
   $RequeteRecupDepartment_ID = $bdd->prepare('SELECT department_id FROM person where id=:id');
   $RequeteRecupDepartment_ID->bindParam(':id', $_SESSION['utilisateur']['id']);
   $RequeteRecupDepartment_ID->execute();
@@ -66,21 +72,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors['nbJours'] = 'Durée du congé incorrecte';
   }
 
+  $data['dateDebut'] = date('Y-m-d', strtotime($data['dateDebut']));
+  $data['dateFin'] = date('Y-m-d', strtotime($data['dateFin']));
+
+  foreach ($Requetes as $Requete) {
+    $start = $Requete['start_at'];
+    $end = $Requete['end_at'];
+
+    if (!($data['dateFin'] < $start || $data['dateDebut'] > $end)) {
+      $errors['dateDebut'] = "Vous avez déjà une demande de congé qui doit être/a été traité à cette période.";
+    }
+  }
+
   $date = date("Y-m-d H:i:s");
   $collaborateurId = $_SESSION['utilisateur']['id'];
   $request_typeID = $idRequest_type['id'];
 
   if (empty($errors)) {
     $requeteNouvelleDemande = $bdd->prepare("INSERT INTO request 
-      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, receipt_file, answer_comment, answer, answer_at) 
-      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at, :receipt_file, :answer_comment, NULL, :answer_at)");
+      (request_type_id, collaborator_id, department_id, created_at, start_at, end_at, period, receipt_file, comment, answer_comment, answer, answer_at) 
+      VALUES (:request_type_id, :collaborator_id, :department_id, :created_at, :start_at, :end_at,:period, :receipt_file,:comment, :answer_comment, NULL, :answer_at)");
     $requeteNouvelleDemande->bindParam(':request_type_id', $request_typeID);
     $requeteNouvelleDemande->bindParam(':collaborator_id', $collaborateurId);
     $requeteNouvelleDemande->bindParam(':department_id', $RecupDepartment_ID['department_id']);
     $requeteNouvelleDemande->bindParam(':created_at', $date);
     $requeteNouvelleDemande->bindParam(':start_at', $data['dateDebut']);
     $requeteNouvelleDemande->bindParam(':end_at', $data['dateFin']);
-    $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+    $requeteNouvelleDemande->bindParam(':period', $data['nbJours']);
+    if (!empty($data['receipt_file'])) {
+      $requeteNouvelleDemande->bindValue(':receipt_file', $data['receipt_file']);
+    } else {
+      $requeteNouvelleDemande->bindValue(':receipt_file', null, PDO::PARAM_NULL);
+    }
+    if (!empty($data['commentaire'])) {
+      $requeteNouvelleDemande->bindValue(':comment', $data['commentaire']);
+    } else {
+      $requeteNouvelleDemande->bindValue(':comment', null, PDO::PARAM_NULL);
+    }
     $requeteNouvelleDemande->bindValue(':answer_comment', null, PDO::PARAM_NULL);
     $requeteNouvelleDemande->bindValue(':answer_at', null, PDO::PARAM_NULL);
     $requeteNouvelleDemande->execute();
@@ -115,18 +143,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="inlineFields block">
           <div class="fieldGroup">
             <label for="dateDebut">Date début</label>
-            <input type="date" id="dateDebut" name="dateDebut" required value="<?= afficheValeur('dateDebut', $data) ?>" />
+            <input type="datetime-local" id="dateDebut" name="dateDebut" required value="<?= afficheValeur('dateDebut', $data)  ?>" />
             <?= afficheErreur('dateDebut', $errors) ?>
           </div>
           <div class="fieldGroup">
             <label for="dateFin">Date de fin</label>
-            <input type="date" id="dateFin" name="dateFin" required value="<?= afficheValeur('dateFin', $data) ?>" />
+            <input type="datetime-local" id="dateFin" name="dateFin" required value="<?= afficheValeur('dateFin', $data) ?>" />
             <?= afficheErreur('dateFin', $errors) ?>
           </div>
         </div>
 
         <label for="nbJours">Nombre de jours demandés</label>
-        <input class="nbJours" type="number" id="nbJours" name="nbJours" required value="<?php afficheValeur('nbJours', $data) ?>" />
+        <input class="nbJours" type="number" id="nbJours" name="nbJours" required value="<?= afficheValeur('nbJours', $data) ?>" />
         <?php afficheErreur('nbJours', $errors) ?>
 
         <label for="justificatif">Justificatif si applicable</label>
@@ -164,6 +192,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     dateDebut.addEventListener("change", calculerNbJours);
     dateFin.addEventListener("change", calculerNbJours);
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const startDateInput = document.querySelector('input[name="dateDebut"]');
+    const endDateInput = document.querySelector('input[name="dateFin"]');
+    const daysInput = document.querySelector('input[name="nbJours"]');
+
+
+    const holidays = [
+      "2025-01-01",
+      "2025-04-21",
+      "2025-05-01",
+      "2025-05-08",
+      "2025-05-29",
+      "2025-06-09",
+      "2025-07-14",
+      "2025-08-15",
+      "2025-11-01",
+      "2025-11-11",
+      "2025-12-25"
+    ];
+
+    function calculateDays() {
+      const startDate = new Date(startDateInput.value);
+      const endDate = new Date(endDateInput.value);
+
+      if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
+        daysInput.value = 0;
+        return;
+      }
+
+      let count = 0;
+      let currentDate = new Date(startDate);
+
+      while (currentDate <= endDate) {
+        const dayOfWeek = currentDate.getDay();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+
+        if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(formattedDate)) {
+          count++;
+        }
+
+
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      daysInput.value = count;
+    }
+
+
+    startDateInput.addEventListener("change", calculateDays);
+    endDateInput.addEventListener("change", calculateDays);
+  });
+  Réduire
 </script>
 <?php
 include '../../includes/footer.php';

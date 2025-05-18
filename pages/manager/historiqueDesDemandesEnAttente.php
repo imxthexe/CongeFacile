@@ -5,7 +5,6 @@ include '../../includes/database.php';
 include '../../includes/header2.php';
 include '../../includes/verifSecuriteManager.php';
 
-// Récupération des filtres
 $typeFiltre = isset($_GET['type']) ? trim($_GET['type']) : '';
 $collabFiltre = isset($_GET['collaborateur']) ? trim($_GET['collaborateur']) : '';
 $dateDebutFiltre = isset($_GET['date_debut']) ? trim($_GET['date_debut']) : '';
@@ -13,15 +12,16 @@ $dateFinFiltre = isset($_GET['date_fin']) ? trim($_GET['date_fin']) : '';
 $nbJoursFiltre = isset($_GET['nb_jours']) ? trim($_GET['nb_jours']) : '';
 $statutFiltre = isset($_GET['statut']) ? trim($_GET['statut']) : '';
 
-// Construction de la requête dynamique
+
 $sql = "SELECT 
     col.last_name AS collaborator_last_name,
     col.first_name AS collaborator_first_name,
     rt.name AS request_type,
+    req.id,
     req.created_at,
     req.start_at,
     req.end_at,
-    DATEDIFF(req.end_at, req.start_at) + 1 AS nb_jours,
+    req.period,
     CASE 
         WHEN req.answer IS NULL THEN 'En cours'
         WHEN req.answer = 0 THEN 'Refusé'
@@ -31,11 +31,11 @@ $sql = "SELECT
 FROM request req
 JOIN request_type rt ON req.request_type_id = rt.id
 JOIN person col ON req.collaborator_id = col.id
-WHERE 1=1";
+WHERE col.department_id=:id";
 
 $params = [];
 
-// Ajout des filtres
+$params[':id'] = $_SESSION["utilisateur"]['departement'];
 if (!empty($typeFiltre)) {
     $sql .= " AND rt.name LIKE :type";
     $params[':type'] = '%' . $typeFiltre . '%';
@@ -52,21 +52,17 @@ if (!empty($dateFinFiltre)) {
     $sql .= " AND DATE(req.end_at) = :dateFin";
     $params[':dateFin'] = $dateFinFiltre;
 }
-if (!empty($nbJoursFiltre)) {
-    $sql .= " AND (DATEDIFF(req.end_at, req.start_at) + 1) = :nbJours";
-    $params[':nbJours'] = $nbJoursFiltre;
-}
+
 if (!empty($statutFiltre)) {
     $sql .= " AND (CASE 
         WHEN req.answer IS NULL THEN 'En cours'
-        WHEN req.answer = 0 THEN 'Refusé'
-        WHEN req.answer = 1 THEN 'Validé'
+        WHEN req.answer = 0 THEN 'Refusée'
+        WHEN req.answer = 1 THEN 'Validée'
         ELSE 'Statut inconnu' 
     END) LIKE :statut";
     $params[':statut'] = '%' . $statutFiltre . '%';
 }
 
-// Exécution de la requête
 $recupRequetesCollab = $bdd->prepare($sql);
 $recupRequetesCollab->execute($params);
 $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
@@ -107,18 +103,19 @@ $requetes = $recupRequetesCollab->fetchAll(PDO::FETCH_ASSOC);
                         <?php
                         if (!empty($requetes)) {
                             foreach ($requetes as $requete) {
+                                $id = $requete["id"];
                                 echo "<tr>";
                                 echo "<td data-label='Type de demande'>" . htmlspecialchars($requete['request_type']) . "</td>";
                                 echo "<td data-label='Collaborateur'>" . htmlspecialchars($requete['collaborator_first_name']) . ' ' . htmlspecialchars($requete['collaborator_last_name']) . "</td>";
                                 echo "<td data-label='Date de début'>" . htmlspecialchars($requete['start_at']) . "</td>";
                                 echo "<td data-label='Date de fin'>" . htmlspecialchars($requete['end_at']) . "</td>";
-                                echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['nb_jours']) . "</td>";
+                                echo "<td data-label='Nb jours'>" . htmlspecialchars($requete['period']) . "</td>";
                                 echo "<td data-label='Statut'>" . htmlspecialchars($requete['statut']) . "</td>";
-                                echo "<td><button class='detailsButton'>Détails</button></td>";
+                                echo "<td><button class='detailsButton'><a  style='color:black;' href='detailsDemande.php?id=$id'>Détails</a></button></td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='7'>Aucune demande trouvée.</td></tr>";
+                            echo "<tr><td colspan='7'>Aucune demande dans l'historique.</td></tr>";
                         }
                         ?>
                     </tbody>
