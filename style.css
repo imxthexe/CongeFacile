@@ -2875,5 +2875,9 @@ form.FormMDPOublié {
   padding: 20px;
   width: 90%;
 }
-
+.small-chart {
+  max-width: 1050px;
+  max-height: 550px;
+  margin-bottom: 20px;
+}
 /* FIN STATISTIQUES */
