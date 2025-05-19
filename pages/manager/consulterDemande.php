@@ -13,6 +13,7 @@ $recupererInfos = $bdd->prepare("SELECT
     r.created_at AS date_demande,
     r.start_at AS date_debut,
     r.end_at AS date_fin,
+    r.period,
     rt.name AS type_conge,
     r.comment AS commentaire
 FROM 
@@ -31,13 +32,7 @@ $infosDemandes = $recupererInfos->fetch(pdo::FETCH_ASSOC);
 $date = new DateTime($infosDemandes['date_demande']);
 $dateFormat = $date->format('d/m/y');
 
-$datedebut = new DateTime($infosDemandes['date_debut']);
-$datedebut = $datedebut->format('d');
 
-$datefin = new DateTime($infosDemandes['date_fin']);
-$datefin = $datefin->format('d');
-
-$nb_jours = $datefin - $datedebut;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id_demande'] ?? null;
@@ -103,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="parameter">
                     <p>Période: <?= $infosDemandes['date_debut'] . ' au ' . $infosDemandes['date_fin'] ?></p>
                     <p>Type de demande: <?= $infosDemandes['type_conge'] ?></p>
-                    <p>Nombre de jours: <?= $nb_jours ?></p>
+                    <p>Nombre de jours: <?= $infosDemandes['period'] ?></p>
                 </div>
 
 

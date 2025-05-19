@@ -15,6 +15,7 @@ $recupInfosDemande = $bdd->prepare("SELECT
     req.created_at,
     req.start_at,
     req.end_at,
+    req.period,
     req.answer,
     req.answer_comment
 FROM request req
@@ -38,7 +39,7 @@ if ($infos["answer"] == null) {
     $infos["answer_comment"] == "votre manager laissera un message lorsque il aura répondu à votre requète";
 }
 
-$nb_jours = $date2 - $date1;
+
 
 
 if ($infos['answer'] === null) {
@@ -71,7 +72,7 @@ if ($infos['answer'] === null) {
             <div class="parameter">
                 <p>Demande du <?= $infos["created_at"] ?></p>
                 <p>Période : <?= $infos['start_at'] . ' au ' . $infos['end_at'] ?></p>
-                <p>Nombre de jours : <?= $nb_jours ?></p>
+                <p>Nombre de jours : <?= $infos['period'] ?></p>
             </div>
 
 
