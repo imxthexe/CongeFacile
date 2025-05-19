@@ -101,13 +101,12 @@ $recupPostes->execute();
 $postes = $recupPostes->fetchAll(pdo::FETCH_ASSOC);
 
 $requete = $bdd->prepare("
-    SELECT d.name AS department_name
-    FROM person p
-    JOIN department d ON p.department_id = d.id
-    WHERE p.id = :id
+    SELECT name AS department_name
+    FROM department
+    WHERE id = :id
 ");
 
-$requete->bindParam(':id', $_SESSION['utilisateur']['id']);
+$requete->bindParam(':id', $_SESSION['utilisateur']['departement']);
 $requete->execute();
 
 $department = $requete->fetch(PDO::FETCH_ASSOC);
