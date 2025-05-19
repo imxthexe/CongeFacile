@@ -22,8 +22,8 @@ En tant que Manager, il est possible de :
  	- Possibilités de consulter le détail d'une demande
   	- Accès à l'historique des demandes
    	- Accès à la page "Mon équipe" qui permet d'ajouter/retirer des membres de votre équipe, de consulter leurs profils
-    	- Accès à la page des statistiques des demandes
-        - Accés au domaine "Administration" afin de gérer les postes, types de demandes, managers et les services ! 
+    - Accès à la page des statistiques des demandes
+    - Accés au domaine "Administration" afin de gérer les postes, types de demandes, managers et les services ! 
 
 
 En tant que Collaborateur, il est possible de : 
@@ -37,13 +37,14 @@ En tant que Collaborateur, il est possible de :
 Pour démarrer le projet suivez ces étapes clés : 
 
 	- Avoir un serveur WEB d'installer sur votre PC, pour ce projet nous vous conseillons XAMPP
- 	- Installer le dépot Github de CongeFacile en local, si ZIP, le déZIP.
+ 	- Installer le dépot Github de CongeFacile en local, si ZIP, le déZIP. ou Cloner le projet sur votre pc directement
+	- Installer le fichier en .sql, l'importer dans une base de donnée que vous nommerez "conge-facile"
   	- Une fois déZIP, suivez ce chemin (l'adapter à votre pc) C:/ xampp -> htdocs, déposez CongeFacile dans ce dossier htdocs
    	- Ouvrir votre application de serveur WEB (XAMPP)
-    	- Démarrer le serveur Apache et le serveur MYSQL
-     	- Dans votre navigateur, entrer localhost/(chemin d'accès à CongeFacile)/pages/commun/
-      	- Entrez vos logins pour accéder à CongeFacile
-       	- Vous êtes prêt à découvrir CongeFacile !
+    - Démarrer le serveur Apache et le serveur MYSQL
+    - Dans votre navigateur, entrer localhost/(chemin d'accès à CongeFacile)/pages/commun/
+    - Entrez vos logins pour accéder à CongeFacile
+    - Vous êtes prêt à découvrir CongeFacile !
 
 
 
@@ -52,14 +53,14 @@ Pour démarrer le projet suivez ces étapes clés :
 
  Les technologies utilisées sont :
    Back : 
-  	- PHP
-        - SQL
+  	- PHP (8.2.12)
+    - SQL
 
   	
    Front :
    	- HTML 
-    	- CSS
-     	- JS
+    - CSS
+    - JS
   		
 
 
@@ -74,38 +75,4 @@ Pour ce projet, nous nous sommes également aidé de l'IA, elle nous a été tr�
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
 

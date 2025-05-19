@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="ContainerNouvelleDemande page">
     <section class="nouvelleDemandeSection">
       <h1>Effectuer une nouvelle demande</h1>
-      <form class="nouvelleDemandeForm" method="POST">
+      <form class="nouvelleDemandeForm" method="POST" novalidate >
         <label for="typeDemande">Type de demande</label>
         <select id="typeDemande" name="typeDemande">
           <?php foreach ($TypesConge as $type) { ?>
