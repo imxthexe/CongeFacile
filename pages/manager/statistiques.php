@@ -8,11 +8,8 @@ include '../../includes/verifSecuriteManager.php';
 include '../../includes/header2.php';
 include_once __DIR__ . '/../../includes/database.php';
 
-
-
 $typeStats = [];
 $acceptStats = array_fill(1, 12, ['accepted' => 0, 'total' => 0]);
-
 
 $query = "SELECT rt.name as request_type, r.answer as status, MONTH(r.created_at) as month 
            FROM request r
@@ -26,9 +23,7 @@ foreach ($rows as $row) {
     $mois = (int)$row['month'];
     $statut = $row['status'];
 
-
     $typeStats[$type] = ($typeStats[$type] ?? 0) + 1;
-
 
     $acceptStats[$mois]['total'] += 1;
     if ($statut == 1) {
@@ -36,34 +31,28 @@ foreach ($rows as $row) {
     }
 }
 
-
 $typeLabels = json_encode(array_keys($typeStats));
 $typeData = json_encode(array_values($typeStats));
 $monthlyLabels = json_encode(array_keys($acceptStats));
 $monthlyAccepted = json_encode(array_column($acceptStats, 'accepted'));
 $monthlyTotal = json_encode(array_column($acceptStats, 'total'));
 
-
-
 $titre = 'Statistiques';
-
 ?>
 
+
 <body>
-
-
     <div class="flex">
-
         <?php include "../../includes/navBar/navBar2.php"; ?>
 
         <div class="page">
             <div class="statistiquesSection">
                 <h1>Statistiques</h1>
                 <p>Types de demandes sur l’année</p>
-                <canvas id="chartTypesDemandes" width="400" height="400"></canvas>
+                <canvas id="chartTypesDemandes" class="small-chart"></canvas>
 
                 <h2>Pourcentage d’acceptation des demandes sur l’année</h2>
-                <canvas id="chartTauxAcceptation" width="600" height="300"></canvas>
+                <canvas id="chartTauxAcceptation" width="800" height="250"></canvas>
             </div>
         </div>
     </div>
@@ -71,7 +60,6 @@ $titre = 'Statistiques';
     <script>
         const typesData = <?= json_encode($typeStats) ?>;
         const acceptData = <?= json_encode($acceptStats) ?>;
-
 
         const ctx1 = document.getElementById('chartTypesDemandes').getContext('2d');
         new Chart(ctx1, {
@@ -84,7 +72,6 @@ $titre = 'Statistiques';
                 }]
             }
         });
-
 
         const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
         const taux = Object.values(acceptData).map(val =>
@@ -114,6 +101,4 @@ $titre = 'Statistiques';
             }
         });
     </script>
-
-
 </body>
