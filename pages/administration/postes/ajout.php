@@ -12,6 +12,7 @@ $recupPostes = $bdd->prepare('SELECT name FROM positions');
 $recupPostes->execute();
 $Postes = $recupPostes->fetchAll(PDO::FETCH_ASSOC);
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
 
