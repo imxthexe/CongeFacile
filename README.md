@@ -45,7 +45,7 @@ Pour démarrer le projet, suivez ces étapes clés :
 
  - Installer le dépôt GitHub de CongeFacile en local (si fichier ZIP, le dézipper, ou cloner le projet sur votre PC directement)
 
- - Installer le fichier .sql et l'importer dans une base de données que vous nommerez "conge-facile"
+ - Installer le fichier .sql et l'importer dans une base de données de PHPMyAdmin (cliquez sur admin de l'onglet mySql dans l'interface xampp) que vous nommerez "conge-facile" 
 
  - Une fois dézippé, suivez ce chemin (à adapter à votre PC) : C:/xampp/htdocs, et déposez CongeFacile dans ce dossier htdocs
 
@@ -62,12 +62,12 @@ Pour démarrer le projet, suivez ces étapes clés :
 
 
 Pour tester le projet en tant que Manager, vous pouvez vous connecter avec l'identifiant suivant :
-salesse@gmail.com — Mot de passe : salesse123
+manager@gmail.com — Mot de passe : manager123
 
 
 
 Pour le tester en tant que Collaborateur, vous pouvez vous connecter avec l'identifiant suivant :
-martins@gmail.com — Mot de passe : Martins1234!
+collaborateur1234@gmail.com — Mot de passe : Collaborateur1234!
 
 
 
